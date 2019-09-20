@@ -1,0 +1,106 @@
+.hide-it {
+    display: none;
+}
+/* .m-input {
+    padding: 2px 4px;
+    border-radius: 0.12rem;
+    height: 2rem !important;
+} */
+.calendar-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+    /* margin-left: -0.25rem; */
+}
+.calendar-button .la {
+    color: black;
+}
+.cv-avatar {
+    height: 90px;
+    padding: 0;
+    margin: 0;
+}
+.cv-avatar__img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+}
+/* Edit button on avatar */
+.btn-avatar-edit {
+    position: absolute;
+    top: 0;
+    left: 100px;
+}
+/* End::Edit button on avatar */
+
+.cv-section-avatar {
+
+}
+.cv-section-info {
+    padding-top: 2rem;
+}
+.cv-section-title {
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    padding: 0.25rem;
+    background-color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.2rem;
+    vertical-align: bottom;
+}
+.cv-section-title i {
+    font-size: 1.3rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+fieldset {
+    border: 1px solid grey;
+    border-radius: 0.25rem;
+    /* margin-right: 1rem; */
+    padding: 1.5rem 1rem;
+    height: 100%;
+    width: 100%;
+}
+fieldset > .row {
+    padding-bottom: 1.25rem;
+}
+.m-radio {
+    margin-bottom: 0;
+}
+
+.cv-file-section {
+    /* background-color: rgba(0, 0, 0, 0.2); */
+}
+.custom-file {
+    width: 100%;
+}
+
+.strike-through {
+    text-decoration: line-through;
+}
+table {
+    width: 100%;
+    margin-top: 2rem;
+}
+table tr td {
+    padding-right: 1rem;
+}
+
+.cv-docs-list {
+    list-style-type: none;
+    margin-left: 0;
+    margin-top: 2rem;
+    padding-left: 0;
+}
+
+.my-btn-group {
+    cursor: pointer;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+}

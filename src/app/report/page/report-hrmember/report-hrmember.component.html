@@ -1,0 +1,131 @@
+<div class="">
+    <div class="row">
+      <div class="col-12">
+        <div class="m-portlet">
+  
+          <div class="m-portlet__body">
+            <div class="m-section">
+              <div class="m-section__content">
+                <!-- TABLE -->
+                <table class="table table-bordered table-hover m-table m-table--head-bg-info">
+                  <thead>
+                    <tr>
+                      <th class="col1">STT</th>
+                      <th class="col2">Dự án</th>
+                      <th class="col3">vị trí cần tuyển dụng</th>
+                      <th class="col4">Phụ trách</th>
+                      <th class="col5">Bộ phận</th>
+                      <th class="col6">Đặt hàng</th>
+                      <th class="col7">Yêu cầu HR</th>
+                      <th class="col8">Ngày order</th>
+                      <th class="col9">Deadline</th>
+                      <th class="col10">Đã contact</th>
+                      <th class="col11">Đã phỏng vấn</th>
+                      <th class="col12">Đã tuyển</th>
+                      <th class="col14">Tổng UV chốt</th>
+                      <th class="col15">Thiếu</th>
+                      <th class="col16">Tỷ lệ hoàn thành</th>
+                    </tr>
+                  </thead>
+                </table>
+  
+                <!-- TABLE -->
+                <table *ngFor="let project of listProjectHrMember; let i = index;" class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                  <tbody>
+                    <tr id="project">
+                      <td class="col1">{{ i + 1 }}</td>
+                      <td class="col2">
+                        <span placement="top" ngbTooltip="{{ project?.title }}">{{ project?.title | summary: 20}}</span>
+                      </td>
+                      <td class="col3">
+                      </td>
+                      <td class="col4">
+                      </td>
+                      <td class="col5">
+                      </td>
+                      <td class="col6">
+                        <span>{{ project?.orderNumber}}</span>
+                      </td>
+                      <td class="col7">
+                        <span>{{ project?.requestHRNumber}}</span>
+                      </td>
+                      <td class="col8">
+                      </td>
+                      <td class="col9">
+                      </td>
+                      <td class="col10">
+                        <span>{{ project?.contacting || 0}}</span>
+                      </td>
+                      <td class="col11">
+                        <span>{{ project?.interview || 0}}</span>
+                      </td>
+                      <td class="col12">
+                        <span>{{ project?.passed || 0}}</span>
+                      </td>
+                      <td class="col14">
+                        <span>{{ project?.onboard || 0}}</span>
+                      </td>
+                      <td class="col15">
+                        <span>{{ project?.lack || 0}}</span>
+                      </td>
+                      <td class="col6">
+                        <span>{{ project?.ratio * 100  || 0 | round: 2}}%</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngFor="let request of project.requestCollections; let j = index;">
+                    <tr>
+                      <td class="col1"></td>
+                      <td class="col2">
+                          {{ j + 1 }}
+                      </td>
+                      <td class="col3">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.title | summary: 20}}</span>
+                      </td>
+                      <td class="col4">
+                      </td>
+                      <td class="col5">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.departmentId?.title | summary: 20}}</span>
+                      </td>
+                      <td class="col6">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.number || 0}}</span>
+                      </td>
+                      <td class="col7">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.number || 0}}</span>
+                      </td>
+                      <td class="col8">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.approvedDate || 0}}</span>
+                      </td>
+                      <td class="col9">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.deadline || 0}}</span>
+                      </td>
+                      <td class="col10">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.countRequestStatus?.Closed || 0}}</span>
+                      </td>
+                      <td class="col11">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.countRequestStatus?.Interview || 0}}</span>
+                      </td>
+                      <td class="col12">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.countRequestStatus?.Offer || 0}}</span>
+                      </td>
+                      <td class="col14">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ request?.countRequestStatus?.Onboard || 0}}</span>
+                      </td>
+                      <td class="col15">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ (request?.number || 0) - (request?.countRequestStatus?.Onboard || 0) }}</span>
+                      </td>
+                      <td class="col16">
+                        <span placement="top" ngbTooltip="{{ request?.title }}">{{ ((request?.countRequestStatus?.Onboard / request?.number) * 100) | round: 2}}%</span>
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+                <!-- END::TABLE -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,104 @@
+<div class="candidate">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-12 col-lg-6">
+      <div class="row">
+        <div class="col-3">
+          <h6 class="color-skill">Email</h6>
+        </div>
+        <div class="col-9">
+          <p class="color-skill-tittle">{{ currentCandidate?.cvId?.email }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <h6 class="color-skill">Phone</h6>
+        </div>
+        <div class="col-9">
+          <p class="color-skill-tittle">{{ currentCandidate?.cvId?.phone }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- end::left column -->
+    <!-- right column -->
+    <div class="col-md-12 col-lg-6">
+      <div class="row">
+        <div class="col-3">
+          <h6 class="color-skill">Gender</h6>
+        </div>
+        <div class="col-9">
+          <p class="color-skill-tittle">{{ currentCandidate?.cvId?.gender ? 'Male' : 'Female' }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <h6 class="color-skill">Address</h6>
+        </div>
+        <div class="col-9">
+          <p class="color-skill-tittle">{{ currentCandidate?.cvId?.address }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- end::right column -->
+  </div>
+  <hr>
+  <div class="row">
+    <!-- experience -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-12">
+          <h6 class="color-skill">Experience</h6>
+        </div>
+        <div class="col-12 color-skill">
+          <p class="color-skill-tittle">{{ currentCandidate?.cvId?.experienceId?.title }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- end::experience -->
+    <!-- education -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-12">
+          <h6 class="color-skill">Education</h6>
+        </div>
+        <div class="col-12 color-skill">
+          <p class="color-skill-tittle">{{ currentCandidate?.cvId?.education }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- end::education -->
+    <!-- skills -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-12">
+          <h6 class="color-skill">Skill</h6>
+        </div>
+        <div class="col-12">
+          <ul>
+            <li class="color-skill-tittle" *ngFor="let skill of currentCandidate?.cvId?.skillCollection">
+              {{ skill.title }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- end::skills -->
+  </div>
+  <hr>
+  <!-- note -->
+  <div class="row">
+    <div class="col-12">
+      <h6 class="color-skill">Notes</h6>
+      <p class="color-skill-tittle">{{ currentCandidate?.cvId?.note }}</p>
+    </div>
+  </div>
+  <!-- end::note -->
+  <!-- cv attachments -->
+  <div class="row">
+    <div class="col-12">
+      <h6 class="color-skill">Attachment</h6>
+      <app-attachment-item *ngIf="currentCandidate?.cvId?.cvUrlCollection?.length"></app-attachment-item>
+    </div>
+  </div>
+  <!-- end::cv attachments -->
+</div>

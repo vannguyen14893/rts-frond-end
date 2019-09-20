@@ -1,0 +1,296 @@
+`
+<!-- requests only view -->
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-content">
+    <div class="m-portlet">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              <span>List request</span>
+            </h3>
+          </div>
+        </div>
+        <!-- <div class="m-portlet__head-tools">
+          <button type="submit" class="btn btn-success m-btn--icon m-btn--air" (click)="navRequestCreate()">
+            <span>
+              <i class="la la-plus"></i>
+              <span>
+                New Request
+              </span>
+            </span>
+          </button>
+        </div> -->
+      </div>
+      <div class="m-form m-form--label-align-right">
+        <div class="m-form__content">
+          <div class="m-alert m-alert--icon alert alert-danger" *ngIf="request && request.requestStatusId.title === 'Rejected'" role="alert">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+              This request was rejected by GROUP Lead, the reason is: " {{ request?.rejectReason }} "
+            </div>
+            <div class="m-alert__close">
+              <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__body">
+          <div class="m-form__section m-form__section--first">
+            <div class="m-form__heading">
+              <h3 class="m-form__heading-title">
+                Job title and department info
+              </h3>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-12">
+                <label class="col-form-label" for="title">
+                  Title*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.title }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-md-5">
+                <label class="col-form-label" for="position">
+                  Position*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.positionId.title }}</p>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="col-form-label" for="number">
+                  Number*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.number }}</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <label class="col-form-label" for="deadline">
+                  Deadline*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.deadline }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-md-5">
+                <label class="col-form-label" for="project">
+                  Project*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.projectId.title }}</p>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="col-form-label" for="recruitment-type">
+                  Request type*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.recruitmentTypeId.title }}</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <label class="col-form-label" for="priority">
+                  Priority*:
+                </label>
+                <div>
+                  <p class="form-control m-input">{{ request?.priorityId.title }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="m-form__seperator m-form__seperator--dashed"></div>
+          <div class="m-form__section m-form__section--second">
+            <div class="m-form__heading">
+              <h3 class="m-form__heading-title">
+                Requirements
+              </h3>
+            </div>
+            <div class="form-group m-form__group">
+              <label for="skills">
+                Skills*:
+              </label>
+              <div>
+                <p class="form-control m-select2">
+                  <span *ngFor="let skill of request?.skillCollection">{{ skill?.title }} , </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="experience">
+                Experience*:
+              </label>
+              <p class="form-control m-input">{{ request?.experienceId.title }}</p>
+            </div>
+            <div class="form-group m-form__group">
+              <label for="description">
+                Description*:
+              </label>
+              <p readonly class="form-control m-input height_100" rows="3">{{ request?.description }}</p>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="foreignLanguage">
+                Foreign languages:
+              </label>
+              <div>
+                <p class="form-control m-select2 height_37">
+                  <span *ngFor="let languge of request?.foreignLanguageCollection">{{ languge?.title }} , </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="certificate">
+                Certificate
+              </label>
+              <p readonly class="form-control m-input height_37">{{ request?.certificate }}</p>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="major">
+                Major
+              </label>
+              <p readonly class="form-control m-input height_100" rows="3">{{ request?.major }}</p>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="others">
+                Others
+              </label>
+              <p readonly class="form-control m-input height_100" rows="3">{{ request?.others }}</p>
+            </div>
+          </div>
+          <div class="m-form__seperator m-form__seperator--dashed"></div>
+          <div class="m-form__section m-form__section--last">
+            <div class="m-form__heading">
+              <h3 class="m-form__heading-title">
+                Salary, benefit
+              </h3>
+            </div>
+            <div class="form-group m-form__group">
+              <label for="salary">
+                Salary
+              </label>
+              <p readonly class="form-control m-input height_37">{{ request?.salary }}</p>
+            </div>
+            <div class="form-group m-form__group">
+              <label for="benefit">
+                Benefit
+              </label>
+              <p readonly class="form-control m-input height_100" rows="3">{{ request?.benefit }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions m-form__actions">
+            <button type="button" (click)="onShowApproveModal()" class="btn btn-success" *ngIf="showApproveButton()">
+              Approve
+            </button>
+            <button type="button" (click)="onShowRejectModal()" class="btn btn-danger" *ngIf="showRejectButton()">
+              Reject
+            </button>
+            <button type="button" (click)="onCancel()" class="btn btn-secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="m_modal_approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" *ngIf="response.message.length === 0">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Are you sure to approve this request ?
+        </h5>
+      </div>
+      <div class="modal-body" *ngIf="response.message.length !== 0">
+        <div class="m-form__content">
+          <div class="" *ngIf="response.isSuccess" role="alert">
+            <div class="m-alert__icon">
+              <!-- <i class="la la-warning"></i> -->
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+            <div class="m-alert__close">
+              <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="m-alert m-alert--icon alert alert-danger" *ngIf="response.isError" role="alert">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+            <div class="m-alert__close">
+              <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="onApprove()" *ngIf="!response.isSubmitting && response.message.length === 0">
+          Yes
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" *ngIf="!response.isSubmitting && response.message.length === 0">
+          Cancel
+        </button>
+        <p *ngIf="response.isSubmitting">We are submitting your request</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="m_modal_reject_reason" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="response.message.length === 0">
+          Reject reason:
+        </h5>
+        <div class="m-form__content" *ngIf="response.message.length !== 0">
+          <div class="" *ngIf="response.isSuccess" role="alert">
+            <div class="m-alert__icon">
+              <!-- <i class="la la-warning"></i> -->
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+          </div>
+          <div class="m-alert m-alert--icon alert alert-danger" *ngIf="response.isError" role="alert">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <textarea ngModel #rejectReason="ngModel" required name="rejectReason" (ngModelChange)="validateRejectReason($event)" class="form-control m-input"
+          rows="3" [disabled]="response.isSubmitting && response.message.length !== 0"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onReject(rejectReason?.value)" [disabled]="rejectReason?.invalid || errorReason"
+          *ngIf="!response.isSubmitting && response.message.length === 0">
+          Done
+        </button>
+        <p *ngIf="response.isSubmitting">We are submitting your request</p>
+      </div>
+    </div>
+  </div>
+</div>

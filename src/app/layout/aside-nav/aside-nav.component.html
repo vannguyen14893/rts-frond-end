@@ -1,0 +1,699 @@
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-dark" id="m_aside_left_close_btn" appunwraptag="">
+  <i class="la la-close"></i>
+</button>
+<div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark">
+  <!-- BEGIN: Aside Menu -->
+  <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" data-menu-vertical="true"
+    data-menu-scrollable="false" data-menu-dropdown-timeout="500">
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
+      <li class="m-menu__section">
+        <h4 class="m-menu__section-text">
+          Management
+        </h4>
+        <!-- <i class="m-menu__section-icon flaticon-more-v3"></i> -->
+      </li>
+
+      <!-- USER MENU FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navUserList()">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            User
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  User
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navUserCreate()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  New user
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navUserList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List users
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::USER MENU -->
+
+      <!-- REQUEST MENU -->
+      <li *ngIf="!isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navRequestList()">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Request
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Request
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+              *ngIf="isDuLead">
+              <a href="#" class="m-menu__link" (click)="navRequestCreate()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  New request
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navRequestList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List requests
+                </span>
+              </a>
+            </li>
+
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::REQUEST MENU -->
+
+      <!-- CV MENU -->
+      <li *ngIf="isHrManager || isHrMember" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+        routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navCvList()">
+          <i class="m-menu__link-icon flaticon-profile"></i>
+          <span class="m-menu__link-text">
+            CV
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  CV
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCvCreate()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  New CV
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCvList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List CV
+                </span>
+              </a>
+            </li>
+
+          </ul>
+        </div> -->
+      </li>
+      <!-- END:: CV MENU -->
+      <!-- CV STATUS MENU -->
+      <li *ngIf="isHrManager || isHrMember" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+        routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navCVStatusList()">
+          <i class="m-menu__link-icon flaticon-profile"></i>
+          <span class="m-menu__link-text">
+            CV Status
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  CV Status
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCVStatusList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List CV Status
+                </span>
+              </a>
+            </li>
+
+          </ul>
+        </div> -->
+      </li>
+      <!-- END:: CV MENU -->
+
+      <!-- CANDIDATE MENU -->
+      <li *ngIf="!isAdmin && !isDuLead && !isDuMember" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+        routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navCandidateList()">
+          <i class="m-menu__link-icon flaticon-user-add"></i>
+          <span class="m-menu__link-text">
+            Candidate
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Candidate
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCandidateCreate()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  New candidate
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCandidateList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List candidate
+                </span>
+              </a>
+            </li>
+
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::CANDIDATE MENU -->
+      <!-- CANDIDATE STATUS MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isHrMember || isHrManager">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navCandidateStatusList()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text">
+            Candidate status
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCandidateStatusList()">
+                <span class="m-menu__link-text">
+                  Candidate status
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navCandidateStatusList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List candidate status
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::CANDIDATE STATUS MENU -->
+
+      <!-- INTERVIEW MENU -->
+      <li *ngIf="isHrManager || isHrMember" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+        routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navInterviewList()" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }">
+          <i class="m-menu__link-icon flaticon-time"></i>
+          <span class="m-menu__link-text">
+            Interview
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Interview
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+              *ngIf="isHrManager || isHrMember">
+              <a href="#" class="m-menu__link" (click)="navInterviewCreate()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  New interview
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navInterviewList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List interviews
+                </span>
+              </a>
+            </li>
+
+          </ul>
+        </div> -->
+      </li>
+      <!-- END:: INTERVIEW MENU -->
+
+      <!-- REPORT MENU -->
+      <li *ngIf="isHrManager || isHrMember" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+        routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navReportList()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text">
+            Report
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Report
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navReportList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List reports
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::REPORT MENU -->
+
+      <!-- DEPARTMENT MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isAdmin">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navDepartmentList()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text">
+            Department
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Department
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navDepartmentList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List departments
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::DEPARTMENT MENU -->
+      <!-- RECRUIMENT MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isHrMember || isHrManager">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navRecruimentList()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text">
+            Recruiment type
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Recruiment type
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navRecruimentList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List recruiments
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::RECRUIMENT MENU -->
+      <!-- REQUEST STATUS MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isDuLead">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navRequestStatusList()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text">
+            Request status
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Request status
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navRequestStatusList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List request status
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::REQUEST STATUS MENU -->
+
+      <!-- CV POSITION MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isDuLead">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navPositionList()">
+          <i class="m-menu__link-icon flaticon-diagram"></i>
+          <span class="m-menu__link-text">
+            Position
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Position
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navPositionList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List Position
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::CV POSITION MENU -->
+
+      <!-- SKILL MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isDuLead">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navSkillList()">
+          <i class="m-menu__link-icon la la-certificate"></i>
+          <span class="m-menu__link-text">
+            Skill
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Skill
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navSkillList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List skills
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::SKILL MENU -->
+
+      <!-- PRIORITY MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isDuLead">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navPriorityList()">
+          <i class="m-menu__link-icon la la-certificate"></i>
+          <span class="m-menu__link-text">
+            Priority
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Priority
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navPriorityList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List priorities
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::PRIORITY MENU -->
+
+      <!-- PROJECT MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isDuLead">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navProjectList()">
+          <i class="m-menu__link-icon la la-certificate"></i>
+          <span class="m-menu__link-text">
+            Project
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Project
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navProjectList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List projects
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::PROJECT MENU -->
+
+      <!-- EXPEROENCE MENU -->
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="isDuLead">
+        <a href="#" class="m-menu__link m-menu__toggle" (click)="navExperienceList()">
+          <i class="m-menu__link-icon la la-certificate"></i>
+          <span class="m-menu__link-text">
+            Experience
+          </span>
+          <!-- <i class="m-menu__ver-arrow la la-angle-right"></i> -->
+        </a>
+        <!-- <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Experience
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="#" class="m-menu__link" (click)="navExperienceList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  List Experiences
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div> -->
+      </li>
+      <!-- END::EXPEROENCE MENU -->
+
+      <!-- CONFIGURATION SECTION -->
+      <li *ngIf="isAdmin" class="m-menu__section">
+        <h4 class="m-menu__section-text">
+          Configuration
+        </h4>
+        <!-- <i class="m-menu__section-icon flaticon-more-v3"></i> -->
+      </li>
+
+      <!-- MAIL NOTIFICATION MENU -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-bell"></i>
+          <span class="m-menu__link-text">
+            Mail notification
+          </span>
+        </a>
+      </li>
+      <!-- END::MAIL NOTIFICATION MENU -->
+      <li class="m-menu__section">
+        <h4 class="m-menu__section-text">
+          Support
+        </h4>
+        <!-- <i class="m-menu__section-icon flaticon-more-v3"></i> -->
+      </li>
+      <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-info"></i>
+          <span class="m-menu__link-text">
+            FAQ
+          </span>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  General
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- END: Aside Menu -->
+</div>
+<!-- END: Left Aside -->

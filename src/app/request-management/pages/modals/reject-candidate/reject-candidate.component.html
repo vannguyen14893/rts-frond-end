@@ -1,0 +1,9 @@
+<app-modal>
+  <div body>
+    <p>Do you want to reject this candidate?</p>
+    <app-candidate-list-card [cv]="currentCandidate?.cvId"></app-candidate-list-card>
+  </div>
+  <div footer>
+    <button type="button" class="btn btn-outline-warning" (click)="submit()">Submit</button>
+  </div>
+</app-modal>

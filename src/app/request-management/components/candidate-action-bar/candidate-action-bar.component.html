@@ -1,0 +1,30 @@
+<div class="my-container">
+  <div *ngIf="canChangeCandidateStatus" class="button-item" placement="top" ngbTooltip="Change status">
+    <div class="btn-group">
+      <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+          <button class="dropdown-item" *ngFor="let id of remainingStatusIds" (click)="changeCandidateStatus(id)">{{ (candidateStatuses$ | async)[id]?.title }}</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="changeCandidateStatus(nextCandidateStatusId)">{{ (candidateStatuses$ | async)[nextCandidateStatusId]?.title }}</button>
+    </div>
+  </div>
+  <div class="wrap-action-item">
+    <div *ngIf="canCreateInterview" class="item interview" placement="top" ngbTooltip="Make interview">
+      <i class="la la-calendar" (click)="makeInterview()"></i>
+    </div>
+    <div *ngIf="canCommentCandidate" class="item comment" placement="top" ngbTooltip="Give your comment">
+      <i class="la la-wechat" (click)="comment()"></i>
+    </div>
+    <div *ngIf="canEditCv" class="item edit" placement="top" ngbTooltip="Edit this candidate">
+      <i class="la la-pencil" (click)="editCandidate()"></i>
+    </div>
+  </div>
+  <!-- <div *ngIf="canRejectCandidate" class="item reject" placement="top" ngbTooltip="Reject this candidate">
+    <i class="la la-times-circle-o" (click)="rejectCandidate()"></i>
+  </div> -->
+</div>
+<app-make-interview *ngIf="(currentModal$ | async) === modalMakeInterview"></app-make-interview>
+<!-- <app-reject-candidate *ngIf="(currentModal$ | async) === modalRejectCandidate"></app-reject-candidate> -->
+<app-change-candidate-status *ngIf="(currentModal$ | async) === modalChangeCandidateStatus"></app-change-candidate-status>

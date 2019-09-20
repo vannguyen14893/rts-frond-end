@@ -1,0 +1,45 @@
+.my-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 60px;
+  min-width: 0px;
+  padding: 5px;
+}
+.title{
+  display: flex;
+  font-size: 0.8rem;
+  opacity:0.55;
+}
+.number {
+  display: flex;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4a4a4a;
+  text-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+.number-selected {
+  display: flex;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1434f7;
+  text-shadow: 0 5px 20px rgba(20, 52, 247, 0.2);
+}
+@media only screen and (min-width: 451px) and (max-width: 509px){
+  .my-container {
+    min-width: 60px;
+  }
+}
+@media only screen and (min-width: 510px) and (max-width: 534px){
+  .my-container {
+    min-width: 70px;
+  }
+}
+@media only screen and (max-width: 450px){
+  .my-container {
+    min-width: 0px;
+  }
+}

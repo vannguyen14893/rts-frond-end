@@ -1,0 +1,350 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-content">
+    <div class="m-form__content" *ngIf="isUpdateSuccess">
+      <div class="m-alert m-alert--icon alert alert-success" id="m_form_1_msg" role="alert">
+        <div class="m-alert__icon">
+          <i class="la la-success"></i>
+        </div>
+        <div class="m-alert__text">
+          Update successfully!
+        </div>
+        <div class="m-alert__close">
+          <button aria-label="Close" class="close" data-close="alert" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="m-form__content" *ngIf="CloseSuccess">
+      <div class="m-alert m-alert--icon alert alert-success" id="m_form_1_msg" role="alert">
+        <div class="m-alert__icon">
+          <i class="la la-success"></i>
+        </div>
+        <div class="m-alert__text">
+          This request is closed
+        </div>
+        <div class="m-alert__close">
+          <button aria-label="Close" class="close" data-close="alert" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="m-portlet">
+      <form class="m-form m-form--label-align-right" [formGroup]="form">
+        <div class="m-portlet__body">
+          <div class="m-form__section m-form__section--first">
+            <div class="m-form__heading">
+              <h3 class="m-form__heading-title">
+                General information
+              </h3>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-12">
+                <label class="col-form-label required" for="title">
+                  Title
+                </label>
+                <div>
+                  <input required name="title" maxlength="255" class="form-control m-input" id="title" formControlName="title" JobTitle [readonly]="!canUpdate">
+                  <div *ngIf="title.invalid && (title.dirty || title.touched || isSubmitted)" class="error">
+                    <div *ngIf="title.errors.required">
+                      Title is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-md-2">
+                <label class="col-form-label required" for="position">
+                  Position
+                </label>
+                <div class="input-group">
+                  <select id="position" formControlName="position" class="form-control m-input">
+                    <option *ngFor="let item of allPositions" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                </div>
+
+                <div *ngIf="position.invalid && (position.dirty || position.touched || isSubmitted)" class="error">
+                  <div *ngIf="position.errors.required">
+                    Position is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label class="col-form-label required" for="department">
+                  Department
+                </label>
+                <div class="input-group">
+                  <select id="department" formControlName="department" class="form-control m-input">
+                    <option *ngFor="let item of listDepartment" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="department.invalid && (department.dirty || department.touched || isSubmitted)" class="error">
+                  <div *ngIf="department.errors.required">
+                    Department is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <label class="col-form-label required" for="number">
+                  Number
+                </label>
+                <div>
+                  <input required type="number" class="form-control m-input" id="number" formControlName="number" (ngModelChange)="numberChange($event)"
+                    OnlyNumber [readonly]="!canUpdate">
+                  <div class="error" *ngIf="(number.touched || isSubmitted) && number.invalid">
+                    <div *ngIf="number.errors.required">
+                      Number is required
+                    </div>
+                    <div *ngIf="number.errors.min">
+                      Min: 1
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <label class="col-form-label required" for="deadline">
+                  Deadline
+                </label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="deadline" formControlName="deadline" readonly ngbDatepicker #d2="ngbDatepicker" [minDate]="{year: 1900, month: 01, day: 01}">
+                  <div class="input-group-append" *ngIf="canUpdate">
+                    <button class="btn btn-outline-secondary my-btn-group" (click)="d2.toggle()" type="button" style="padding:4px;">
+                      <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="deadline.invalid && (deadline.dirty || deadline.touched || isSubmitted)" class="error">
+                  <div *ngIf="deadline.errors.required">
+                    Deadline is required.
+                  </div>
+                  <div *ngIf="deadline.errors.minDate">
+                    Deadline must be greater than today.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-md-2">
+                <label class="col-form-label required" for="project">
+                  Project
+                </label>
+                <div class="input-group">
+                  <select id="project" formControlName="project" class="form-control m-input">
+                    <option *ngFor="let item of allProjects" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="project.invalid && (project.dirty || project.touched || isSubmitted)" class="error">
+                  <div *ngIf="project.errors.required">
+                    Project is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="col-form-label required" for="group">
+                  Group
+                </label>
+                <div class="input-group">
+                  <select id="group" formControlName="group" class="form-control m-input">
+                    <option *ngFor="let item of listGroup" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="group.invalid && (group.dirty || group.touched || isSubmitted)" class="error">
+                  <div *ngIf="group.errors.required">
+                    Group is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="col-form-label required" for="recruitment-type">
+                  Request type
+                </label>
+                <div>
+                  <select id="recruitment-type" formControlName="recruitmentType" class="form-control m-input">
+                    <option *ngFor="let item of allRecruitmentTypes" value={{item?.id}}>
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                  <div *ngIf="recruitmentType.invalid && (recruitmentType.dirty || recruitmentType.touched || isSubmitted)" class="error">
+                    <div *ngIf="recruitmentType.errors.required">
+                      Request type is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <label class="col-form-label required" for="priority">
+                  Priority
+                </label>
+                <div>
+                  <select id="priority" formControlName="priority" class="form-control m-input">
+                    <option *ngFor="let item of allPrioritys" value={{item?.id}}>
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                  <div *ngIf="priority.invalid && (priority.dirty || priority.touched || isSubmitted)" class="error">
+                    <div *ngIf="priority.errors.required">
+                      Priority type is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="m-form__seperator m-form__seperator--dashed"></div>
+          <div class="m-form__section m-form__section--second">
+            <div class="m-form__heading">
+              <h3 class="m-form__heading-title">
+                Requirements
+              </h3>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-12">
+                <label for="skill" class="required">
+                  Skills
+                </label>
+                <div class="input-group my-skill" style="width: 100%;">
+                  <ng-select id="skill" [items]="allSkills" bindLabel="title" bindValue="id" [multiple]="true" maxSelectedItems=5 placeholder="Select skills"
+                    clearAllText="Clear" formControlName="skills">
+                  </ng-select>
+                </div>
+                <div *ngIf="skills.invalid && (skills.dirty || skills.touched || isSubmitted)" class="error">
+                  <div *ngIf="skills.errors.required">
+                    Skill is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+              <div class="col-12">
+                <label for="experience" class="required">
+                  Experience
+                </label>
+                <div class="input-group">
+                  <select id="experience" formControlName="experience" class="form-control m-input">
+                    <option *ngFor="let item of allExperiences" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="experience.invalid && (experience.dirty || experience.touched || isSubmitted)" class="error">
+                  <div *ngIf="experience.errors.required">
+                    Experience is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group m-form__group row">
+              <div class="col-12">
+                <label for="description" class="required">
+                  Description
+                </label>
+                <textarea required maxlength="3000" name="description" class="form-control m-input" id="description" rows="3" formControlName="description"
+                  [readonly]="!canUpdate"></textarea>
+                <div *ngIf="description.invalid && (description.dirty || description.touched || isSubmitted)" class="error">
+                  <div *ngIf="description.errors.required">
+                    Description is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+              <div class="col-12">
+                <label for="foreignLanguage">
+                  Foreign languages
+                </label>
+                <div class="input-group">
+                  <ng-select id="foreignLanguage" [items]="allForeignLanguages" bindLabel="title" bindValue="id" [multiple]="true" placeholder="Select foreign languages"
+                    clearAllText="Clear" formControlName="foreignLanguage">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="certificate">
+                Certificate
+              </label>
+              <input maxlength="255" class="form-control m-input" id="certificate" formControlName="certificate" [readonly]="!canUpdate">
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="major">
+                Major
+              </label>
+              <textarea maxlength="255" class="form-control m-input" id="major" rows="3" formControlName="major" [readonly]="!canUpdate"></textarea>
+            </div>
+
+            <div class="form-group m-form__group">
+              <label for="others">
+                Others
+              </label>
+              <textarea maxlength="3000" class="form-control m-input" id="others" rows="3" formControlName="others" [readonly]="!canUpdate"></textarea>
+            </div>
+          </div>
+          <div class="m-form__seperator m-form__seperator--dashed"></div>
+          <div class="m-form__section m-form__section--last">
+            <div class="m-form__heading">
+              <h3 class="m-form__heading-title">
+                Salary, benefit
+              </h3>
+            </div>
+            <div class="form-group m-form__group">
+              <label for="salary">
+                Salary
+              </label>
+              <input maxlength="255" class="form-control m-input" id="salary" formControlName="salary" [readonly]="!canUpdate">
+            </div>
+            <div class="form-group m-form__group">
+              <label for="benefit">
+                Benefit
+              </label>
+              <textarea maxlength="3000" class="form-control m-input" id="benefit" rows="3" formControlName="benefit" [readonly]="!canUpdate"></textarea>
+            </div>
+            <div class="form-group m-form__group">
+              <label for="benefit">
+                Rejected reason
+              </label>
+              <textarea maxlength="3000" class="form-control m-input" id="benefit" rows="3" formControlName="rejectReason" [readonly]="!canUpdate"></textarea>
+            </div>
+          </div>
+
+          <div class="row element-space">
+            <div class="col-12">
+              <app-request-log-list *ngIf="isUpdateLog" [urlRequestId]="urlRequestId"></app-request-log-list>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+          <div class="m-form__actions m-form__actions">
+            <button *ngIf="canClone && (isHrManager)" type="button" class="btn btn-primary" (click)="clone()">
+              Clone
+            </button>
+            <button *ngIf="canUpdate && (isDuLead || isHrManager || isGroupLead)" type="button" class="btn btn-primary" (click)="onUpdate()">
+              Update
+            </button>
+            <button *ngIf="canUpdate" type="button" class="btn btn-warning" (click)="onReset()">
+              Reset
+            </button>
+            <!-- <button *ngIf="canClose && (isGroupLead || isDuLead || isHrManager)" type="button" class="btn btn-danger" (click)="close('request')">
+              Close
+            </button> -->
+            <button *ngIf="canUpdate" type="button" class="btn btn-secondary" (click)="onCancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <div class="m-content">
+    <div class="row">
+      <div class="col-12">
+        <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                  <span>Report DU</span>
+                </h3>
+              </div>
+            </div>
+            <div class="m-portlet__head-tools">
+              <button type="submit" class="btn btn-success m-btn--icon m-btn--air" (click)="dowloadDuReport()">
+                <span>
+                  <i class="la la-plus"></i>
+                  <span>
+                    Export excel
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+              <div class="row align-items-center">
+                <!-- FILTER -->
+                <div class="col-md-12 col-lg-9">
+                    <div class="form-group m-form__group row align-items-center">
+                      <div class="col-md-6 col-lg-3">
+                        <div class="form-group m-form__group">
+                          <select class="form-control m-input" (change)="onChange()" [(ngModel)]="year"> <!-- Remove [(ngModel)]="year" -->
+                            <option value="">Select year</option>
+                            <option *ngFor="let year of listYear" [value]="year">
+                              {{ year }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <!-- END::FILTER -->
+              </div>
+            </div>
+            <div class="m-section">
+              <div class="m-section__content">
+                <!-- TABLE *ngIf="listReport?.length <0" -->
+                <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">#</th>
+                      <th rowspan="2" colspan="2">Posititon</th>
+                      <th colspan="2" class="col_group_month">April</th>
+                      <th colspan="2" class="col_group_month">May</th>
+                      <th colspan="2" class="col_group_month">June</th>
+                      <th colspan="2" class="col_group_month">July</th>
+                      <th colspan="2" class="col_group_month">August</th>
+                      <th colspan="2" class="col_group_month">September</th>
+                      <th colspan="2" class="col_group_month">October</th>
+                      <th colspan="2" class="col_group_month">November</th>
+                      <th colspan="2" class="col_group_month">December</th>
+                      <th colspan="2" class="col_group_month">January</th>
+                      <th colspan="2" class="col_group_month">February</th>
+                      <th colspan="2" class="col_group_month">March</th>
+                      <th rowspan="2" class="col_group_month">Total</th>
+                    </tr>
+                    <tr>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                      <th>New</th>
+                      <th>TT</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let item of listReport; let i = index; let a = last;" [ngClass]="{'group': !item.department }">
+                      <!-- TODO: check là 2 dòng cuối đổi màu. [ngClass]="{'group': !item.department }"-->
+                      <td>{{ i + 1 }}</td>
+                      <td class="cell_position" [ngClass]="{'hiden_group': item.department }">{{ item.group }}</td>
+                      <td class="cell_department">{{ item.department }}</td>
+                      <td> {{ item?.statisticMonth[0].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[0].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[1].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[1].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[2].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[2].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[3].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[3].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[4].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[4].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[5].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[5].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[6].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[6].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[7].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[7].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[8].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[8].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[9].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[9].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[10].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[10].numberOfTT }} </td>
+                      <td> {{ item?.statisticMonth[11].numberOfNew }} </td>
+                      <td> {{ item?.statisticMonth[11].numberOfTT }} </td>
+                      <td>{{ item.total }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- END::TABLE -->
+
+                <!-- SHOW MESSAGE ERROR -->
+                <div *ngIf="resultMessage.length > 0" class="align-center">
+                  <p>{{ resultMessage }}</p>
+                </div>
+                <!-- END::SHOW MESSAGE -->
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

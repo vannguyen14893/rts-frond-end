@@ -1,0 +1,182 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <!-- BEGIN: Subheader -->
+    <div class="m-content">
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">
+                {{currentUser?.departmentId?.title}}
+                <span> Department</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <form class="m-form m-form--label-align-right" [formGroup]="form">
+          <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Job title and department info
+                </h3>
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-12">
+                  <label class="col-form-label" for="title">
+                    Title*:
+                  </label>
+                  <div>
+                    <input readonly class="form-control m-input" id="title" formControlName="title">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-md-5">
+                  <label class="col-form-label" for="position">
+                    Position*:
+                  </label>
+                  <div>
+                    <input readonly id="position" formControlName="position" class="form-control m-input">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <label class="col-form-label" for="number">
+                    Number*:
+                  </label>
+                  <div>
+                    <input readonly class="form-control m-input" id="number" type="number" formControlName="number"
+                      OnlyNumber>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <label class="col-form-label" for="deadline">
+                    Deadline*:
+                  </label>
+                  <div>
+                    <input readonly class="form-control m-input" id="deadline" formControlName="deadline">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <div class="col-md-5">
+                  <label class="col-form-label" for="project">
+                    Project*:
+                  </label>
+                  <div>
+                    <input readonly id="project" formControlName="project" class="form-control m-input">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <label class="col-form-label" for="recruitment-type">
+                    Request type*:
+                  </label>
+                  <div>
+                    <input readonly id="recruitment-type" formControlName="recruitmentType" class="form-control m-input">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <label class="col-form-label" for="priority">
+                    Priority*:
+                  </label>
+                  <div>
+                    <input readonly id="priority" formControlName="priority" class="form-control m-input">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="m-form__section m-form__section--second">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Requirements
+                </h3>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="skill">
+                  Skills*:
+                </label>
+                <div>
+                  <ng-select [clearable]="false" id="skill" [items]="allSkills" bindLabel="title" bindValue="id" [multiple]="true" placeholder="Select skills"
+                    clearAllText="Clear" formControlName="skills" class="custom" [searchable]="false">
+                  </ng-select>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="experience">
+                  Experience*:
+                </label>
+                <input readonly id="experience" formControlName="experience" class="form-control m-input">
+              </div>
+              <div class="form-group m-form__group">
+                <label for="description">
+                  Description*:
+                </label>
+                <textarea readonly class="form-control m-input" id="description" rows="3" formControlName="description"></textarea>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="foreignLanguage">
+                  Foreign languages:
+                </label>
+                <div>
+                  <ng-select [clearable]="false" id="foreignLanguage" [items]="allForeignLanguages" bindLabel="title" bindValue="id" [multiple]="true"
+                    placeholder="Select foreign languages" clearAllText="Clear" formControlName="foreignLanguage" class="custom"
+                    [searchable]="false">
+                  </ng-select>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="certificate">
+                  Certificate
+                </label>
+                <input readonly class="form-control m-input" id="certificate" formControlName="certificate">
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="major">
+                  Major
+                </label>
+                <textarea readonly class="form-control m-input" id="major" rows="3" formControlName="major"></textarea>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="others">
+                  Others
+                </label>
+                <textarea readonly class="form-control m-input" id="others" rows="3" formControlName="others"></textarea>
+              </div>
+            </div>
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="m-form__section m-form__section--last">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Salary, benefit
+                </h3>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="salary">
+                  Salary
+                </label>
+                <input readonly class="form-control m-input" id="salary" formControlName="salary">
+              </div>
+              <div class="form-group m-form__group">
+                <label for="benefit">
+                  Benefit
+                </label>
+                <textarea readonly class="form-control m-input" id="benefit" rows="3" formControlName="benefit"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+              <button type="button" (click)="onCancel()" class="btn btn-secondary">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

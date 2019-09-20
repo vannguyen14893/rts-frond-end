@@ -1,0 +1,62 @@
+/* @import '../../../../../styles/design/_variables.scss'; */
+#header {
+    width: 100%;
+    border-bottom: 1px solid #a7a9ac;
+    background-color: #fff;
+    padding: 0 15px;
+    /* color: #fff; */
+}
+
+.m-brand__logo-wrapper  h3{
+    color: #fff;
+    text-align: left;
+    margin: 3.3% 0 0 5%;
+    float: left;
+}
+.m-brand__logo-wrapper  img{
+  width: 99px;
+  height: 100%;
+  float: left;
+  margin-left: 3px;
+}
+
+@media screen and (max-width: 992px) {
+    .m-brand__logo-wrapper  h3{
+      margin: 15px 0 0 15px;
+      font-size: 2.2rem;
+    }
+    .m-brand__logo-wrapper  img{
+      width: 120px;
+      margin-left: 0px;
+    }
+}
+
+@media screen and (min-width: 993px) {
+    .m-brand__tools {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 345px) {
+  .m-brand .m-brand__logo .m-brand__logo-wrapper {
+    width: 150%;
+  }
+}
+
+@media screen and (max-width: 1030px) {
+    #header{
+        font-size: 120%;
+    }
+}
+/* .centeruppercase {
+    text-align: center;
+} */
+.right {
+    text-align: right;
+}
+/* .logo-header {
+    width: 15%;
+} */
+.paddingFirst:hover {
+    cursor: pointer;
+}

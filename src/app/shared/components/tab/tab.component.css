@@ -1,0 +1,57 @@
+.my-tab-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  margin-top: 20px;
+}
+.my-tab-content {
+  /* border: 1px solid rgba(0, 0, 0, 0.125); */
+  border-top: none;
+  background-color: #fafbfc;
+  border-radius: 0px 0px 3px 3px;
+}
+.my-tab {
+  color: #9b9b9b;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.my-tab p {
+  margin-bottom: 10px;
+}
+.my-tab:hover {
+  cursor: pointer;
+}
+.my-tab.inactive .name {
+  font-size: 16px;
+  color: #9b9b9b;
+}
+.my-tab.active .name {
+  font-size: 16px;
+  color: #131313;
+  font-weight: 400;
+}
+.my-tab.active {
+  border-bottom: solid 2px #1434f7;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 836px) {
+  .my-tab.active .name {
+    font-size: 14px;
+  }
+  .my-tab.inactive .name {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .my-tab-container {
+    padding-right: 0px;
+  }
+  .wrap-my-tab-content {
+    padding-right: 0px;
+  }
+}

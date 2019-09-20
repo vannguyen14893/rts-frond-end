@@ -1,0 +1,20 @@
+<app-modal [header]="'Reject request'">
+  <div body>
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="reason" class="required">Reason</label>
+        <div class="row">
+          <div class="col-12">
+            <textarea formControlName="reason" id="rejectReason" class="form-control m-input" rows="3" autofocus></textarea>
+            <div class="error" *ngIf="reason.touched && reason.invalid">Please leave a reason.</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group margin-top-20">
+        <button type="button" class="btn btn-primary" (click)="reject()" [disabled]="form.invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</app-modal>

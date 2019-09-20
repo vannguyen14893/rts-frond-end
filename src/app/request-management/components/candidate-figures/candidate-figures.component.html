@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-12">
+    <app-avatar class="overlay" src="./assets/app/media/img/misc/user-avatar-default.jpg" size="120px" isRounded="true" *ngIf="!currentRequestAssignee?.assignee?.avatarUrl"></app-avatar>
+    <app-avatar class="overlay" src="{{ currentRequestAssignee?.assignee?.avatarUrl | resourceStatic}}" size="120px" isRounded="true"
+      *ngIf="currentRequestAssignee?.assignee?.avatarUrl"></app-avatar>
+    <!-- assignee dropdown -->
+    <div class="candidate-figure-bar">
+      <div (click)="toggleDropdownMenu()" class="candidate-switch__left">
+        <div>
+          <p class="candidate-switch__name">{{ ((currentRequestAssigneeId$ | async) === 0 ? 'This request' : currentRequestAssignee?.assignee?.fullName) |
+            uppercase }}</p>
+        </div>
+        <div *ngIf="!hrMember">
+          <div class="candidate-switch__right">
+            <i class="la la-caret-down"></i>
+          </div>
+          <div class="my-dropdown-content" [ngClass]="{ show: showDropdownMenu }">
+            <ul>
+              <li (click)="selectRequestAssignee(0)">
+                <div class="candidate-switch no-border">
+                  <app-avatar class="dropdown-content_avatar" size="m" isRounded="true"></app-avatar>
+                  <p class="dropdown-content_name">{{ 'This request' | uppercase }}</p>
+                </div>
+              </li>
+              <li *ngFor="let requestAssignee of currentRequest?.requestAssignee" (click)="selectRequestAssignee(requestAssignee.id)">
+                <div class="candidate-switch no-border">
+                  <app-avatar class="dropdown-content_avatar" size="m" src="{{ requestAssignee?.assignee?.avatarUrl | resourceStatic}}" isRounded="true"></app-avatar>
+                  <p class="dropdown-content_name">{{ requestAssignee?.assignee?.fullName | uppercase }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end::assignee dropdown -->
+      <!-- figures list -->
+      <ul class="figures">
+        <li (click)="selectStatus('target')">
+          <app-candidate-status-figure class="color-target" number="{{ (currentRequestAssigneeId$ | async) === 0 ? currentRequest?.number : currentRequestAssignee?.numberOfCandidate }}"
+            [text]="target"></app-candidate-status-figure>
+        </li>
+        <li (click)="selectStatus('applied')" [ngClass]="{ selected: (currentCandidateStatus$ | async) === applied}">
+          <app-candidate-status-figure class="color-target" number="{{ currentAppliedCandidateIds$ | async | length }}" text="Applied" [selected]="(currentCandidateStatus$ | async) === applied"></app-candidate-status-figure>
+        </li>
+        <li (click)="selectStatus('contacting')" [ngClass]="{ selected: (currentCandidateStatus$ | async) === contacting}">
+          <app-candidate-status-figure class="color-contacting" number="{{ currentContactingCandidateIds$ | async | length }}" [text]="contacting" [selected]="(currentCandidateStatus$ | async) === contacting"></app-candidate-status-figure>
+        </li>
+        <li (click)="selectStatus('interview')" [ngClass]="{ selected: (currentCandidateStatus$ | async) === interview }">
+          <app-candidate-status-figure class="color-interview" number="{{ currentInterviewCandidateIds$ | async | length }}" [text]="interview" [selected]="(currentCandidateStatus$ | async) === interview"></app-candidate-status-figure>
+        </li>
+        <li (click)="selectStatus('offer')" [ngClass]="{ selected: (currentCandidateStatus$ | async) === offer }">
+          <app-candidate-status-figure class="color-offer" number="{{ currentOfferCandidateIds$ | async | length }}" [text]="offer" [selected]="(currentCandidateStatus$ | async) === offer"></app-candidate-status-figure>
+        </li>
+        <li (click)="selectStatus('onboard')" [ngClass]="{ selected: (currentCandidateStatus$ | async) === onboard }">
+          <app-candidate-status-figure class="color-onboard" number="{{ currentOnboardCandidateIds$ | async | length }}" [text]="onboard" [selected]="(currentCandidateStatus$ | async) === onboard"></app-candidate-status-figure>
+        </li>
+      </ul>
+
+      <!-- end::figures list -->
+
+    </div>
+  </div>
+</div>

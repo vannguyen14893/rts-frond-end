@@ -1,0 +1,42 @@
+<!-- <p>
+  create works!
+</p>\ -->
+<div class="text-center main_page">
+  <form class="form-signin" [formGroup]="globalAccountForm" (ngSubmit)="onSubmit()">
+    <div class="container" *ngIf="response.isSuccess">
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true" (click)="onResetResponse()"></button>
+        <strong>{{response.message}}</strong>
+      </div>
+    </div>
+    <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+    <h1 class="h3 mb-3 font-weight-normal">Please enter name, password and base url</h1>
+    <label for="inputName" class="sr-only">Name</label>
+    <input type="text" id="inputName" class="form-control" placeholder="Name" formControlName="name">
+    <div class="error-no-padding" *ngIf="name.touched && name.invalid">
+      <div *ngIf="name.hasError('required') || name.hasError('notEmpty')">
+        Name is required.
+      </div>
+    </div>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="pass">
+    <div class="error-no-padding" *ngIf="pass.touched && pass.invalid">
+      <div *ngIf="pass.hasError('required') || pass.hasError('notEmpty')">
+        Pass is required.
+      </div>
+    </div>
+    <label for="inputBaseUrl" class="sr-only">Base Url</label>
+    <input type="text" id="inputBaseUrl" class="form-control" placeholder="Base Url" formControlName="baseUrl">
+    <div class="error-no-padding" *ngIf="baseUrl.touched && baseUrl.invalid">
+      <div *ngIf="baseUrl.hasError('required') || baseUrl.hasError('notEmpty')">
+        Base Url is required.
+      </div>
+    </div>
+    <!-- <div class="checkbox mb-3"> -->
+    <!-- <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label> -->
+    <!-- </div> -->
+    <button class="btn btn-lg btn-primary btn-block mt-3" [disabled]="response.isSubmitting" type="submit">Submit</button>
+  </form>
+</div>

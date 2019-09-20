@@ -1,0 +1,13 @@
+[readonly]:focus {
+  border: 1px solid rgba(0, 0, 0, 0.075);
+}
+[readonly] {
+  background-color: #f4f5f8;
+}
+ng-select {
+  width: 100%;
+  border-color: rgba(0, 0, 0, 0.075);
+}
+.element-space {
+  margin-top: 20px;
+}

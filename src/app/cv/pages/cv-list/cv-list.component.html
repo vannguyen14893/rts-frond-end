@@ -1,0 +1,248 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          CV
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="#" class="m-nav__link" (click)="navCvList()">
+              <span class="m-nav__link-text">
+                CV
+              </span>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="#" class="m-nav__link">
+              <span class="m-nav__link-text" (click)="navCvList()">
+                List
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content">
+
+    <div class="m-portlet">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text" ngbTooltip="{{ currentUser?.departmentId?.title }}" placement="top">
+              {{ currentUser?.departmentId?.title | summary: 50 }}
+              <!-- <span> Department</span> -->
+            </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools">
+          <button type="submit" class="btn btn-success m-btn--icon m-btn--air" (click)="navCvCreate()">
+            <span>
+              <i class="la la-plus"></i>
+              <span>
+                New CV
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="m-portlet__body">
+        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+          <div class="row align-items-center">
+            <!-- FILTER -->
+            <div class="col-md-12 col-lg-9">
+              <form #filterForm="ngForm">
+                <div class="form-group m-form__group row align-items-center">
+                  <div class="col-lg-10">
+                    <div class="row">
+                      <div class="col-md-6 col-lg-3">
+                        <select class="form-control m-input" ngModel name="skillId">
+                          <option value="">All Skill</option>
+                          <option *ngFor="let skill of skills" value="{{ skill?.id }}">
+                            {{ skill?.title | summary: 20 }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                        <select ngModel name="experienceId" class="form-control m-input">
+                          <option value="">All Eexperience</option>
+                          <option *ngFor="let exp of experiences" value="{{ exp?.id }}">
+                            {{ exp?.title | summary: 20 }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                        <select ngModel name="requestId" class="form-control m-input">
+                          <option value="">All Request</option>
+                          <option *ngFor="let request of requests" value="{{ request.id }}" ngbTooltip="{{ request?.title }}" placement="top">
+                            {{ request?.title | summary: 20 }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                        <select ngModel name="statusId" class="form-control m-input">
+                          <option value="">All Status</option>
+                          <option *ngFor="let status of cvStatuss" value="{{ status.id }}">
+                            {{ status?.title | summary: 20 }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2">
+                    <div class="row">
+                      <div class="col-md-6 col-lg-12">
+                        <a class="btn btn-info m-btn m-btn--icon" href="#" ng-reflect-href="#" (click)="filter(filterForm)">
+                          <!-- <a class="btn btn-info m-btn m-btn--icon" href="#"> -->
+                          <span>
+                            <i class="la la-filter"></i>
+                            <span>
+                              Filter
+                            </span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- END::FILTER -->
+            <!-- SEARCH -->
+            <div class="col-md-12 col-lg-3">
+              <div class="m-input-icon m-input-icon--left">
+                <input ngModel #title="ngModel" name="title" class="form-control m-input" placeholder="Search name, email, phone..." type="text"
+                  (keyup.enter)="search(title.value)" appCvSearchBox [maxLength]="255">
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                  <span>
+                    <i class="la la-search"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <!-- END::SEARCH -->
+          </div>
+        </div>
+
+        <div class="m-section">
+          <div class="m-section__content">
+            <!-- TABLE -->
+            <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th sortable-column="fullName">Name</th>
+                  <th>Status</th>
+                  <th sortable-column="dob">Date of birth</th>
+                  <th>Skills</th>
+                  <th sortable-column="email">Email</th>
+                  <th>Experience</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody *ngIf="cvs && cvs.length > 0">
+                <tr *ngFor="let cv of cvs; let i = index;">
+                  <th scope="row">{{ requestPage?.size * requestPage?.number + i + 1 }}</th>
+                  <td>
+                    <a (click)="viewCvDetail(cv)" href="#">
+                      <span placement="top" ngbTooltip="{{ cv?.fullName }}">
+                        {{ cv?.fullName | summary: 20 }}
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <span placement="top" ngbTooltip="{{ cv?.statusId.title }}">
+                      {{ cv?.statusId.title | summary: 20}}
+                    </span>
+                  </td>
+                  <td>{{ cv?.dob }}</td>
+                  <td>
+                    <span *ngFor="let skill of cv.skillCollection" style="margin-left: 1%">
+                      <a href="#">
+                        {{ skill?.title | summary: 20 }}
+                      </a>
+                    </span>
+                  </td>
+                  <td>
+                    <span placement="top" ngbTooltip="{{ cv?.email }}">
+                      {{ cv?.email | summary: 20 }}
+                    </span>
+                  </td>
+                  <td>
+                    <span placement="top" ngbTooltip="{{ cv?.experienceId?.title }}">
+                      {{ cv?.experienceId?.title | summary: 20 }}
+                    </span>
+                  </td>
+                  <td>
+                    <a href="javascript: void(0);" (click)="viewCvDetail(cv)">
+                      <i class="la la-edit" placement="top" ngbTooltip="Update CV"></i>
+                    </a>
+                    <a href="javascript: void(0);" (click)="makeCandidate(cv?.id)">
+                      <i class="la la-user-plus" placement="top" ngbTooltip="Make candidate"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- END::TABLE -->
+
+            <!-- SHOW MESSAGE -->
+            <div *ngIf="resultMessage?.length > 0" class="align-center">
+              <div class="align-center">
+                <p>{{ resultMessage }}</p>
+              </div>
+            </div>
+            <!-- END::SHOW MESSAGE -->
+
+            <!-- PAGINATION -->
+            <div class="row align-items-end" *ngIf="requestPage?.totalElements > 0">
+              <div class="col-12">
+                <div class="float-right">
+                  <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                    <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first">
+                      <i class="la la-angle-double-left"></i>
+                    </button>
+                    <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first">
+                      <i class="la la-angle-left"></i>
+                    </button>
+                  </div>
+                  <div class="pagination__page-number">
+                    <p>Page {{ (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages
+                      }}
+                    </p>
+                  </div>
+                  <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                    <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last">
+                      <i class="la la-angle-right"></i>
+                    </button>
+                    <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last">
+                      <i class="la la-angle-double-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END::PAGINATION -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

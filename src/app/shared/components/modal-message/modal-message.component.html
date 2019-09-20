@@ -1,0 +1,24 @@
+<!-- BEGIN::CREATE DEPARTMENT MODAL -->
+<div class="modal fade" id="modal_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div [ngClass]="sizeClass" role="document">
+    <div>
+      <div [ngClass]="contextClass" role="alert">
+        <div class="m-alert__icon">
+          <i class="la la-warning"></i>
+        </div>
+        <div class="m-alert__text">
+          <strong>
+            {{ message.type  + ' !' | uppercase }}
+          </strong>
+          {{ message.message }}
+        </div>
+        <div class="m-alert__actions" style="width: 200px;">
+          <button class="btn btn-primary btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="closeModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END::CREATE DEPARTMENT MODAL -->

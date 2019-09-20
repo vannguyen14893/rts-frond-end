@@ -1,0 +1,18 @@
+<div class="candidate-card">
+  <app-avatar src="{{ candidate?.cvId?.profileImg | resourcePublic }}" size='x'></app-avatar>
+  <div class="candidate-info">
+    <p class="full-name"> <span class="show-full-name">{{ candidate?.cvId?.fullName }}</span> <span *ngIf = "candidate?.cvId?.experienceId?.title" class="experience">{{ candidate?.cvId?.experienceId?.title }}</span></p>
+    <p class="title"> <span class="title-tag">{{ candidate?.title }}</span> <span *ngIf = "candidate?.source" class="source"> + {{candidate?.source}}</span></p>
+    <div class="social">
+        <a target="_blank" href="https://www.facebook.com/{{candidate?.cvId?.facebook}}" *ngIf="candidate?.cvId?.facebook">
+          <i class="la la-facebook-square" title="{{candidate?.cvId?.facebook}}" ngbTooltip="{{candidate?.cvId?.facebook}}"></i>
+        </a>
+        <a target="_blank" href="https://www.linkedin.com/" *ngIf="candidate?.cvId?.linkedin">
+          <i class="la la-linkedin-square" title="{{candidate?.cvId?.linkedin}}" ngbTooltip="{{candidate?.cvId?.linkedin}}"></i>
+        </a>
+        <a target="_blank" href="https://www.skype.com/" *ngIf="candidate?.cvId?.skype">
+          <i class="la la-skype" title="{{candidate?.cvId?.skype}}" ngbTooltip="{{candidate?.cvId?.skype}}"></i>
+        </a>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,294 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+html body {
+    height: 100%;
+}
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 350;
+    margin: 0;
+    overflow: auto;
+}
+
+#m_aside_left {
+    /* min-height: 100%; */
+}
+
+app-aside-nav {
+    height: 100%;
+}
+
+#m_ver_menu {
+    height: 100%;
+}
+
+#m_ver_menu>ul {
+    height: 100%;
+}
+
+.brand-name {
+    color: rgb(213, 214, 224);
+    text-align: center;
+    font-family: Poppins !important;
+    font-weight: 300;
+}
+
+.version-info {
+    font-size: 8pt;
+    float: right;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+a:hover {
+    text-decoration: none;
+}
+.pointer:hover {
+    cursor: pointer !important;
+}
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+
+
+/* END OF THIEN STYLES */
+
+
+/* LOGIN PAGE */
+
+.login-logo {
+    /* height: 65px; */
+}
+
+
+/* END::LOGIN PAGE */
+
+.pagination__page-number {
+    display: inline-flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: bottom;
+}
+
+.pagination__page-number>p {
+    margin-bottom: 0.25rem !important;
+}
+
+.float-right {
+    float: right
+}
+
+.align-center {
+    display: flex;
+    padding-top: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* REQUEST LIST */
+
+.skill-list {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 80px;
+    display: block;
+}
+
+ul.skill-list li {
+    display: inline-block;
+}
+
+ul.skill-list li:not(:first-child)::before {
+    content: ' ,';
+}
+
+
+/* END:: REQUEST LIST */
+
+.error {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  font-size: 0.8rem;
+  color: indianred;
+  padding-left: 15px;
+}
+.error-no-padding {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    font-size: 0.8rem;
+    color: indianred;
+}
+
+.no-border-left {
+    border-left: 0px;
+}
+
+
+/* END::REQUEST LIST */
+
+
+/* FOR ALL THE TABLE */
+
+th:hover {
+    cursor: pointer;
+}
+/* END::ALL THE TABLE */
+
+/* Align time picker text to center */
+ngb-timepicker  input {
+  padding-left: 1.2rem !important;
+}
+/* END: align time picker text to center */
+
+
+/* END::ALL THE TABLE */
+.required::after {
+    content: '*';
+    color: red;
+}
+
+[disabled] {
+    cursor: not-allowed;
+}
+
+/* Styles for actions icons */
+.actions {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+}
+.actions li {
+    display: inline-block;
+}
+.actions li:hover {
+    cursor: pointer;
+}
+.la-edit {
+    color: green;
+}
+.la-trash {
+    color: red;
+}
+.la-check {
+    color: #36a3f7;
+}
+
+
+
+/* Input group for cv-create */
+.input-group-prepend {
+    background-color: #f4f5f8;
+    border: 1px solid #ebedf2;
+    border-right: 0;
+    color: #575962;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.input-group-text {
+    font-size: 1.5rem;
+}
+/* End::Input group for cv-create */
+.ng-select-custom {
+    width: calc(100% - 54.2px);
+}
+.ng-select-custom .ng-control {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+.margin-top-15 {
+    margin-top: 15px;
+}
+.margin-top-20 {
+    margin-top: 20px;
+}
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+/* scroll bar */
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 6px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.125); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(0,0,0,0.125); 
+}
+/* end::scroll bar */
+
+/* Mouse styles */
+.rts-action:hover {
+    cursor: pointer;
+}
+.rts-action:active {
+    cursor: default;
+}
+/* end::Mouse styles */
+/* Interview tab */
+.rts-tab-header {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  justify-content: flex-start;
+  overflow-x: auto;
+}
+/* .rts-tab-header::-webkit-scrollbar { 
+    /* Hidden scrollbar
+    display: none;
+} */
+.rts-tab-header:hover {
+  cursor: pointer;
+}
+.rts-tab-content {
+  width: 100%;
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+  background: #fafbfc;
+  padding-top: 20px;
+  padding-bottom: 10px
+}
+/* end::Interview tab */

@@ -1,0 +1,104 @@
+.candidate-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: 22px;
+}
+.candidate-info {
+  padding-left: 22px;
+}
+p {
+  margin: 0;
+  padding: 0;
+  line-height: 1rem;
+  padding-bottom: 4px;
+}
+.full-name {
+  font-size: 28px;
+  font-weight: 500;
+  padding-top: 5px;
+  color: #04143a;
+  line-height: 1.5rem;
+}
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 6px;
+  color: #7ED321;
+  float: left;
+  line-height: 25px;
+}
+.title-tag {
+  border-radius: 1px;
+  background-color: transparent;
+  padding: 3px 5px;
+  display: block;
+  float: left;
+  margin-right: 6px;
+}
+.source {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4a4a4a;
+  border-radius: 1px;
+  background-color: transparent;
+  padding: 3px;
+  line-height: 25px;
+  display: block;
+  float: left;
+}
+.show-full-name {
+  float: left;
+  padding: 5px;
+  line-height: 30px;
+}
+.experience {
+  font-size: 16px;
+  border-radius: 2px;
+  margin: 5px 5px 10px;
+  padding: 4px;
+  color: #4A90E2;
+  background-color: #4a90e240;
+  float: left;
+}
+.social {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: 100%;
+}
+.la {
+  font-size: 2.5rem;
+}
+.la:hover {
+  cursor: pointer;
+}
+.la:first-child {
+  margin-left: 0;
+}
+.la-facebook-square {
+  color: rgb(59, 89, 152);
+}
+.la-linkedin-square {
+  color: rgb(0, 119, 181);
+}
+.la-skype {
+  color: rgb(0, 175, 240);
+}
+
+@media only screen and (min-width: 550px) and (max-width: 767px) {
+  .experience {
+    margin-top: 3.3%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .full-name {
+    font-size: 25px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .show-full-name {
+    padding: 12px 4px;
+  }
+}

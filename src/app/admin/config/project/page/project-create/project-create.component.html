@@ -1,0 +1,38 @@
+<form [formGroup]="formProject" (ngSubmit)="onSubmit()">
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Title
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="title" maxlength="255" placeholder="Enter project's title">
+        <div class="error-no-padding" *ngIf="title.touched && title.invalid">
+          <div *ngIf="title.hasError('required') || title.hasError('notEmpty')">
+            Title is required.
+          </div>
+          <div *ngIf="title.hasError('shouldBeUnique')">
+            Title should be unique.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row" style="margin-top:4%">
+    <label class="col-form-label col-lg-3 col-sm-12">
+      Description
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <textarea type="text" class="form-control m-input" row="4" formControlName="description" maxlength="255" placeholder="Enter project's description"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="float-right">
+    <button type="submit" [disabled]="title.invalid" class="btn btn-primary">
+      Create
+    </button>
+    <button type="button" class="btn" (click)="onCancel()" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

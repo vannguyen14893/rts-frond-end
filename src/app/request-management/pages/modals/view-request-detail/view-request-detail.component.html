@@ -1,0 +1,8 @@
+<ng-template #modal let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <app-request-management-detail></app-request-management-detail>
+  </div>
+</ng-template>

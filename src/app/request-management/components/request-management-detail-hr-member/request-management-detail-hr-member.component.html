@@ -1,0 +1,708 @@
+<!-- requests can update by dulead  -->
+<div *ngIf="isCanUpdate()" class="m-grid__item m-grid__item--fluid m-wrapper">
+    <!-- BEGIN: Subheader -->
+    <div class="m-content">
+      <div class="m-form__content" *ngIf="isUpdateSuccess">
+        <div class="m-alert m-alert--icon alert alert-success" id="m_form_1_msg" role="alert">
+          <div class="m-alert__icon">
+            <i class="la la-success"></i>
+          </div>
+          <div class="m-alert__text">
+            Updated successfully!
+          </div>
+          <div class="m-alert__close">
+            <button aria-label="Close" class="close" data-close="alert" type="button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                Request detail
+              </h3>
+            </div>
+          </div>
+  
+          <div *ngIf="isHrManager" class="m-portlet__head-caption">
+            <div class="row grid-demo">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-3"></div>
+              <div class="col-lg-3">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="margin-left: 100px;
+                      padding-top: 7px;
+                      height: 40px;">Assign HR Member
+                </button>
+              </div>
+              <div class="col-lg-3">
+                <button *ngIf="displayButtonClose()" type="button" class="btn btn-danger" data-toggle="modal" data-target="#CloseModal" style="margin-left: 100px;
+                      padding-top: 7px;
+                      height: 40px; float: right;">Close</button>
+              </div>
+            </div>
+  
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form class="m-form m-form--label-align-right" [formGroup]="form2">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <button *ngIf="!btnNewModalIsDisabled()" (click)="addItem()" _ngcontent-c6="" class="btn btn-success m-btn--icon m-btn--air"
+                        type="button">
+                        <span _ngcontent-c6="">
+                          <i _ngcontent-c6="" class="la la-plus"></i>
+                          <span _ngcontent-c6="">
+                            New
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row grid-demo">
+                        <div formArrayName="items" *ngFor="let item of form2.get('items').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-group m-form__group row" style="margin-bottom: 12px; ">
+                            <label class="col-lg-2 col-form-label">
+                              Assignee
+                            </label>
+                            <div class="col-lg-4">
+                              <select (ngModelChange)="reqAssigneeModalChange($event, i)" formControlName="requestAssignee" required class="form-control m-input">
+                                <!-- <div *ngFor="let listHr of allHrMemberComboBox"> -->
+                                <option *ngFor="let item of allHrMemberComboBox[i]" value={{item?.id}}>
+                                  {{ item?.fullName | summary: 30 }}
+                                </option>
+                                <!-- </div> -->
+                              </select>
+                              <div *ngIf="form2.controls.items.controls[i].controls.requestAssignee.invalid
+                                                           && (form2.controls.items.controls[i].controls.requestAssignee.dirty
+                                                              || form2.controls.items.controls[i].controls.requestAssignee.touched)"
+                                class="error">
+                                <div *ngIf="form2.controls.items.controls[i].controls.requestAssignee.errors.required">
+                                  Assignee is required.
+                                </div>
+                              </div>
+                            </div>
+                            <label class="col-lg-2 col-form-label">
+                              Number:
+                            </label>
+                            <div class="col-lg-2">
+                              <input OnlyNumber formControlName="number" required type="number" class="form-control m-input" (ngModelChange)="numberModalChange($event, i)">
+                              <div *ngIf="form2.controls.items.controls[i].controls.number.invalid
+                                                          && (form2.controls.items.controls[i].controls.number.dirty
+                                                             || form2.controls.items.controls[i].controls.number.touched)"
+                                class="error">
+                                <div *ngIf="form2.controls.items.controls[i].controls.number.errors.required">
+                                  Number is required.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-2" style="text-align: center;">
+                              <!-- <button > -->
+                              <i (click)="deleteItem(i)" class="la la-trash-o" style="font-size: 40px; cursor: pointer;"></i>
+                              <!-- </button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer ">
+                      <button [disabled]="form2.invalid" type="submit" (click)="onModalSubmit()" class="btn btn-success" data-dismiss="modal">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Modal -->
+          <div class="modal fade" id="CloseModal" role="dialog">
+            <div class="modal-dialog">
+  
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure close this request?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" type="submit" (click)="onModalClose()" class="btn btn-default" data-dismiss="modal">Yes</button>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+  
+        </div>
+        <form *ngIf="isCanUpdate()" class="m-form m-form--label-align-right" [formGroup]="form" (ngSubmit)="onUpdate()">
+          <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Job title and department info
+                </h3>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label"> Status: </label>
+                <label class="col-lg-3 col-form-label" style="text-align:left;"> {{request?.requestStatusId?.title}} </label>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label" for="title">
+                  Title:
+                </label>
+                <div class="col-lg-11">
+                  <input required name="title" maxlength="100" class="form-control m-input" id="title" formControlName="title">
+                  <div *ngIf="title.invalid && (title.dirty || title.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="title.errors.required">
+                      Title is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label" for="position">
+                  Position:
+                </label>
+                <div class="col-lg-3">
+                  <select id="position" formControlName="position" class="form-control m-input">
+                    <option *ngFor="let item of allPositions" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                  <div *ngIf="position.invalid && (position.dirty || position.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="position.errors.required">
+                      Position is required.
+                    </div>
+                  </div>
+                </div>
+                <label class="col-lg-2 col-form-label" for="number">
+                  Number:
+                </label>
+                <div class="col-lg-2">
+                  <input required type="number" class="form-control m-input" id="number" formControlName="number" (ngModelChange)="numberChange($event)">
+                  <div class="error" *ngIf="number.touched && number.invalid">
+                    <div *ngIf="number.errors.required">
+                      Number is required
+                    </div>
+                    <div *ngIf="number.errors.min">
+                      Min: 1
+                    </div>
+                  </div>
+                </div>
+                <label class="col-lg-1 col-form-label" for="deadline">
+                  Deadline:
+                </label>
+                <div class="col-lg-3">
+                  <div class="input-group">
+                    <input class="form-control m-input" id="deadline" formControlName="deadline" readonly ngbDatepicker #d2="ngbDatepicker" [minDate]="{year: 1900, month: 01, day: 01}">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary my-btn-group" (click)="d2.toggle()" type="button" style="padding:4px;">
+                        <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div *ngIf="deadline.invalid && (deadline.dirty || deadline.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="deadline.errors.required">
+                      Deadline is required.
+                    </div>
+                    <div *ngIf="deadline.errors.minDate">
+                      Deadline must be greater than today.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label" for="project">
+                  Project:
+                </label>
+                <div class="col-lg-3">
+                  <select id="project" formControlName="project" class="form-control m-input">
+                    <option *ngFor="let item of allProjects" value={{item?.id}}>
+                      {{ item?.title | summary: 30 }}
+                    </option>
+                  </select>
+                  <div *ngIf="project.invalid && (project.dirty || project.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="project.errors.required">
+                      Project is required.
+                    </div>
+                  </div>
+                </div>
+                <label class="col-lg-2 col-form-label" for="recruitment-type">
+                  Request type:
+                </label>
+                <div class="col-lg-2">
+                  <select id="recruitment-type" formControlName="recruitmentType" class="form-control m-input">
+                    <option *ngFor="let item of allRecruitmentTypes" value={{item?.id}}>
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                  <div *ngIf="recruitmentType.invalid && (recruitmentType.dirty || recruitmentType.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="recruitmentType.errors.required">
+                      Request type is required.
+                    </div>
+                  </div>
+                </div>
+                <label class="col-lg-1 col-form-label" for="priority">
+                  Priority:
+                </label>
+                <div class="col-lg-3">
+                  <select id="priority" formControlName="priority" class="form-control m-input">
+                    <option *ngFor="let item of allPrioritys" value={{item?.id}}>
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                  <div *ngIf="priority.invalid && (priority.dirty || priority.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="priority.errors.required">
+                      Priority type is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="m-form__section m-form__section--second">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Requirements
+                </h3>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="skills">
+                  Skills:
+                </label>
+                <div>
+                  <select formControlName="skills" class="form-control m-select2" id="skills" multiple>
+                    <option></option>
+                    <option *ngFor="let item of allSkills" [ngValue]="item?.id">
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                  <div *ngIf="!skillsFieldIsValid() && (skills.dirty || skills.touched || isSubmitted)" class="alert alert-danger">
+                    <div *ngIf="!skillsFieldIsValid()">
+                      Skills is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="experience">
+                  Experience:
+                </label>
+                <select id="experience" formControlName="experience" class="form-control m-input">
+                  <option *ngFor="let item of allExperiences" value={{item?.id}}>
+                    {{ item?.title | summary: 30 }}
+                  </option>
+                </select>
+                <div *ngIf="experience.invalid && (experience.dirty || experience.touched || isSubmitted)" class="alert alert-danger">
+                  <div *ngIf="experience.errors.required">
+                    Experience is required.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="description">
+                  Description:
+                </label>
+                <textarea required maxlength="3000" name="description" class="form-control m-input" id="description" rows="3" formControlName="description"></textarea>
+                <div *ngIf="description.invalid && (description.dirty || description.touched || isSubmitted)" class="alert alert-danger">
+                  <div *ngIf="description.errors.required">
+                    Description is required.
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="foreignLanguage">
+                  Foreign languages:
+                </label>
+                <div>
+                  <select formControlName="foreignLanguage" class="form-control m-select2" id="foreignLanguage" name="param" multiple>
+                    <option></option>
+                    <option *ngFor="let item of allForeignLanguages" [ngValue]="item?.id">
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="certificate">
+                  Certificate
+                </label>
+                <input maxlength="100" class="form-control m-input" id="certificate" formControlName="certificate">
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="major">
+                  Major
+                </label>
+                <textarea maxlength="3000" class="form-control m-input" id="major" rows="3" formControlName="major"></textarea>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="others">
+                  Others
+                </label>
+                <textarea maxlength="3000" class="form-control m-input" id="others" rows="3" formControlName="others"></textarea>
+              </div>
+            </div>
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="m-form__section m-form__section--last">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Salary, benefit
+                </h3>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="salary">
+                  Salary
+                </label>
+                <input maxlength="100" class="form-control m-input" id="salary" formControlName="salary">
+              </div>
+              <div class="form-group m-form__group">
+                <label for="benefit">
+                  Benefit
+                </label>
+                <textarea maxlength="3000" class="form-control m-input" id="benefit" rows="3" formControlName="benefit"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+              <button type="submit" class="btn btn-success">
+                Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- requests only view -->
+  <div *ngIf="!isCanUpdate()" class="m-grid__item m-grid__item--fluid m-wrapper">
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="m-subheader__title m-subheader__title--separator">
+            Requests
+          </h3>
+          <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+              <a href="#" class="m-nav__link m-nav__link--icon" (click)="navRequestHome()">
+                <i class="m-nav__link-icon la la-home"></i>
+              </a>
+            </li>
+            <li class="m-nav__separator">
+              -
+            </li>
+            <li class="m-nav__item">
+              <a href="#" class="m-nav__link" (click)="navRequestList()">
+                <span class="m-nav__link-text">
+                  Requests
+                </span>
+              </a>
+            </li>
+            <li class="m-nav__separator">
+              -
+            </li>
+            <li class="m-nav__item">
+              <a href="#" class="m-nav__link">
+                <span class="m-nav__link-text">
+                  Detail
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="m-content">
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                Request detail
+              </h3>
+            </div>
+          </div>
+  
+          <div *ngIf="isHrManager" class="m-portlet__head-caption">
+            <div class="row grid-demo">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-3"></div>
+              <div class="col-lg-3">
+                <button *ngIf="isCanAssign()" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="margin-left: 100px;
+                  padding-top: 7px;
+                  height: 40px;">Assign HR Member
+                </button>
+              </div>
+              <div class="col-lg-3">
+                <button *ngIf="displayButtonClose()" type="button" class="btn btn-danger" data-toggle="modal" data-target="#CloseModal" style="margin-left: 100px;
+                        padding-top: 7px;
+                        height: 40px; float: right;">Close</button>
+              </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form class="m-form m-form--label-align-right" [formGroup]="form2">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <button *ngIf="!btnNewModalIsDisabled()" (click)="addItem()" _ngcontent-c6="" class="btn btn-success m-btn--icon m-btn--air"
+                        type="button">
+                        <span _ngcontent-c6="">
+                          <i _ngcontent-c6="" class="la la-plus"></i>
+                          <span _ngcontent-c6="">
+                            New
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row grid-demo">
+                        <div formArrayName="items" *ngFor="let item of form2.get('items').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-group m-form__group row" style="margin-bottom: 12px; ">
+                            <label class="col-lg-2 col-form-label">
+                              Assignee
+                            </label>
+                            <div class="col-lg-4">
+                              <select (ngModelChange)="reqAssigneeModalChange($event, i)" formControlName="requestAssignee" required class="form-control m-input">
+                                <!-- <div *ngFor="let listHr of allHrMemberComboBox"> -->
+                                <option *ngFor="let item of allHrMemberComboBox[i]" value={{item?.id}}>
+                                  {{ item?.fullName | summary: 30 }}
+                                </option>
+                                <!-- </div> -->
+                              </select>
+                              <div *ngIf="form2.controls.items.controls[i].controls.requestAssignee.invalid
+                                                             && (form2.controls.items.controls[i].controls.requestAssignee.dirty
+                                                                || form2.controls.items.controls[i].controls.requestAssignee.touched)"
+                                class="error">
+                                <div *ngIf="form2.controls.items.controls[i].controls.requestAssignee.errors.required">
+                                  Assignee is required.
+                                </div>
+                              </div>
+                            </div>
+                            <label class="col-lg-2 col-form-label">
+                              Number:
+                            </label>
+                            <div class="col-lg-2">
+                              <input OnlyNumber formControlName="number" required type="number" class="form-control m-input" (ngModelChange)="numberModalChange($event, i)">
+                              <div *ngIf="form2.controls.items.controls[i].controls.number.invalid
+                                                            && (form2.controls.items.controls[i].controls.number.dirty
+                                                               || form2.controls.items.controls[i].controls.number.touched)"
+                                class="error">
+                                <div *ngIf="form2.controls.items.controls[i].controls.number.errors.required">
+                                  Number is required.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-2" style="text-align: center;">
+                              <!-- <button > -->
+                              <i (click)="deleteItem(i)" class="la la-trash-o" style="font-size: 40px; cursor: pointer;"></i>
+                              <!-- </button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer ">
+                      <button [disabled]="form2.invalid" type="submit" (click)="onModalSubmit()" class="btn btn-success" data-dismiss="modal">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="CloseModal" role="dialog">
+              <div class="modal-dialog">
+  
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure close this request?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" type="submit" (click)="onModalClose()" class="btn btn-default" data-dismiss="modal">Yes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+        <form class="m-form m-form--label-align-right" [formGroup]="form">
+          <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+              <!-- <div class="m-form__heading">
+  
+                          </div> -->
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Job title and department info
+                </h3>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label"> Status: </label>
+                <label class="col-lg-3 col-form-label" style="text-align:left;"> {{request?.requestStatusId?.title}} </label>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label" for="title">
+                  Title:
+                </label>
+                <div class="col-lg-11">
+                  <input readonly class="form-control m-input" id="title" formControlName="title">
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label" for="position">
+                  Position:
+                </label>
+                <div class="col-lg-3">
+                  <input readonly id="position" formControlName="position" class="form-control m-input">
+                </div>
+                <label class="col-lg-2 col-form-label" for="number">
+                  Number:
+                </label>
+                <div class="col-lg-2">
+                  <input readonly class="form-control m-input" id="number" formControlName="number">
+                </div>
+                <label class="col-lg-1 col-form-label" for="deadline">
+                  Deadline:
+                </label>
+                <div class="col-lg-3">
+                  <input readonly class="form-control m-input" id="deadline" formControlName="deadline">
+                </div>
+              </div>
+              <div class="form-group m-form__group row">
+                <label class="col-lg-1 col-form-label" for="project">
+                  Project:
+                </label>
+                <div class="col-lg-3">
+                  <input readonly id="project" formControlName="project" class="form-control m-input">
+                </div>
+                <label class="col-lg-2 col-form-label" for="recruitment-type">
+                  Request type:
+                </label>
+                <div class="col-lg-2">
+                  <input readonly id="recruitment-type" formControlName="recruitmentType" class="form-control m-input">
+                </div>
+                <label class="col-lg-1 col-form-label" for="priority">
+                  Priority:
+                </label>
+                <div class="col-lg-3">
+                  <input readonly id="priority" formControlName="priority" class="form-control m-input">
+                </div>
+              </div>
+            </div>
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="m-form__section m-form__section--second">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Requirements
+                </h3>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="skills">
+                  Skills:
+                </label>
+                <div>
+                  <select formControlName="skills" class="form-control m-select2" id="skills" multiple>
+                    <option></option>
+                    <option *ngFor="let item of allSkills" [ngValue]="item?.id">
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="experience">
+                  Experience:
+                </label>
+                <input readonly id="experience" formControlName="experience" class="form-control m-input">
+              </div>
+              <div class="form-group m-form__group">
+                <label for="description">
+                  Description:
+                </label>
+                <textarea readonly class="form-control m-input" id="description" rows="3" formControlName="description"></textarea>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="foreignLanguage">
+                  Foreign languages:
+                </label>
+                <div>
+                  <select formControlName="foreignLanguage" class="form-control m-select2" id="foreignLanguage" multiple>
+                    <option></option>
+                    <option *ngFor="let item of allForeignLanguages" [ngValue]="item?.id">
+                      {{ item?.title | summary: 20 }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="certificate">
+                  Certificate
+                </label>
+                <input readonly class="form-control m-input" id="certificate" formControlName="certificate">
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="major">
+                  Major
+                </label>
+                <textarea readonly class="form-control m-input" id="major" rows="3" formControlName="major"></textarea>
+              </div>
+  
+              <div class="form-group m-form__group">
+                <label for="others">
+                  Others
+                </label>
+                <textarea readonly class="form-control m-input" id="others" rows="3" formControlName="others"></textarea>
+              </div>
+            </div>
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="m-form__section m-form__section--last">
+              <div class="m-form__heading">
+                <h3 class="m-form__heading-title">
+                  Salary, benefit
+                </h3>
+              </div>
+              <div class="form-group m-form__group">
+                <label for="salary">
+                  Salary
+                </label>
+                <input readonly class="form-control m-input" id="salary" formControlName="salary">
+              </div>
+              <div class="form-group m-form__group">
+                <label for="benefit">
+                  Benefit
+                </label>
+                <textarea readonly class="form-control m-input" id="benefit" rows="3" formControlName="benefit"></textarea>
+              </div>
+            </div>
+          </div>
+  
+        </form>
+      </div>
+    </div>
+  </div>

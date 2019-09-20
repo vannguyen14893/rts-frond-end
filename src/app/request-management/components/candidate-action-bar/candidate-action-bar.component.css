@@ -1,0 +1,42 @@
+.my-container {
+
+}
+.item {
+  margin: 5px 10px;
+  float: left;
+}
+.wrap-action-item {
+  float: right;
+}
+.button-item {
+  float: right;
+}
+.la {
+  font-size: 1.8rem;
+  font-weight: 500;
+  align-items: center;
+}
+.item:hover {
+  cursor: pointer;
+}
+.interview:hover {
+  color: blue;
+}
+.comment:hover {
+  color: green;
+}
+.edit:hover {
+  color: brown;
+}
+.reject {
+  color: red;
+}
+.reject:hover {
+  color: indianred;
+}
+@media only screen and (max-width: 992px){
+  .my-container {
+    float: left;
+    margin-bottom: 18px;
+  }
+}

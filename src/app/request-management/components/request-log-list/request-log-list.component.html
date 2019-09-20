@@ -1,0 +1,13 @@
+
+<div class="request-log-container">
+  <p *ngIf="requestLogs?.length === 0; else history">
+    No history.
+  </p>
+  <ng-template #history>
+    <ul #scrollLogs class="request-log">
+      <li *ngFor="let log of requestLogs">
+        <app-log [log]="log"></app-log>
+      </li>
+    </ul>
+  </ng-template>
+</div>

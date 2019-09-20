@@ -1,0 +1,460 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        CV
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a href="#" class="m-nav__link m-nav__link--icon" (click)="navCvList()">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="" class="m-nav__link" (click)="navCvList()">
+            <span class="m-nav__link-text">
+              Request
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <span class="m-portlet__head-icon m--hide">
+              <i class="la la-gear"></i>
+            </span>
+            <!-- <h6 class="text-success">
+  {{ message }}
+  </h6> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Body CV detail -->
+    <div class="col-md-12">
+      <div class="m-portlet">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon m--hide">
+                <i class="la la-gear"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                CV - {{ cv?.fullName | summary: 40 }}
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--begin::Form-->
+        <form [formGroup]="form" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+          <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+              <!-- BEGIN::MESSAGE -->
+              <div class="col-12" *ngIf="messageChooseImage.length > 0">
+                <div class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                  <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+                  {{ messageChooseImage }}
+                </div>
+              </div>
+              <!-- END::MESSAGE -->
+              <!-- BEGIN::MESSAGE -->
+              <div class="col-12" *ngIf="messageCreateCvError.length > 0">
+                <div class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                  <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+                  {{ messageCreateCvError }}
+                </div>
+              </div>
+              <!-- END::MESSAGE -->
+              <!-- BEGIN::MESSAGE -->
+              <div class="col-12" *ngIf="messageCreateCvSuccess && messageCreateCvSuccess.length > 0">
+                <div class="m-alert m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
+                  <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+                  {{ messageCreateCvSuccess }}
+                </div>
+              </div>
+              <!-- END::MESSAGE -->
+
+              <!-- BEGIN::CV-INFO -->
+              <div class="col-12">
+                <div class="row cv-section-avatar">
+                  <div class="col-md-2">
+                    <div class="m-card-profile__pic cv-avatar">
+                      <input type="file" style="display: none;" id="uploadAvatar" accept=".jpg, .png, .jpeg">
+                      <i class="la la-edit btn-avatar-edit"></i>
+                      <div class="m-card-profile__pic-wrapper ">
+                        <img src="{{ avatarBase64 }}" alt="" *ngIf="avatarBase64" class="cv-avatar__img" />
+                        <img src="{{ cv?.profileImg | resourcePublic }}" alt="avatar" class="cv-avatar__img" *ngIf="!avatarBase64" onError="this.onerror=null;this.src='./assets/app/media/img/misc/user-avatar-default.jpg';"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- BEGIN::FULL NAME -->
+                    <div class="row">
+                      <div class="col-12">
+                        <label for="fullName" class="col-form-label required">Full name</label>
+                        <input type="text" class="form-control m-input" placeholder="Full name" id="fullName" formControlName="fullName" [maxlength]="constraints.varcharMaxLength">
+                      </div>
+                    </div>
+                    <!-- END:: FULL NAME -->
+                  </div>
+                  <div class="col-md-4">
+                    <!-- BEGIN::PHONE -->
+                    <div class="row">
+                      <div class="col-12">
+                        <label class="col-form-label">
+                          Phone number
+                        </label>
+                        <input type="text" class="form-control m-input" placeholder="Phone number" [maxlength]="constraints.phoneMaxLength" formControlName="phone">
+                      </div>
+                    </div>
+                    <!-- END::PHONE -->
+                  </div>
+                </div>
+                <div class="row cv-section-info">
+                  <!-- BEGIN::1st COLUMN -->
+                  <div class="col-md-4 field-set">
+                    <fieldset>
+                      <!-- BEGIN::BASIC INFO -->
+                      <p class="cv-section-title">
+                        BASIC INFORMATION
+                      </p>
+                      <!-- END::BASIC INFO -->
+                      <!-- BEGIN::BIRTHDAY -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label">
+                            <!-- <i class="la la-calendar"></i> -->
+                            Date of birth
+                          </label>
+                          <div>
+                            <div class="input-group">
+                              <input class="form-control m-input" placeholder="Birthday" ngbDatepicker #d="ngbDatepicker" readonly formControlName="dob"
+                                [startDate]="maxDate" [minDate]="{ year: 1900, month: 1, day: 1 }" [maxDate]="maxDate">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar-button" (click)="d.toggle()" type="button">
+                                  <img _ngcontent-c2="" src="https://ng-bootstrap.github.io/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;">
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END::BIRTHDAY -->
+                      <!-- BEGIN::GENDER -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label">
+                            <!-- <i class="la la-user"></i> -->
+                            Gender
+                          </label>
+                          <div class="m-radio-inline">
+                            <label class="m-radio">
+                              <input name="gender" class="form-control m-input" type="radio" value="1" formControlName="gender"> Male
+                              <span></span>
+                            </label>
+                            <label class="m-radio">
+                              <input name="gender" class="form-control m-input" type="radio" value="0" formControlName="gender"> Female
+                              <span></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END::GENDER -->
+                      <!-- BEGIN::EMAIL -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label" for="email">
+                            <!-- <i class="la la-envelope"></i> -->
+                            Email
+                          </label>
+                          <input type="email" class="form-control m-input" placeholder="Email" id="email" formControlName="email" [maxlength]="constraints.varcharMaxLength">
+                        </div>
+                      </div>
+                      <!-- END::EMAIL -->
+
+                      <!-- BEGIN::Position -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label" for="position" ngbTooltip="Dev, senior C, junior java, etc">
+                            Position
+                          </label>
+                          <input type="text" class="form-control m-input" placeholder="Position" id="position" formControlName="position" [maxlength]="constraints.varcharMaxLength">
+                          <div class="error">
+                            <div *ngIf="position.hasError('invalidFormat')">
+                              Letter only.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END::position -->
+
+                      <!-- BEGIN::ADDRESS -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label" for="address">
+                            <!-- <i class="la la-map-marker"></i> -->
+                            Address
+                          </label>
+                          <textarea type="text" class="form-control m-input" placeholder="Address" id="address" rows="2" formControlName="address"
+                            [maxlength]="constraints.unicodeMaxLength"></textarea>
+                        </div>
+                      </div>
+                      <!-- END::ADDRESS -->
+                    </fieldset>
+                  </div>
+                  <!-- END::1st COLUMN -->
+                  <!-- BEGIN::2ND COLUMN -->
+                  <div class="col-md-4 field-set">
+                    <fieldset>
+                      <p class="cv-section-title">
+                        SOCIAL
+                      </p>
+                      <!-- BEGIN::FACEBOOK -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label" for="facebook">
+                            <!-- <i class="la la-facebook"></i> -->
+                            Facebook
+                          </label>
+                          <input type="text" class="form-control m-input" placeholder="Facebook" id="facebook" formControlName="facebook" [maxlength]="constraints.varcharMaxLength">
+                        </div>
+                      </div>
+
+                      <!-- END::FACEBOOK -->
+                      <!-- BEGIN::SKYPE -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label" for="skype">
+                            Skype
+                          </label>
+                          <input type="text" class="form-control m-input" placeholder="Skype" id="skype" formControlName="skype" [maxlength]="constraints.varcharMaxLength">
+                        </div>
+                      </div>
+
+                      <!-- END::SKYPE -->
+                      <!-- BEGIN::LINKEDIN -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="col-form-label" for="linkedin">
+                            Linkedin
+                          </label>
+                          <input type="text" class="form-control m-input" placeholder="Linkedin" id="linkedin" formControlName="linkedin" [maxlength]="constraints.varcharMaxLength">
+                        </div>
+                      </div>
+                      <!-- END::LINKEDIN -->
+                    </fieldset>
+                  </div>
+                  <!-- END::2ND COLUMN -->
+                  <!-- BEGIN::3RD COLUMN -->
+                  <div class="col-md-4 field-set">
+                    <fieldset>
+                      <p class="cv-section-title">
+                        <!-- <i class="la la-list"></i> -->
+                        EXPERIENCE & SKILLS
+                      </p>
+                      <!-- BEGIN::WORK EXPERIENCE -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="workExperence" class="col-form-label">
+                            Work experience
+                          </label>
+                          <select name="experience" id="experience" class="form-control m-input" formControlName="experience">
+                            <option *ngFor="let exp of experienceList" [value]="exp.id">
+                              {{ exp.title | summary: 30 }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- END::WORK EXPERIENCE -->
+                      <!-- BEGIN::SKILLS -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="skills" class="col-form-label">Skills</label>
+                          <ng-select [items]="skillList" bindLabel="title" bindValue="id" [multiple]="true" placeholder="Select skills" clearAllText="Clear"
+                            formControlName="skillCollection" class="custom">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <!-- END::SKILLS -->
+                      <!-- BEGIN::Certifications -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="skills" class="col-form-label">Certification</label>
+                          <ng-select [items]="certificationList" bindLabel="title" bindValue="id" [multiple]="true" placeholder="Select certifications"
+                            clearAllText="Clear" formControlName="certificationColection" class="custom">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <!-- END::Certifications -->
+                      <!-- BEGIN::EDUCATION -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="education" class="col-form-label">Education</label>
+                          <input type="text" class="form-control m-input" placeholder="Education" formControlName="education" [maxLength]="constraints.varcharMaxLength"
+                            id="education">
+                        </div>
+                      </div>
+                      <!-- END::EDUCATION -->
+                      <!-- BEGIN::NOTE -->
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="note" class="col-form-label">Note</label>
+                          <textarea class="form-control m-input" id="note" rows="5" placeholder="Give your note here ..." formControlName="note" [maxlength]="constraints.unicodeMaxLength"></textarea>
+                        </div>
+                      </div>
+                      <!-- END::NOTE -->
+                    </fieldset>
+                  </div>
+                  <!-- END::3RD COLUMN -->
+                </div>
+              </div>
+              <!-- END::CV-INFO -->
+              <!-- BEGIN:: CV-FILE -->
+              <div class="col-6 cv-file-section">
+                <div class="row">
+                  <div class="col-12 attachments">
+                    <label for="CV attachments" class="col-form-label" style="font-weight: bold">
+                      CV attachments:
+                    </label>
+                    <ul *ngFor="let item of cv?.cvUrlCollection">
+                      <li (click)="viewFileCv(item.url)" ngbTooltip='click to open' style="cursor: pointer;">{{ item.url | summary: 60}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- END:: CV-FILE -->
+            </div>
+          </div>
+        </form>
+        <!--end::Form-->
+        <!-- History::footer -->
+        <div *ngIf="listRequestHistory && listRequestHistory?.length >0" class="m-portlet__foot row" style="min-height: 200px;">
+          <div class="col-12">
+            <label for="history" class="col-form-label" style="font-weight: bold">
+              Make candidate history
+            </label>
+            <ul *ngFor="let item of listRequestHistory">
+              <li>{{item}}</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Request information: -->
+        <div class="m-portlet__foot row" class="requestInfor">
+          <div class="col-12 requestInfor_label">
+            <label for="requestInfor" class="col-form-label">
+              Request information
+            </label>
+          </div>
+          <div class="col-12 requestInfor_content">
+            <div class="row">
+              <label>title:</label>
+              <span>
+                {{ request?.title }}
+              </span>
+            </div>
+            <div class="row">
+              <div class="col-4" style="padding-left: 0px;">
+                <label>deadline:</label>
+                <span>
+                  {{ request?.deadline }}
+                </span>
+              </div>
+              <div class="col-4">
+                <label>position:</label>
+                <span>
+                  {{request?.positionId?.title}}
+                </span>
+              </div>
+              <div class="col-4">
+                <label>number:</label>
+                <span>
+                  {{request?.number}}
+                </span>
+              </div>
+            </div>
+            <!-- project, experienceId -->
+            <div class="row">
+              <div class="col-4" style="padding-left: 0px;">
+                <label>project:</label>
+                <span>
+                  {{ request?.projectId?.title }}
+                </span>
+              </div>
+              <div class="col-4">
+                <label>experience:</label>
+                <span>
+                  {{request?.experienceId?.title}}
+                </span>
+              </div>
+              <div class="col-4">
+                <label>group:</label>
+                <span>
+                  {{request?.groupId?.title}}
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <label>description:</label>
+              <span>
+                {{ request?.description }}
+              </span>
+            </div>
+            <div class="row">
+              <label>skills:</label>
+              <span *ngFor="let skill of request?.skillCollection" class="skills-item">
+                <u style="padding-right: 5px;">
+                  {{ skill?.title | summary: 20 }}
+                </u>
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <!-- From edit candidate: -->
+        <div class=" row m-portlet__foot">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-md-6 col-lg-6">
+                <label class="col-form-label required">Title</label>
+                <input type="text" class="form-control m-input" placeholder="title" id="title" [(ngModel)]='titleValue' [maxlength]="constraints.nameMaxLength">
+              </div>
+              <div class="col-md-6 ">
+                <label class="col-form-label required">Source</label>
+                <input type="text" class="form-control m-input" placeholder="source" id="source" [(ngModel)]='sourceValue' [maxlength]="constraints.nameMaxLength"
+                  s>
+              </div>
+            </div>
+          </div>
+          <div class="col-12" style="padding: 1%;">
+            <div class="m-form__actions">
+              <!-- || -->
+              <button class="btn btn-primary" type="button" [disabled]="titleValue.length === 0  || sourceValue.length === 0" (click)="candidateUpdateSubmit()">
+                Submit
+              </button>
+              <button class="btn btn-warning" type="reset" [disabled]="loading" (click)="candidateClearSubmit()">
+                Reset
+              </button>
+              <button class="btn btn-secondary" type="button" [disabled]="loading" (click)="candidateCancelSubmit()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- END: From edit candidate -->
+      </div>
+    </div>
+  </div>
+</div>

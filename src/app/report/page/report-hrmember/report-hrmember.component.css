@@ -1,0 +1,107 @@
+.m-section {
+    position:relative;
+  }
+  .m-section__content {
+    height:750px;
+    overflow-x:scroll;  
+    margin-top:20px;
+  }
+  .m-section table {
+    width:1808px;
+    margin-bottom: 0rem;
+  }
+  
+  .m-portlet .m-portlet__body {
+    padding: 2.2rem 2.2rem;
+    padding-top: 0.3rem;
+  }
+  
+  .m-section table * {
+    /* background:rgb(255, 255, 255); */
+    color:black;
+  }
+  
+  .m-section table thead th .text {
+    position:absolute;   
+    top:-20px;
+    z-index:2;
+    height:20px;
+    width:35%;
+    border:1px solid red;
+  }
+  
+  .col-12{
+    margin-bottom: -7rem;
+  }
+  
+  .m-grid__item{
+    margin-bottom: 0rem;
+  }
+  
+  .col1{
+    width: 58.4px;
+  }
+  .col2{
+    width: 79.2px;
+  }
+  
+  .col3{
+    width: 204.8px;
+  }
+  
+  .col4{
+    width: 149.6px;
+  }
+  
+  .col5{
+    width: 96.8px;
+  }
+  
+  .col6{
+    width: 108.8px;
+  }
+  
+  .col7{
+    width: 125.6px;
+  }
+  
+  .col8{
+    width: 129.6px;
+  }
+  
+  .col9{
+    width: 109.6px;
+  }
+  
+  .col10{
+    width: 129.6px;
+  }
+  
+  .col11{
+    width: 149.6px;
+  }
+  
+  .col12{
+    width: 107.2px;
+  }
+  
+  .col13{
+    width: 192px;
+  }
+  
+  .col14{
+    width: 144px;
+  }
+  
+  .col15{
+    width: 74.4px;
+  }
+  
+  .col16{
+    width: 140px;
+  }
+  
+  #project td{
+    background:rgb(0, 0, 0, 0.125);
+    color:black;
+  }

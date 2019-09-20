@@ -1,0 +1,31 @@
+.facebook {
+    width: 100%;
+}
+.facebook-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 20px;
+}
+p {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.facebook-header__text {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+.facebook-header__username {
+    font-size: 1rem;
+    color: blue;
+}
+.facebook-header__timestamp {
+    padding-left: 10px;
+    font-size: 0.7rem;
+    color: grey;
+}
+.padding-10 {
+    padding-top: 10px;
+}

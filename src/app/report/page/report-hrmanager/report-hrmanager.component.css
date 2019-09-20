@@ -1,0 +1,8 @@
+li {
+  font-size: 25px;
+}
+
+.list:hover {
+  background: rgba(0, 0, 0, 0.125);
+  text-align: center;
+}

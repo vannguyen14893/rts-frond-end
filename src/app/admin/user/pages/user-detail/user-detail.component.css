@@ -1,0 +1,12 @@
+.profile {
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+.profile .la-edit {
+    font-size: 2rem;
+}
+#m_user_profile_tab_1 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

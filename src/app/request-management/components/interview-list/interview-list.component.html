@@ -1,0 +1,33 @@
+<div class="rts-tab-header">
+    <div *ngFor="let interview of interviews"
+      class="rts-tab-header_item"
+      [ngClass]="{ active: interview?.id === currentInterview?.id }"
+      (click)="selectInterview(interview)">
+      <p class="rts-interview-title">
+        {{ interview?.title }}
+      </p>
+      <p class="rts-interview-time">
+        {{ interview.startTime | date: 'medium' }}
+      </p>
+    </div>
+</div>
+<div *ngIf="(interviews?.length>0)">
+  <div class="rts-tab-underline"></div>
+  <div class="rts-tab-content">
+    <app-interview-item [interview]="currentInterview" (addInterviewer$)="addInterviewer()" (addCandidate$)="addCandidate()" (sendMeetingRequest$)="sendMeetingRequest()" (goComment)="goComment()"></app-interview-item> 
+  </div>
+<div>
+
+<!-- <div *ngIf="interviews?.length > 0; else oneInterview">
+  <app-tab [tabs]="tabs" (tabSelected)="switchTab($event)">
+    <app-interview-item [interview]="currentInterview" (addInterviewer$)="addInterviewer()" (addCandidate$)="addCandidate()"></app-interview-item>
+  </app-tab>
+</div>
+<ng-template #oneInterview>
+    <app-interview-item [interview]="currentInterview" *ngIf="selectedInterview | async" (addInterviewer$)="addInterviewer()" (addCandidate$)="addCandidate()"></app-interview-item>  
+</ng-template> -->
+<!-- modals -->
+<app-send-meeting-request *ngIf="(currentModal$ | async) === modalSendMeetingRequest"></app-send-meeting-request>
+<app-add-interviewer *ngIf="(currentModal$ | async) === modalAddInterviewerToInterview"></app-add-interviewer>
+<app-add-candidate-to-interview *ngIf="(currentModal$ | async) === modalAddCandidateToInterview"></app-add-candidate-to-interview>
+<!-- end::modals -->

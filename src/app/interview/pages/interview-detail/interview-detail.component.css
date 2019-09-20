@@ -1,0 +1,91 @@
+.my-btn-group {
+    border-radius: 0 0.25rem 0.25rem 0 !important;
+    border-left: 0px;
+}
+.m-portlet.m-portlet--tabs .m-portlet__head {
+  background: #f2f3f8;
+  padding: 0;
+}
+.m-tabs-line.m-tabs-line--primary a.m-tabs__link {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.m-tabs-line.m-tabs-line--primary a.m-tabs__link.active {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #1434f7;
+}
+#m_candidates .m-portlet__body {
+  padding: 0;
+}
+.m-portlet__head-tools .m-tabs-line {
+  width: 100%;
+}
+.m-tabs-line .m-tabs__item {
+  width: 20%;
+  text-align: center;
+  margin: 0;
+}
+.m-form.m-form--fit .m-form__group {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.left-candidate-list {
+  padding: 0;
+}
+.right-candidate-list {
+  padding: 0;
+  border-left: 1px solid #f7f9fc;
+}
+.send-comment-form {
+  background: transparent;
+  width: 93%;
+  margin: 30px;
+  position: relative;
+  padding: 10px 0px 10px;
+  flex-direction: row-reverse;
+  box-shadow: none;
+}
+.send-comment-form input {
+  padding: 15px 0px;
+  border: none;
+}
+.send-comment-form button {
+  /* position: absolute; */
+  right: 0px;
+  background: #5c73fa;
+  border: none;
+  margin-top: 15px;
+}
+.send-comment-form button i {
+  color: #fff;
+  font-size: 30px;
+  transform: rotate(-44deg);
+  font-weight: normal;
+}
+
+.inputcomment{
+  height: 200px;
+  display: block;
+  width: 99%;
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 0.25rem;
+}
+
+.list_comment{
+  height: 400px;
+}
+@media only screen and (max-width: 850px) {
+  .name {
+    flex-direction: column;
+  }
+  .send-comment-form {
+    width: 85%;
+  }
+}

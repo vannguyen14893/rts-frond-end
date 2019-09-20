@@ -1,0 +1,88 @@
+<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-grid--tablet-and-mobile m-grid--hor-tablet-and-mobile m-login m-login--1 m-login--singin"
+ id="m_login">
+	<div class="m-grid__item m-grid__item--order-tablet-and-mobile-2 m-login__aside">
+		<div class="m-stack m-stack--hor m-stack--desktop">
+			<div class="m-stack__item m-stack__item--fluid">
+				<div class="m-login__wrapper">
+					<div class="m-login__logo">
+						<a href="#">
+							<img class="login-logo" src="./assets/app/media/img//logos/cmc-global.png" style="width: 100%;">
+						</a>
+					</div>
+					<div class="m-login__signin" style="position: relative;">
+						<div class="m-login__head">
+							<h3 class="m-login__title">
+								Welcome Back
+							</h3>
+						</div>
+						<form [formGroup]="loginForm" (ngSubmit)="login()" class="m-login__form m-form" action="">
+							<ng-template #alertSignin></ng-template>
+							<div class="form-group m-form__group">
+								<p *ngIf="message.length > 0" style="color: red; font-size: 1rem; text-align: center;">{{ message }}</p>
+							</div>
+							<div class="form-group m-form__group">
+								<input class="form-control m-input" type="text" placeholder="Username" name="email" formControlName="username" autocomplete="off"
+								 [maxlength]="constraints.username.maxlength">
+							</div>
+							<div class="form-group m-form__group">
+								<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password" formControlName="password"
+								 [maxlength]="constraints.password.maxlength">
+							</div>
+							<div class="row m-login__form-sub">
+								<div class="col m--align-right">
+									<a href="javascript:;" id="m_login_forget_password" class="m-link" (click)="displayForgetPasswordForm()">
+										Forgot Password?
+									</a>
+								</div>
+							</div>
+							<div class="m-login__form-action">
+								<button [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+									Sign In
+								</button>
+							</div>
+						</form>
+						<!-- <div class="m--margin-top-40 m-alert m-alert--outline m-alert--outline-2x alert alert-success fade show" role="alert">
+							<p>FOR DEMO PURPOSE: Click on the account to auto-fill login credentials.
+								<br> Username:
+								<span style="color: black">
+									<a href="#" (click)="initForm(demoAdmin)" #demoAdmin>admin</a>,
+									<a href="#" (click)="initForm(demoDuLead)" #demoDuLead>dulead</a>,
+									<a href="#" (click)="initForm(demoDuMember)" #demoDuMember>dumember</a>,
+									<a href="#" (click)="initForm(demoHrManager)" #demoHrManager>hrmanager</a>,
+									<a href="#" (click)="initForm(demoHrMember)" #demoHrMember>hrmember</a>,
+									<a href="#" (click)="initForm(demoGroupLead)" #demoGroupLead>GroupLead</a></span>
+								<br> Password:
+								<span style="color: black">12345678</span>
+							</p>
+						</div> -->
+					</div>
+					<app-forgot-password-form></app-forgot-password-form>
+				</div>
+			</div>
+			<div class="m-stack__item m-stack__item--center">
+				<div class="m-login__account">
+					<span class="m-login__account-msg">
+						Copyright &copy; 2018 by CMC Global
+					</span>
+					&nbsp;&nbsp;
+					<!-- <a class="m-link m-link--focus m-login__account-link" href="javascript:;" id="m_login_signup">
+						Sign Up
+					</a> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--<div class="m-grid__item m-grid__item&#45;&#45;fluid m-grid m-grid&#45;&#45;center m-grid&#45;&#45;hor m-grid__item&#45;&#45;order-tablet-and-mobile-1	m-login__content"
+	 style="background-image: url(./assets/app/media/img//bg/bg-4.jpg)">
+		<div class="m-grid__item m-grid__item&#45;&#45;middle">
+			<h3 class="m-login__welcome">
+				Recruitment Tracking System
+			</h3>
+			<p class="m-login__msg">
+				&lt;!&ndash; Lorem ipsum dolor sit amet, coectetuer adipiscing
+				<br>
+				elit sed diam nonummy et nibh euismod &ndash;&gt;
+			</p>
+		</div>
+	</div>-->
+</div>

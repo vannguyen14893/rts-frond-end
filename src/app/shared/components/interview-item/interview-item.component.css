@@ -1,0 +1,69 @@
+.interview .row {
+  height: 40px;
+}
+.avatar-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+}
+.avatar-list li:not(:first-child) {
+  padding-left: 5px;
+}
+.square-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid green;
+  border-radius: 3px;
+  margin-left: 5px;
+}
+.square-button:hover {
+  cursor: pointer;
+  background: green;
+}
+.square-button:hover .la-plus {
+  color: white;
+}
+.square-button:active .la-plus {
+  color: white;
+  font-size: 1.3rem;
+}
+.la-plus {
+  font-size: 1.5rem;
+  color: green;
+}
+
+.color-text{
+  color: #9b9b9b;
+}
+.content-color-text{
+  color: #131313;
+}
+.padding-left-22 {
+  padding-left: 22px;
+}
+.padding-horizontal-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.la-user-plus {
+  color: rgb(20, 52, 247);
+  font-size: 20px;
+}
+.la-user-plus:hover {
+  color: rgba(20, 52, 247, 0.6);
+}
+.icon {
+  margin-left: 16px;
+}
+
+@media only screen and (max-width: 575px) {
+  .icon {
+    display: none;
+  }
+  .wrap-content {
+    padding-left: 33px;
+  }
+}
+

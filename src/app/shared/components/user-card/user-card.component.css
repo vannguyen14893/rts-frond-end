@@ -1,0 +1,52 @@
+.user-card {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 20px;
+}
+p {
+  margin: 0;
+  padding: 0;
+  line-height: 1rem;
+  padding-bottom: 4px;
+}
+.name {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.full-name {
+  display: flex;
+  flex: 1;
+  font-size: 18px;
+  font-weight: 400;
+  color: #04143a;
+  line-height: 1.5rem;
+}
+.title {
+  font-size: 14px;
+  font-weight: 400;
+  padding-top: 6px;
+  color:#4a4a4a;
+}
+.experience {
+  font-size: 13px;
+  padding-top: 6px;
+  color: #4a4a4a;
+}
+
+.circle:before {
+  content: ' \25CF';
+  font-size: 10px;
+  margin-right: 5px;
+}

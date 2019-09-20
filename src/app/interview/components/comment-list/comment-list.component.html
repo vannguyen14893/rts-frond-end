@@ -1,0 +1,14 @@
+<div class="candidate-log-container">
+    <p *ngIf="currentCandidateLogs?.length === 0; else history">
+      No history.
+    </p>
+    <ng-template #history>
+      <ul #scrollLogs class="candidate-log">
+        <li *ngFor="let log of currentCandidateLogs">
+          <div *ngIf="log.action === 'comment'">
+            <app-log [log]="log"></app-log>
+          </div>
+        </li>
+      </ul> 
+    </ng-template>
+  </div>

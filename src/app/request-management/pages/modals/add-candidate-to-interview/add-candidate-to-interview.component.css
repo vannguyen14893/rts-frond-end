@@ -1,0 +1,51 @@
+.candidate-list {
+  width: 100%;
+}
+.candidate-list ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+.candidate-list ul li:not(:first-child) {
+  margin-left: 10px;
+}
+
+.search-candidate {
+  margin-top: 20px;
+  width: 100%;
+}
+.search-result {
+  margin-top: 25px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* search result */
+.candidate-list-section {
+  padding: 2rem 1rem;
+   border-top: none;
+ }
+ .candidate-list-item {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 5px 0px;
+ }
+ /* .candidate-list-item:hover {
+   cursor: pointer;
+   background: burlywood;
+ } */
+ /* .candidate-list-item:hover span {
+   border: 1px solid black;
+ } */
+ /* .selected {
+   background: burlywood;
+ }
+ .selected span {
+   border: 1px solid black;
+ } */
+/* end::search result */

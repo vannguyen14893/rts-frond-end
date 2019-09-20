@@ -1,0 +1,1 @@
+export const MAKE_CANDIDATE = 'MAKE_CANDIDATE';

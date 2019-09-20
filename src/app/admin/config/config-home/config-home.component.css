@@ -1,0 +1,18 @@
+.link-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+.link-item {
+  width: 200px;
+  height: 50px;
+  text-align: center;
+}
+.link-item:hover {
+  background: rgba(0, 0, 0, 0.125);
+}
+.link-item a {
+  line-height: 50px;
+  vertical-align: center;
+}

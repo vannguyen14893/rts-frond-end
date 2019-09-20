@@ -1,0 +1,9 @@
+
+export const ROLES = Object.freeze({
+    ADMIN: 'ROLE_ADMIN',
+    DU_LEAD: 'ROLE_DU_LEAD',
+    DU_MEMBER: 'ROLE_DU_MEMBER',
+    HR_MANAGER: 'ROLE_HR_MANAGER',
+    HR_MEMBER: 'ROLE_HR_MEMBER',
+    GROUP_LEAD: 'ROLE_GROUP_LEAD',
+});

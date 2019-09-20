@@ -1,0 +1,67 @@
+.candidate-card {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.candidate-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 20px;
+}
+p {
+  margin: 0;
+  padding: 0;
+  line-height: 1rem;
+  padding-bottom: 4px;
+}
+.name {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.full-name {
+  display: flex;
+  flex: 1;
+  line-height: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: #4a90e2;
+  font-size: 18px;
+}
+.title {
+  font-size: 14px;
+  font-weight: 400;
+  padding-top: 6px;
+  color:#4a4a4a;
+}
+.experience {
+  font-size: 13px;
+  padding-top: 6px;
+  color: #4a4a4a;
+}
+.status {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9b9b9b;
+}
+.circle:before {
+  content: ' \25CF';
+  font-size: 10px;
+  margin-right: 5px;
+}
+.paperclip {
+  margin-right: 5px;
+}
+@media only screen and (max-width: 850px) {
+  .name {
+    flex-direction: column;
+  }
+}

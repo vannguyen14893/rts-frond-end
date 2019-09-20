@@ -1,0 +1,14 @@
+.time-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.time-picker p {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 0;
+}
+.full-name {
+  padding-left: 5px;
+}

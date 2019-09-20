@@ -1,0 +1,32 @@
+<app-modal header="Change candidate status">
+  <div body>
+      <div>
+          <p>Are you sure to move these candidates to
+            <strong>{{ nextStatus?.title }}</strong>?</p>
+          <app-candidate-list-card [cv]="currentCandidate?.cvId"></app-candidate-list-card>
+        </div>
+    <form action="#" [formGroup]="form">
+      
+      <div class="col-9 wrap-onboard-date" *ngIf="nextStatus.title === 'Onboard'">
+        <label for="date" class="required">Onboard Date</label>
+        <div class="input-group">
+          <input class="form-control" formControlName="onboardDate" placeholder="yyyy-mm-dd" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+              <img src="https://ng-bootstrap.github.io/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+            </button>
+          </div>
+          <div *ngIf="onboardDate.invalid && (onboardDate.dirty || onboardDate.touched || isSubmitted)" class="error">
+            <div *ngIf="onboardDate.errors.required">
+              Date is required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div footer>
+    <button type="button" class="btn btn-outline-primary" [disabled]="form.invalid && show" (click)="submit()">Submit</button>
+  </div>
+</app-modal>

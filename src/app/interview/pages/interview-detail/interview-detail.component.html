@@ -1,0 +1,416 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        Detail Interview
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a href="#" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="javascript: void(0);" class="m-nav__link" (click)="backToList()">
+            <span class="m-nav__link-text">
+              Interview
+            </span>
+          </a>
+        </li>
+        <li class="m-nav__separator">
+          -
+        </li>
+        <li class="m-nav__item">
+          <a href="javascript: void(0);" class="m-nav__link">
+            <span class="m-nav__link-text">
+              Detail
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+  <!--begin::Portlet-->
+  <div class="m-portlet">
+    <!--<div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+          <h3 class="m-portlet__head-text">
+            Detail interview
+          </h3>
+        </div>
+      </div>
+    </div>-->
+
+    <!--Begin Tabs -->
+    <form [formGroup]="formInterview" (keyup.enter)="$event.preventDefault()">
+      <div class="m-portlet m-portlet--full-height m-portlet--tabs">
+        <div class="m-form__content">
+          <div class="m-alert m-alert--icon alert alert-danger" *ngIf="error.isError" role="alert">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+              {{ error.message }}
+            </div>
+            <div class="m-alert__close">
+              <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+            </div>
+          </div>
+        </div>
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-tools">
+            <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--left m-tabs-line--primary" role="tablist">
+              <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link " [class.active]="activeComment ==='false'" data-toggle="tab" href="#m_general_info" role="tab"
+                  ng-reflect-href="m_general_info">
+                  <i class="flaticon-share m--hide"></i>
+                  General information
+                </a>
+              </li>
+              <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" [class.active]="activeComment==='true'" data-toggle="tab" href="#m_candidates" role="tab"
+                  ng-reflect-href="#m_candidates">
+                  Candidates
+                </a>
+              </li>
+              <!-- <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_interviewers" role="tab" ng-reflect-href="#m_interviewers">
+                  Interviewers
+                </a>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane" [class.active]="activeComment==='false'" id="m_general_info">
+            <!--begin::Form-->
+            <div class="m-form m-form--fit m-form--label-align-right">
+              <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    Title *
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control m-input" formControlName="title" maxlength="255" placeholder="Enter interview's title">
+                      <div class="error-no-padding" *ngIf="title.touched && title.invalid">
+                        Title is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12" required>
+                    Location *
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control m-input" formControlName="location" maxlength="255" placeholder="Enter interview's location">
+                      <div class="error-no-padding" *ngIf="location.touched && location.invalid">
+                        Location is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    Start Time *
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="m-input-icon m-input-icon--left">
+                      <div class="input-group">
+                        <input class="form-control" formControlName="startTime" (ngModelChange)="onSelectStartTime($event, d1)" readonly ngbDatepicker
+                          #d1="ngbDatepicker" placeholder="dd/mm/yyyy">
+                        <div class="error" *ngIf="startDateError">
+                          Start Day doesn't accept passed day initial day.
+                        </div>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary my-btn-group" (click)="d1.toggle()" type="button" style="padding:4px;">
+                            <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <ngb-timepicker formControlName="ngbTimeStart" readonly></ngb-timepicker>
+                      <div class="error-no-padding" *ngIf="ngbTimeStart.touched && ngbTimeStart.invalid">
+                        Time is required.
+                      </div>
+                      <div class="error-no-padding" *ngIf="ngbStartTimeError">
+                        Start Time must smaller than End Time.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    End Time *
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="m-input-icon m-input-icon--left">
+                      <div class="input-group">
+                        <input class="form-control" formControlName="endTime" (ngModelChange)="onSelectEndTime($event, d2)" readonly ngbDatepicker
+                          #d2="ngbDatepicker" placeholder="dd/mm/yyyy">
+                        <div class="error-no-padding" *ngIf="endDateError">
+                          End Day must greater than Start Day.
+                        </div>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary my-btn-group" (click)="d2.toggle()" type="button" style="padding:4px;">
+                            <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <ngb-timepicker formControlName="ngbTimeEnd" readonly></ngb-timepicker>
+                      <div class="error-no-padding" *ngIf="ngbTimeEnd.touched && ngbTimeEnd.invalid">
+                        Time is required.
+                      </div>
+                      <div class="error-no-padding" *ngIf="ngbEndTimeError">
+                        End Date Time must greater than Start Date Time.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    Status *
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="input-group">
+                      <select class="form-control m-input" formControlName="statusId">
+                        <option *ngFor="let status of listStatus" [ngValue]="status" [selected]="interview?.statusId?.id === status?.id">
+                          {{ status?.title }}
+                        </option>?
+                      </select>
+                      <div class="error-no-padding" *ngIf="statusId.touched && statusId.invalid">
+                        Status is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    Note
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <textarea type="text" class="form-control m-input" formControlName="note" maxlength="255" placeholder="Enter your url"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="m-form__actions m-form__actions">
+                <div class="row">
+                  <div class="col-lg-9 ml-lg-auto m_interviewers tab-pane">
+                    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || formInterview.invalid" (click)="updateInterview()">
+                      Update
+                    </button>
+                    <button type="reset" class="btn btn-secondary" [disabled]="isSubmitting" (click)="backToList()">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end::Form-->
+          </div>
+          <div class="tab-pane" [class.active]="activeComment==='true'" id="m_candidates">
+            <div class="m-form m-form--fit m-form--label-align-right">
+              <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                  <div class="col-4 left-candidate-list">
+                    <app-candidate-list [interview]="interview"></app-candidate-list>
+                  </div>
+                  <div class="col-8 right-candidate-list">
+                    <h3 style="text-align: center; padding-top: 20px;">{{ currentCandidate?.cvId?.fullName }}</h3>
+                    <div class="list_comment">
+                      <app-comment-list [interview]="interview">
+                      </app-comment-list>
+                    </div>
+
+                    <div class="send-comment-form row">
+                      <textarea type="text" class="form-control inputcomment" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}" id="myComment"
+                        placeholder="Enter your comment"></textarea>
+                      <button class="btn btn-primary btncomment" type="button" (click)="sendComment()">
+                        <i class="la la-send-o" style="font-size: 15px; margin-right: 4px;"></i>Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="m_interviewers">
+            <div class="m-form m-form--fit m-form--label-align-right">
+              <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    Interviewers *
+                  </label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <button class="btn btn-primary" data-toggle="modal" type="button" data-target="#m_modal_add_user" style="margin-bottom: 1%">Add more interviewer</button>
+                    <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Full Name</th>
+                          <th>Department</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="interview?.userCollection && interview?.userCollection.length > 0">
+                        <tr *ngFor="let user of interview?.userCollection; let i = index;">
+                          <th scope="row">{{ i + 1 }}</th>
+                          <td>{{ user?.fullName }}</td>
+                          <td>{{ user?.departmentId.title }}</td>
+                          <td>
+                            <a href="javascript: void(0);">
+                              <i class="la la-trash" (click)="onDeleteUser(user?.id)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!-- DISPLAY NOT FOUND MESSAGE -->
+                    <div *ngIf="interview?.userCollection && interview?.userCollection.length === 0" class="align-center">
+                      <p>No interviewers've been chosen</p>
+                    </div>
+                    <!-- END::DISPLAY NOT FOUND MESSAGE -->
+                    <div class="error-no-padding" *ngIf="userCollection.invalid">
+                      User Collection is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="m-portlet__foot m-portlet__foot--fit" style="padding: 2%">
+
+
+        </div> -->
+      </div>
+    </form>
+  </div>
+  <!--end::Portlet-->
+  <div class="modal fade" id="m_modal_add_candidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Choose candidates
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              &times;
+            </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="200">
+            <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Full Name</th>
+                  <th>Experience</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="listCandidateByRequestId && listCandidateByRequestId.length > 0">
+                <tr *ngFor="let candidate of listCandidateByRequestId; let i = index;">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ candidate?.cvId.fullName }}</td>
+                  <td>{{ candidate?.cvId.experienceId.title }}</td>
+                  <td>
+                    <a href="javascript: void(0);">
+                      <i class="la la-plus-circle" (click)="onAddCandidate(candidate?.id)"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- DISPLAY NOT FOUND MESSAGE -->
+            <div *ngIf="listCandidateByRequestId && listCandidateByRequestId?.length === 0" class="align-center">
+              <p>No candidates</p>
+            </div>
+            <!-- END::DISPLAY NOT FOUND MESSAGE -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="m_modal_add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Choose interviewers
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">
+              &times;
+            </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="200">
+            <div class="row" style="margin-bottom: 1%">
+              <label class="col-form-label col-lg-5 col-sm-12">
+                Choose department *
+              </label>
+              <div class="col-lg-7 col-md-9 col-sm-12">
+                <select class="form-control m-input" name="option" (change)="changeUser($event)">
+                  <option *ngFor="let department of listDepartment" [value]="department?.id">
+                    {{ department?.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Full Name</th>
+                  <th>Department</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="listUser && listUser?.length > 0">
+                <tr *ngFor="let user of listUser; let i = index;">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ user?.fullName }}</td>
+                  <td>{{ user?.departmentId.title }}</td>
+                  <td>
+                    <a href="javascript: void(0);">
+                      <i class="la la-plus-circle" (click)="onAddUser(user?.id)"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- DISPLAY NOT FOUND MESSAGE -->
+            <div *ngIf="listUser && listUser?.length === 0" class="align-center">
+              <p>No interviewers</p>
+            </div>
+            <!-- END::DISPLAY NOT FOUND MESSAGE -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-priamry" data-dismiss="modal">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

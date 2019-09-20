@@ -1,0 +1,211 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Admin
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="#" class="m-nav__link" (click)="navUserList()">
+              <span class="m-nav__link-text">
+                User
+              </span>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="#" class="m-nav__link">
+              <span class="m-nav__link-text" (click)="navUserList()">
+                List
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content">
+    <div class="m-portlet">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              All users
+            </h3>
+          </div>
+        </div>
+        <div class="m-portlet__head-tools">
+          <button type="submit" class="btn btn-success m-btn--icon m-btn--air" data-toggle="modal" data-target="#createUserFormModal"
+            (click)="navUserCreate()">
+            <span>
+              <i class="la la-plus"></i>
+              <span>
+                New user
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="m-portlet__body">
+        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+          <div class="row align-items-center">
+            <!-- FILTER -->
+            <div class="col-md-12 col-lg-8">
+              <form #filterForm="ngForm">
+                <div class="form-group m-form__group row align-items-center">
+                  <div class="col-md-4 col-lg-4">
+                    <div class="form-group m-form__group">
+                      <select class="form-control m-input" ngModel #roleId="ngModel" name="roleId">
+                        <option value="">Select role</option>
+                        <option *ngFor="let role of roles" value="{{ role?.id }}">
+                          {{ role?.roleName | role | summary: 20 }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-lg-2">
+                    <a class="btn btn-info m-btn m-btn--icon" href="#" ng-reflect-href="#" (click)="filter(roleId)">
+                      <span>
+                        <i class="la la-filter"></i>
+                        <span>
+                          Filter
+                        </span>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- END::FILTER -->
+            <!-- SEARCH -->
+            <div class="col-md-4 col-lg-4">
+              <div class="m-input-icon m-input-icon--left">
+                <input ngModel #queryForm="ngModel" name="queryForm" class="form-control m-input" placeholder="Search username, email or full name..."
+                  type="text" (keyup.enter)="search(queryForm)" [maxlength]="config.searchMaxLength" appUserSearchBox>
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                  <span>
+                    <i class="la la-search"></i>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <!-- END::SEARCH -->
+          </div>
+        </div>
+        <div class="m-section">
+          <div class="m-section__content">
+            <!-- TABLE -->
+            <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th sortable-column="username">Username</th>
+                  <th sortable-column="email">Email</th>
+                  <th sortable-column="fullName">Full name</th>
+                  <th sortable-column="roleId.roleName">Role</th>
+                  <th sortable-column="departmentId.title">Department</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody *ngIf="users && users.length > 0">
+                <tr *ngFor="let user of users; let i = index;">
+                  <th scope="row">{{ requestPage.size * requestPage.number + i + 1 }}</th>
+                  <td>
+                    <a href="#" (click)="onUpdate(user)" placement="top" ngbTooltip="{{ user?.username }}">{{ user?.username | summary: 20}}</a>
+                  </td>
+                  <td>
+                    <span placement="top" ngbTooltip="{{ user?.email | summary: 30 }}">{{ user?.email | summary: 20}}</span>
+                  </td>
+                  <td>
+                    <span placement="top" ngbTooltip="{{ user?.fullName | summary: 30 }}">{{ user?.fullName | summary: 20}}</span>
+                  </td>
+                  <td>
+                    <span *ngFor="let role of user.roleCollection" style="margin-left: 1%">
+                      <span placement="top" ngbTooltip="{{ role?.roleName }}">
+                        {{ role?.roleName | role | summary: 20 }}
+                      </span>
+                    </span>
+                  </td>
+                  <td>
+                    <span placement="top" ngbTooltip="{{ user?.departmentId?.title }}">{{ user?.departmentId?.title | summary: 30 }}</span>
+                  </td>
+                  <td>
+                    <ul class="actions">
+                      <li>
+                        <i class="la la-edit" placement="top" ngbTooltip="Update user" (click)="onUpdate(user)"></i>
+                      </li>
+                      <li>
+                        <i class="la la-check" placement="top" ngbTooltip="Set in-active" *ngIf="user?.isActive" (click)="onSetStatus(user)"></i>
+                        <i class="la la-close" placement="top" ngbTooltip="Set active" *ngIf="!user?.isActive" (click)="onSetStatus(user)"></i>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- END::TABLE -->
+
+            <!-- SHOW MESSAGE -->
+            <div *ngIf="resultMessage?.length > 0" class="align-center">
+              <div class="align-center">
+                <p>{{ resultMessage }}</p>
+              </div>
+            </div>
+            <!-- END::SHOW MESSAGE -->
+
+            <!-- PAGINATION -->
+            <div class="row align-items-end" *ngIf="requestPage && requestPage.totalElements > 0">
+              <div class="col-12">
+                <div class="float-right">
+                  <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                    <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first">
+                      <i class="la la-angle-double-left"></i>
+                    </button>
+                    <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first">
+                      <i class="la la-angle-left"></i>
+                    </button>
+                  </div>
+                  <div class="pagination__page-number">
+                    <p>Page {{ !requestPage ? 0 : (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages
+                      || 0}}
+                    </p>
+                  </div>
+                  <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                    <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last">
+                      <i class="la la-angle-right"></i>
+                    </button>
+                    <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last">
+                      <i class="la la-angle-double-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END::PAGINATION -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- BEGIN::CREATE DEPARTMENT MODAL -->
+<div *ngIf="isModalOpen" class="modal fade" id="modal_confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <app-set-active [isActive]="!selectedUser?.isActive" [userId]="selectedUser?.id" (submitted)="onStatusChanged($event)" (cancelModal)="closeModal($event)"></app-set-active>
+  </div>
+</div>
+<!-- END::CREATE DEPARTMENT MODAL -->

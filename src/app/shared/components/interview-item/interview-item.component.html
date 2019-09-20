@@ -1,0 +1,87 @@
+<div class="interview">
+  <div class="row">
+    <div class="col-sm-1 col-md-1 d-flex align-items-center">
+      <div class="icon">
+        <i class="width-height la la-user"></i>
+      </div>
+    </div>
+    <div class="col-sm-10 col-md-10 d-flex flex-row align-items-center wrap-content">
+      <span class="color-text">Interviewees: </span>
+      <ul class="avatar-list d-flex flex-row">
+        <li *ngFor="let c of interview?.candidateCollection">
+          <app-avatar class="padding-horizontal-10" title="{{c?.cvId?.fullName}}" size="m" isRounded='true' src="{{ c?.cvId?.profileImg | resourcePublic }}"></app-avatar>
+        </li>
+      </ul>
+      <i *ngIf="canEditInterview" class="la la-user-plus rts-action" title="Add interviewees" (click)="addCandidate()"></i>
+    </div>
+    <div class="col-sm-1 col-md-1 d-flex align-items-center">
+      <a class="btn" href="#" id="dropdownMenuButton"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="icon">
+          <i class="la la-ellipsis-v"></i>
+      </div>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" (click)='navigateToComment(interview.id)' href="#">
+          <span>Comment</span>
+        </a>
+        <a class="dropdown-item"  href="#">
+          <span (click)="sendMeetingRequest()">Send meeting request</span>
+          
+          <!-- <app-send-meeting-request *ngIf="(currentModal$ | async) === modalSendMeetingRequest" ></app-send-meeting-request> -->
+        </a>
+        <a class="dropdown-item" (click)='navigateToInterviewDetail(interview.id)' href="#">
+          <span>View detail</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center ">
+    <div class="col-sm-1 col-md-1 d-flex align-items-center">
+      <div class="icon">
+        <i class="width-height text-right la la-child"></i>
+      </div>
+    </div>
+    <div class="col-sm-11 col-md-11 d-flex flex-row align-items-center wrap-content">
+      <span class="color-text">Interviewers: </span>
+      <ul class="avatar-list d-flex flex-row align-items-center">
+        <li *ngFor="let i of interview?.userCollection">
+          <app-avatar class="padding-horizontal-10" title="{{i?.fullName}}" size="m" isRounded='true' src="{{ i?.avatarUrl | resourceStatic }}"></app-avatar>
+        </li>
+      </ul>
+      <i *ngIf="canEditInterview" class="la la-user-plus rts-action" title="Add interviewers" (click)="addInterviewer()"></i>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-1 col-md-1 d-flex align-items-center">
+      <div class="icon">
+        <i class="width-height la la-clock-o"></i>
+      </div>
+    </div>
+    <div class="color-text col-sm-11 col-md-11 d-flex align-items-center wrap-content">
+      <span style="margin-right: 0.5em">From</span>
+      <span class="content-color-text">{{ (interview?.startTime | date: 'medium')}}</span>
+      <span style="margin-left: 0.5em; margin-right: 0.5em">to</span>
+      <span class="content-color-text">{{ (interview?.endTime | date: 'medium') }}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-1 col-md-1 d-flex align-items-center">
+      <div class="icon">
+        <i class="width-height la la-map-marker"></i>
+      </div>
+    </div>
+    <div class="content-color-text col-sm-11 col-md-11 d-flex align-items-center wrap-content">
+      {{ interview?.location }}
+    </div>
+  </div>
+  <div class="row" *ngIf="interview?.note">
+    <div class="col-sm-1 col-md-1 d-flex align-items-center">
+      <div class="icon">
+        <i class="width-height la flaticon-edit"></i>
+      </div>
+    </div>
+    <div class="content-color-text col-sm-11 col-md-11 d-flex align-items-center wrap-content">
+      {{ interview?.note }}
+    </div>
+  </div>
+</div>

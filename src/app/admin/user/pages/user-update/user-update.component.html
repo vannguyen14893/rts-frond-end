@@ -1,0 +1,225 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Admin
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="#" class="m-nav__link" (click)="navUserList()">
+              <span class="m-nav__link-text">
+                User
+              </span>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="#" class="m-nav__link">
+              <span class="m-nav__link-text">
+                Update
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content">
+    <div class="m-portlet">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              Update user
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="m-portlet__body">
+        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div *ngIf="errorMessage.length > 0" class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+                {{ errorMessage }}
+              </div>
+              <div *ngIf="successMessage.length > 0" class="m-alert m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+                {{ successMessage }}
+                <br> Redirecting to list page in {{ timer }} second(s).
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-section">
+          <div class="m-section__content">
+            <!-- BEGIN::Form -->
+            <form [formGroup]="form" class="row justify-content-center">
+              <div class="col-4">
+                <div class="form-group row">
+                  <div class="col-12">
+                    <label for="fullName" class="form-control-label">
+                      Full name
+                    </label>
+                    <input type="text" class="form-control" id="fullName" formControlName="fullName" [maxlength]="inputConstraints.varcharMaxLength" appNoSpecialKey>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <div class="col-12">
+                    <label for="username" class="form-control-label required">
+                      Username
+                    </label>
+                    <input type="text" class="form-control" id="username" formControlName="username" (blur)="checkUsername()" appUsername [maxlength]="inputConstraints.varcharMaxLength">
+                    <div *ngIf="username.touched && username.invalid">
+                      <div class="error" *ngIf="username.errors.required">
+                        Username is required.
+                      </div>
+                      <div class="error" *ngIf="username.errors.duplicate">
+                        Username exists.
+                        <a href="javascript: void(0);" (click)="navUserNameDetailUrl()">Click here</a> to view user detail.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <label for="email" class="form-control-label required">
+                      Email
+                    </label>
+                    <input type="email" class="form-control" id="email" formControlName="email" (blur)="checkEmail()" appEmail [maxlength]="inputConstraints.varcharMaxLength">
+                    <div class="error" *ngIf="email.touched && email.invalid">
+                      <div *ngIf="email.errors.required || email.errors.email">
+                        Valid email is required.
+                      </div>
+                      <!-- <div *ngIf="email.errors.email">
+                            Invalid email format.
+                          </div> -->
+                      <div *ngIf="email.errors.duplicate">
+                        Email exists.
+                        <a href="javascript: void(0);" (click)="navEmailDetailUrl()">Click here</a> to view user detail.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <div class="col-12">
+                    <label class="form-control-label required">
+                      Department
+                    </label>
+                    <div class="input-group">
+                      <select class="form-control m-input" id="department" 
+                      formControlName="department"
+                      >
+                        <option value="">Select department</option>
+                        <option *ngFor="let department of departments" [value]="department.id">
+                          {{ department?.title }}
+                        </option>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-primary m-btn m-btn--icon no-border-left" style="height: calc(2.55rem + 2px); border-top-left-radius: 0; border-bottom-left-radius: 0; border-color: #ebedf2;"
+                          type="button" (click)="onNewDepartment()">
+                          <i class="la la-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="error" *ngIf="department.touched && department.invalid">
+                      <div *ngIf="department.errors.required">
+                        Department is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <label for="role" class="form-control-label required">
+                      Role
+                    </label>
+                    <select class="form-control" id="role" 
+                    formControlName="role">
+                      <option value="">Select role</option>
+                      <option *ngFor="let role of roles" [value]="role.id">
+                        {{ role?.roleName | role }}
+                      </option>
+                    </select>
+                    <div class="error" *ngIf="role.touched && role.invalid">
+                      <div *ngIf="role.errors.required">
+                        Role is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <label for="group" class="form-control-label required">
+                      Group
+                    </label>
+                    <select class="form-control" id="group" 
+                    formControlName="group">
+                      <option value="">Select group</option>
+                      <option *ngFor="let group of groups" [value]="group.id">
+                        {{ group?.title}}
+                      </option>
+                    </select>
+                    <div class="error" *ngIf="group.touched && group.invalid">
+                      <div *ngIf="group.errors.required">
+                        Group is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()" [disabled]="form.invalid || loading">
+                      Submit
+                    </button>
+                    <button type="button" class="btn btn-warning" (click)="onReset()" [disabled]="loading">
+                      Reset
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancel()" [disabled]="loading">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- END::Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- BEGIN::CREATE DEPARTMENT MODAL -->
+<div class="modal fade" id="modal_add_department" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Create new Department
+        </h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            &times;
+          </span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        <app-department-create (submitted)="departmentSubmitted($event)"></app-department-create>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END::CREATE DEPARTMENT MODAL -->

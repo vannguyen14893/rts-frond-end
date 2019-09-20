@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-12 my-tab-container">
+      <div *ngFor="let tab of tabs" class="my-tab" [ngClass]="tab.isActive ? 'active' : 'inactive'" (click)="switchTab(tab.tabName)">
+        <p><span class="name">{{ tab.tabName }}</span>
+          <span class="m-badge m-badge--info">
+            {{ tab.badgeNumber }}
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="col-12 wrap-my-tab-content">
+      <div class="my-tab-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="log container">
+  <div class="log-container row">
+    <div class="wrap-head-log col-12">
+      <app-avatar src="{{log?.actor?.avatarUrl | resourceStatic}}" size="m"></app-avatar>
+      <div class="log__text">
+        <div class="log__header">
+          <p class="log__username">
+            {{ log?.actor?.fullName }}
+          </p>
+          <div class="wrap-detail-log">
+            <p class="log__message">
+              {{ log?.action }}
+            </p>
+            <p class="circle"></p>
+            <p class="log__timestamp">
+              {{ log?.log_time | date: 'medium'}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="log__content col-12">
+      <p *ngFor="let item of arr">
+        {{ item }}
+      </p>
+  </div>
+</div>

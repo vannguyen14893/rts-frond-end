@@ -1,0 +1,177 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Prioritiy
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="javascript: void(0);" class="m-nav__link">
+              <span class="m-nav__link-text">
+                Priority
+              </span>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="javascript: void(0);" class="m-nav__link">
+              <span class="m-nav__link-text">
+                List
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content">
+    <div class="row">
+      <div class="col-12">
+        <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                  <span *ngIf="listPriority"> List Priority </span>
+                </h3>
+              </div>
+            </div>
+            <div class="m-portlet__head-tools">
+              <button _ngcontent-c7="" class="btn btn-success m-btn--icon m-btn--air" type="button" (click)="openModal()">
+                <span _ngcontent-c7="">
+                  <i _ngcontent-c7="" class="la la-plus"></i>
+                  <span _ngcontent-c7="">
+                    New Priority
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="m-portlet__body">
+            <div class="m-section">
+              <div class="m-section__content">
+                <!-- TABLE -->
+                <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th sortable-column="title">Title</th>
+                      <th sortable-column="description">Description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <!-- SHOW MESSAGE -->
+                  <!-- <div *ngIf="resultMessage.length > 0" class="align-center">
+                      <p>{{ resultMessage }}</p>
+                    </div> -->
+                  <!-- END::SHOW MESSAGE -->
+                  <tbody *ngIf="listPriority && listPriority?.length > 0">
+                    <tr *ngFor="let priority of listPriority; let i = index;">
+                      <th scope="row">{{ requestPage.size * requestPage.number + i + 1 }}</th>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ priority?.title }}">{{ priority?.title | summary: 20}}</span>
+                      </td>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ priority?.description }}">
+                          {{ priority?.description | summary: 50}}
+                        </span>
+                      </td>
+                      <td>
+                        <a href="javascript: void(0);">
+                          <i class="la la-edit" (click)="onDetail(priority)" placement="top" ngbTooltip="View detail">
+                          </i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- END::TABLE -->
+
+                <!-- PAGINATION -->
+                <div class="row align-items-end" *ngIf="requestPage?.totalElements > 0">
+                  <div class="col-12">
+                    <div class="float-right">
+                      <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first">
+                          <i class="la la-angle-double-left"></i>
+                        </button>
+                        <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first">
+                          <i class="la la-angle-left"></i>
+                        </button>
+                      </div>
+                      <div class="pagination__page-number">
+                        <p>Page {{ (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages
+                          }}
+                        </p>
+                      </div>
+                      <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                        <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last">
+                          <i class="la la-angle-right"></i>
+                        </button>
+                        <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last">
+                          <i class="la la-angle-double-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END::PAGINATION -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_add_priority" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Create new Priority
+        </h5>
+      </div>
+      <div class="modal-body">
+        <app-priority-create (submitted)="prioritySubmitted($event)"></app-priority-create>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          Done
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_update_priority" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Update Priority
+        </h5>
+      </div>
+      <div class="modal-body">
+        <app-priority-update [oldPriority]="oldPriority" (submitted)="priorityUpdated($event)"></app-priority-update>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          Done
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>

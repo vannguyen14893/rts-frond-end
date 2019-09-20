@@ -1,0 +1,12 @@
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <app-header></app-header>
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body main-content">
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <swal #unauthorizedSwal title="Permission denied" text="You are not allowed to perform this action." type="error" [showCancelButton]="false"
+        [showConfirmButton]="true" (confirm)="closeSwal()" (close)="closeSwal()">
+    </swal>
+    <app-footer></app-footer>
+</div>

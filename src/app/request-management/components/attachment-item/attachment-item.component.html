@@ -1,0 +1,10 @@
+<ul class="wrap-attachment-item">
+  <li *ngFor="let cvUrl of cvUrls" class="attachment-item">
+    <a style="cursor: pointer;" (click)="viewFileCv(cvUrl.url)"
+       ngbTooltip='click open file'>
+      <img src={{cvUrl.path}} alt="pdf-icon">
+      <br>
+      {{ cvUrl.url }}
+    </a>
+  </li>
+</ul>

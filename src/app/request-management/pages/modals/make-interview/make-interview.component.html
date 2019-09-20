@@ -1,0 +1,149 @@
+<app-modal header="Make interview" (callback)="onCallBack()">
+  <div body>
+    <div *ngIf="message && message.type==='error' && message.message.length > 0" class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show"
+      role="alert">
+      <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+      {{ message.message }}
+    </div>
+    <div *ngIf="!selectedCandidates || selectedCandidates?.length === 0; else myForm">
+      <p>Please select candidates first.</p>
+    </div>
+    <ng-template #myForm>
+      <form action="#" [formGroup]="form">
+        <div class="form-group">
+          <label for="candidateList">Selected candidates</label>
+          <!-- <div class="form-control"> -->
+          <!-- <app-avatar *ngFor="let candidate of selectedCandidates" src="{{ candidate?.cvId?.profileImg | resourcePublic }}" size="m"></app-avatar> -->
+
+          <ng-select [items]="qualifiedCandidates" [(ngModel)]="selectedCandidates" [multiple]="true" bindLabel="cvId.fullName" formControlName="candidateCollection">
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+              <span class="ng-value-label">
+                <img [src]="item.cvId.profileImg | resourcePublic" width="20px" height="20px">
+                <span class="full-name">{{item.cvId.fullName}}</span>
+              </span>
+              <span class="ng-value-icon right" (click)="clear(item); $event.stopPropagation()" aria-hidden="true">×</span>
+            </ng-template>
+
+            <ng-template ng-option-tmp let-item="item">
+              <img [src]="item.cvId.profileImg | resourcePublic" width="20px" height="20px">
+              <span class="full-name">{{item.cvId.fullName}}</span>
+            </ng-template>
+          </ng-select>
+
+          <!-- </div> -->
+        </div>
+        <div class="form-group">
+          <label for="title" class="required">Title</label>
+          <div class="input-group">
+            <input type="text" class="form-control" [maxlength]="255" placeholder="English skill interview" formControlName="title">
+            <div *ngIf="title.invalid && (title.dirty || title.touched || isSubmitted)" class="error">
+              <div *ngIf="title.errors.required">
+                Title is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="location" class="required">Location</label>
+          <div class="input-group">
+            <input type="text" class="form-control" [maxlength]="255" placeholder="CMC Tower, 11 Duy Tan str., Cau Giay dist., Hanoi"
+              formControlName="location">
+            <div *ngIf="location.invalid && (location.dirty || location.touched || isSubmitted)" class="error">
+              <div *ngIf="location.errors.required">
+                Location is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- start time -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col-5">
+              <label for="date" class="required">Date</label>
+              <div class="input-group">
+                <input class="form-control" formControlName="date" [minDate]="today" placeholder="yyyy-mm-dd" ngbDatepicker #d2="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+                    <img src="https://ng-bootstrap.github.io/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                  </button>
+                </div>
+                <div *ngIf="date.invalid && (date.dirty || date.touched || isSubmitted)" class="error">
+                  <div *ngIf="date.errors.required">
+                    Date is required.
+                  </div>
+                  <div *ngIf="date.errors.minDate">
+                    Date must be greater than today.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3" style="padding-left: 0px; padding-right: 0px;">
+              <label for="time" class="required">Time</label>
+              <select name="time" id="time" formControlName="time" class="form-control">
+                <option *ngFor="let time of times" [value]="time"> {{ time }}</option>
+              </select>
+              <div *ngIf="time.invalid && (time.dirty || time.touched || isSubmitted)" class="error">
+                <div *ngIf="time.errors.required">
+                  Time is required.
+                </div>
+                <div *ngIf="time.errors.conflict">
+                  Time conflict.
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="duration" class="required">Duration</label>
+              <select name="duration" id="duration" formControlName="duration" class="form-control">
+                <option *ngFor="let duration of durations" value="{{ duration.value }}"> {{ duration.display }}</option>
+              </select>
+              <div *ngIf="duration.invalid && (duration.dirty || duration.touched || isSubmitted)" class="error">
+                <div *ngIf="duration.errors.required">
+                  Duration is required.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end::start time -->
+        <!-- interviewers -->
+        <div class="form-group">
+          <label for="interviewers">Interviewers</label>
+          <ng-select [items]="allUsers" [multiple]="true" bindLabel="fullName" formControlName="userCollection">
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+              <span class="ng-value-label">
+                <img [src]="item.avatarUrl | resourceStatic" width="20px" height="20px">
+                <span class="full-name">{{item.fullName}}</span>
+              </span>
+              <span class="ng-value-icon right" (click)="clear(item); $event.stopPropagation()" aria-hidden="true">×</span>
+            </ng-template>
+
+            <ng-template ng-option-tmp let-item="item">
+              <img [src]="item.avatarUrl | resourceStatic" width="20px" height="20px">
+              <span class="full-name">{{item.fullName}}</span>
+            </ng-template>
+          </ng-select>
+          <div *ngIf="userCollection.invalid && (userCollection.dirty || userCollection.touched || isSubmitted)" class="error">
+            <div *ngIf="userCollection.errors.required">
+              Interviewers is required.
+            </div>
+          </div>
+        </div>
+        <!-- end::interviewers -->
+        <!-- note -->
+        <div class="form-group">
+          <label for="note">Note</label>
+          <textarea formControlName="note" [maxlength]="255" name="note" id="note" rows="3" class="form-control"></textarea>
+        </div>
+        <!-- end::note -->
+      </form>
+    </ng-template>
+  </div>
+  <div footer>
+    <div *ngIf="!selectedCandidates || selectedCandidates?.length === 0; else submitButton">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    </div>
+    <ng-template #submitButton>
+      <button type="button" class="btn btn-outline-primary" (click)="submit()">Submit</button>
+    </ng-template>
+  </div>
+</app-modal>

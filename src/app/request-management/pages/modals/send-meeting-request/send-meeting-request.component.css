@@ -1,0 +1,50 @@
+.interviewer-list {
+    width: 100%;
+  }
+  .interviewer-list ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+  }
+  .interviewer-list ul li:not(:first-child) {
+    margin-left: 10px;
+  }
+  
+  .search-user {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .search-result {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .search-result ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* search result */
+  .candidate-list-section {
+    margin-top: 15px;
+    padding: 2rem 1rem;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .candidate-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 0px;
+  }
+  .candidate-list-item:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 5px;
+  }
+  /* end::search result */

@@ -1,0 +1,81 @@
+ <app-modal header="Send meeting request">
+  <div body>
+    <div class="search-user">
+        <form [formGroup]="meetingRequest" (ngSubmit)="onSubmit()" class="row justify-content-center">
+          <div class="col-12">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-md-2 col-sm-12">
+                    Title
+                  </label>
+                  <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control m-input" formControlName="title" maxlength="255" placeholder="Enter interview's title">
+                  
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-md-2 col-sm-12" required>
+                    Location
+                  </label>
+                  <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control m-input" formControlName="location" maxlength="255" placeholder="Enter interview's location">
+                     
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-md-2 col-sm-12">
+                    Start Time
+                  </label>
+                  <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="m-input-icon m-input-icon--left">
+                      <div class="input-group">
+                        <input class="form-control" formControlName="startTime" (ngModelChange)="onSelectStartTime($event, d1)" readonly ngbDatepicker
+                          #d1="ngbDatepicker" placeholder="dd/mm/yyyy">
+                        <!-- <div class="error" *ngIf="startDateError">
+                          Start Day doesn't accept passed day initial day.
+                        </div> -->
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary my-btn-group" (click)="d1.toggle()" type="button" style="padding:4px;">
+                            <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <ngb-timepicker formControlName="ngbTimeStart" readonly></ngb-timepicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-3 col-md-2 col-sm-12">
+                    End Time
+                  </label>
+                  <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="m-input-icon m-input-icon--left">
+                      <div class="input-group">
+                        <input class="form-control" formControlName="endTime" (ngModelChange)="onSelectEndTime($event, d2)" readonly ngbDatepicker
+                          #d2="ngbDatepicker" placeholder="dd/mm/yyyy">
+                        <!-- <div class="error-no-padding" *ngIf="endDateError">
+                          End Day must greater than Start Day.
+                        </div> -->
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary my-btn-group" (click)="d2.toggle()" type="button" style="padding:4px;">
+                            <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <ngb-timepicker formControlName="ngbTimeEnd" readonly></ngb-timepicker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>
+      </form>
+    </div>
+  </div>
+  <div footer>
+    <button type="submit" class="btn btn-outline-primary" (click)='onSubmit()'  >Submit</button>
+  </div>
+</app-modal>

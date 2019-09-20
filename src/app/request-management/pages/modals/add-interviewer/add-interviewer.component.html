@@ -1,0 +1,32 @@
+<app-modal header="Add interviewer">
+  <div body>
+    <div *ngIf="message && message.type==='error' && message.message.length > 0" class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show"
+      role="alert">
+      <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+      {{ message.message }}
+    </div>
+    <div class="interviewer-list">
+      <ul>
+        <li *ngFor="let user of currentInterview?.userCollection">
+          <app-avatar size="m" src="{{ user.avatarUrl | resourceStatic }}"></app-avatar>
+        </li>
+        <li *ngFor="let user of addedInterviewers">
+          <app-avatar size="m" src="{{ user.avatarUrl | resourceStatic }}"></app-avatar>
+        </li>
+      </ul>
+    </div>
+    <div class="search-user">
+      <label for="search-input">More interviewers</label>
+      <input type="text" class="form-control" id="search-input" placeholder="Search account, full name..." [(ngModel)]="searchInput"
+        (keyup)="search()">
+    </div>
+    <div class="candidate-list-section">
+      <div *ngFor="let user of searchResults" class="candidate-list-item">
+        <app-user-card [user]="user" (click)="checkUser(user)"></app-user-card>
+      </div>
+    </div>
+  </div>
+  <div footer>
+    <button type="button" class="btn btn-outline-primary" (click)="submit()">Submit</button>
+  </div>
+</app-modal>

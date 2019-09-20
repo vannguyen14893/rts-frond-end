@@ -1,0 +1,6 @@
+<div *ngIf="!isAdmin; else admin">
+  <app-request-list></app-request-list>
+</div>
+<ng-template #admin>
+  <app-user-list></app-user-list>
+</ng-template>

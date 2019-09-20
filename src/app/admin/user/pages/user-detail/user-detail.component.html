@@ -1,0 +1,98 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title">
+        My Profile
+      </h3>
+    </div>
+  </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+  <div class="row">
+    <div class="col-xl-3 col-lg-4">
+      <div class="m-portlet m-portlet--full-height">
+        <div class="m-portlet__body">
+          <div class="m-card-profile">
+            <div class="m-card-profile__title m--hide">
+              {{ user?.fullName }}
+            </div>
+            <div class="m-card-profile__pic">
+              <button type="button" class="profile btn btn-sm btn-default">
+                <div>
+                  <!-- <img src="./assets/app/media/img/users/ic_mode_edit.png" alt=""/> -->
+                  <input type="file" style="display: none;" id="uploadAvatar" (change)="onChangeAvatar($event)" accept=".jpg, .png, .jpeg">
+                  <i class="la la-edit btn-avatar-edit" (click)="openAvatarBrowser()" ngbTooltip="Maximum {{ constraints.avatarMaxSize/1024/1024}}MB"
+                    placement="top"></i>
+                </div>
+              </button>
+              <div class="m-card-profile__pic-wrapper">
+                <!-- <img src="{{ avatarBase64 }}" alt="" *ngIf="avatarBase64" class="cv-avatar__img" /> -->
+                <img src="{{ user.avatarUrl  | resourceStatic }}" alt="avatar" class="cv-avatar__img" onError="this.onerror=null;this.src='./assets/app/media/img/misc/user-avatar-default.jpg';"
+                />
+              </div>
+
+            </div>
+            <div class="m-card-profile__details">
+              <span class="m-card-profile__name">
+                {{ user?.fullName }}
+              </span>
+              <p class="m-card-profile__email">
+                {{ user?.email }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-9 col-lg-8">
+      <div class="m-portlet m-portlet--full-height m-portlet--tabs">
+        <div class="m-portlet__head">
+          <div class="m-portlet__head-tools">
+            <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
+              <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
+                  <i class="flaticon-share m--hide"></i>
+                  My Profile
+                </a>
+              </li>
+              <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
+                  Change Password
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane active" id="m_user_profile_tab_1">
+            <form class="m-form m-form--fit m-form--label-align-right">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <!-- UPDATE PROFILE FORM -->
+                    <app-update-profile-form [isAdmin]="isAdmin" [user]="user" [role]="role"></app-update-profile-form>
+                    <!-- END::UPDATE PROFILE FORM -->
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane" id="m_user_profile_tab_2">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <!-- CHANGE PASSWORD FORM -->
+                  <app-change-password-form></app-change-password-form>
+                  <!-- END::CHANGE PASSWORD FORM -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-message *ngIf="openModal" [message]="messageChangeAvatar" [size]="l" [centered]="true" (modalClosed)="modalClosed($event)"></app-modal-message>

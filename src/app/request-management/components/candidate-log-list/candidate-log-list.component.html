@@ -1,0 +1,17 @@
+<div class="candidate-log-container">
+  <p *ngIf="currentCandidateLogs?.length === 0; else history">
+    No history.
+  </p>
+  <ng-template #history>
+    <ul #scrollLogs class="candidate-log">
+      <li *ngFor="let log of currentCandidateLogs">
+        <app-log [log]="log"></app-log>
+      </li>
+    </ul>
+    <ul class="comment-list-item">
+      <li *ngFor="let comment of currentCandidate?.commentCollection ">
+        <app-comment [comment]="comment"></app-comment>
+      </li>
+    </ul>
+  </ng-template>
+</div>

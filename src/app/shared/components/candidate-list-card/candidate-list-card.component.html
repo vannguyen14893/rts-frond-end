@@ -1,0 +1,14 @@
+<div class="candidate-card">
+  <app-avatar src="{{ cv?.profileImg | resourcePublic }}" size='l' isRounded="true"></app-avatar>
+  <div class="candidate-info">
+    <div class="name"> 
+      <div class="full-name">{{ cv?.fullName }} </div>
+      <div class="status">
+        <i *ngIf="cv?.cvUrlCollection?.length" class="la la-paperclip paperclip"></i>
+        <div *ngIf="status?.title" [ngStyle]="{'color': getColor()}" title="{{status?.title}}" (click)="navigateToRequestStatusBar(status?.title, candidate)">{{status?.title}}</div>
+      </div> 
+    </div>
+    <p *ngIf="cv?.title" class="title">{{ cv?.title }} </p>
+    <p class="experience">{{ cv?.experienceId?.title }} </p>
+  </div>
+</div>

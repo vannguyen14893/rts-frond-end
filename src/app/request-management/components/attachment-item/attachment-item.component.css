@@ -1,0 +1,28 @@
+.wrap-attachment-item {
+  float: left;
+  padding: 0;
+  margin-top: 15px;
+  overflow-y: -webkit-paged-x;
+  overflow-y: -moz-paged-x;
+  overflow-y: -o-paged-x;
+  overflow-y: -ms-paged-x;
+}
+.wrap-attachment-item::-webkit-scrollbar {
+  height: 5px;
+}
+.attachment-item {
+  float: left;
+  list-style: none;
+  width: 120px;
+  margin-right: 20px;
+  text-align: center;
+}
+.attachment-item:nth-child(7n) {
+  margin-right: 10px;
+}
+.attachment-item img {
+  border-radius: 50%;
+  margin-bottom: 8px;
+  width: 40px;
+  height:40px;
+}

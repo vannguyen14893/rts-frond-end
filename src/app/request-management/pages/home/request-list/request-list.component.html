@@ -1,0 +1,591 @@
+<div class="rts-content">
+  <!-- START ROW FILTER -->
+  <div class="m-portlet__body">
+    <div class="m-form m-form--label-align-right">
+      <!-- head -->
+      <div class="head">
+        <!-- SEARCH -->
+        <div class="head_search">
+          <form class="m-input-icon m-input-icon--left">
+            <button (click)="search(title.value)" type="submit" class="search-button m-input-icon__icon m-input-icon__icon--left">
+              <span>
+                <i class="la la-search"></i>
+              </span>
+            </button>
+            <input ngModel #title="ngModel" name="title" class="form-control m-input" placeholder="Start typing to search request..."
+              type="text" (keyup.enter)="search(title.value)" appNoSpecialKey [maxLength]="255">
+          </form>
+        </div>
+        <!-- END::SEARCH -->
+
+        <!-- FILTER -->
+        <form #filterForm="ngForm">
+          <div class="head_filter">
+
+            <select name="hrId" class="form-control m-input filter head_filter_item create2 ng-dropdown-panel-items scroll-host" [(ngModel)]="requestParams.assigneeId">
+              <option value="" class="blll">All Hr</option>
+              <option *ngFor="let hr of allHrMember" value="{{ hr?.id }}" class="blll">
+                {{ hr?.fullName | summary: 18 }}
+              </option>
+            </select>
+
+            <select name="groupId" class="form-control m-input filter head_filter_item create1" [(ngModel)]="requestParams.groupId">
+              <option value="" class="blll">All Group</option>
+              <option *ngFor="let group of listGroup" value="{{ group?.id }}" class="blll">
+              {{ group?.title | summary: 18 }}
+              </option>
+            </select>
+
+            <ng-select [items]="listDepartment" bindLabel="title" bindValue="id" [multiple]="true" placeholder="All Departments" clearAllText="Clear"
+              [(ngModel)]="requestParams.departmentId" [ngModelOptions]="{standalone: true}" class="form-control m-input filter head_filter_item custom ">
+            </ng-select>
+
+            <select name="assigneeId" class="form-control m-input filter head_filter_item create2" [(ngModel)]="requestParams.assigneeId" *ngIf="isHrMember">
+              <option value="" class="blll">All Assignee</option>
+              <option *ngFor="let user of listUser" value="{{ user?.id }}" class="blll">
+                {{ user?.fullName | summary: 18 }}
+              </option>
+            </select>
+
+            <select name="priorityId" class="form-control m-input filter head_filter_item create" [(ngModel)]="requestParams.priorityId">
+              <option value="" class="blll">All Priority</option>
+              <option *ngFor="let priority of listPriority" value="{{ priority?.id }}" class="blll">
+                {{ priority?.title | summary: 18 }}
+              </option>
+            </select>
+
+            <ng-select [items]="listRequestStatus" bindLabel="title" bindValue="id" [multiple]="true" placeholder="All Status" clearAllText="Clear"
+              [(ngModel)]="requestParams.requestStatusId" [ngModelOptions]="{standalone: true}" class="form-control m-input filter head_filter_item custom">
+            </ng-select>
+
+            <span class="btn btn-info m-btn m-btn--icon btn_filter" href="#" ng-reflect-href="#" (click)="filter()">
+              <span>
+                <i class="la la-filter"></i>
+                <span>
+                  Filter
+                </span>
+              </span>
+            </span>
+            <!-- <a class="btn" *ngIf="isDuLead"> -->
+            <button style="float: right; margin-left: 15px; margin-top: -5px" class="btn btn-success m-btn--air" type="button" *ngIf="isDuLead || isGroupLead || isHrManager"
+              (click)="onCreate()" [disabled]="response.isSubmitting">
+              <span>
+                <i class="la la-plus"></i>
+                <span>
+                  New Request
+                </span>
+              </span>
+            </button>
+            <!-- </a> -->
+          </div>
+        </form>
+        <!--END:: FILTER -->
+
+      </div>
+      <!-- end head -->
+    </div>
+  </div>
+  <!-- END ROW FILTER -->
+
+  <!-- START ROW LIST REQUEST -->
+  <div *ngIf="listRequest && listRequest.length > 0">
+    <div class="rts-padding-aside" *ngFor="let request of listRequest; let i= index;">
+      <div class="card" style="border-radius: 2px" [ngClass]="{ 'warning': request?.overDue, 'notWarning': !request?.overDue}">
+        <div class="card-header" style="border-bottom: none; background-color: transparent;">
+          <div class="row wrap-card-header">
+            <!-- START HEADER TITLE -->
+            <div class="header">
+              <a [routerLink]="['/request', request.id]" (click)="onCenterDetail(request.id)">
+                <span class="rts-padding-left-2 rts-color-red status urgent" *ngIf="request?.priorityId.title === 'Urgent'">
+                  {{ request?.priorityId.title }}
+                </span>
+              </a>
+              <a [routerLink]="['/request', request.id]" (click)="onCenterDetail(request.id)">
+                <span class="rts-padding-left-2 rts-color-yellow status medium" *ngIf="request?.priorityId.title === 'Medium'">
+                  {{ request?.priorityId.title }}
+                </span>
+              </a>
+              <a [routerLink]="['/request', request.id]" (click)="onCenterDetail(request.id)">
+                <span class="rts-padding-left-2 rts-color-blue status normal" *ngIf="request?.priorityId.title === 'Normal'">
+                  {{ request?.priorityId.title }}
+                </span>
+              </a>
+              <a [routerLink]="['/request', request.id]" (click)="onCenterDetail(request.id)">
+                <span class="title-text">{{ request?.title }}</span>
+              </a>
+              <a href="#">
+                <span style="color: #9b9b9b;">
+                  <span class="from-text">from</span>
+                  <b class="department-text">{{request?.departmentId?.title}}</b>
+                  <span class="with-target-text">with target of</span>
+                </span>
+              </a>
+              <a [routerLink]="['/request', request.id]" (click)="onCenterDetail(request.id)">
+                <span style="color: black" class="rts-padding-left-2">
+                  <b class="number-people-text">{{ request?.number }}</b>
+                  <span style="color: #9b9b9b;"> people </span>
+                </span>
+              </a>
+            </div>
+            <!-- END HEADER TITLE -->
+            <div class="button-header">
+              <!-- START HEADER TOOLS-->
+              <div class="m--align-right">
+                <div class="btn-group m-btn-group">
+                  <button class="btn btn-primary" *ngIf="isHrManager && (request?.requestStatusId.title === 'Approved')" [disabled]="response.isSubmitting"
+                    data-toggle="modal" data-target="#modal-assign-member" (click)="openNewAssignMember(request)" placement="top"
+                    ngbTooltip="Assign new Hrmember">Assign</button>
+                  <!-- <button class="btn btn-primary" *ngIf="isHrManager && (request?.requestStatusId.title === 'In-Progress')"
+                    [disabled]="response.isSubmitting" data-toggle="modal" data-target="#modal-assign-member" (click)="openNewAssignMember(request)"
+                    placement="top" ngbTooltip="Assign new Hrmember">Replace All Assignee</button> -->
+                  <button class="btn btn-primary" *ngIf="(isDuLead && request?.requestStatusId.title === 'New') || (isHrManager && request?.requestStatusId.title === 'New')"
+                    (click)="onSetUpDynamicRequest(request)" placement="top" ngbTooltip="Submit to Group Lead" data-toggle="modal"
+                    data-target="#modal-submit-request" [disabled]="response.isSubmitting">
+                    <i class="la la-upload"></i>Submit</button>
+                  <button class="btn btn-success" *ngIf="(isGroupLead) && (request?.requestStatusId.title === 'Pending') &&((request?.groupId.title ==='Delivery Unit' && isGroupDU) || (request?.groupId.title ==='Back Office' && isGroupBO)|| (request?.groupId.title ==='Sale' && isGroupBO)|| (request?.groupId.title ==='QA' && isGroupBO))"
+                    [disabled]="response.isSubmitting" (click)="onSetUpDynamicRequest(request)" data-toggle="modal" data-target="#modal-approve-request">
+                    Approve</button>
+                  <button class="btn btn-danger" *ngIf="(isGroupLead) && (request?.requestStatusId.title === 'Pending') &&((request?.groupId.title ==='Delivery Unit' && isGroupDU) || (request?.groupId.title ==='Back Office' && isGroupBO)|| (request?.groupId.title ==='Sale' && isGroupBO)|| (request?.groupId.title ==='QA' && isGroupBO))"
+                    [disabled]="response.isSubmitting" (click)="rejectRequest(request)" data-toggle="modal" data-target="#modal-reject-request"
+                    style="border-radius: 0px 3px 3px 0;">
+                    Reject</button>
+                  <div class="dropdown">
+                    <span class="btn" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="la la-cog"></i>
+                    </span>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <span class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-assign-member" (click)="openDetailAssignMember(request)"
+                        *ngIf="isHrManager && request?.requestStatusId.title === 'In-Progress'" style="cursor: pointer;">
+                        <i class="la la-edit"></i>
+                        <span>Edit assigned member</span>
+                      </span>
+                      <span class="dropdown-item" [routerLink]="['/request/', request.id, 'detail']" href="#" (click)="onDetail(request.id)" style="cursor: pointer;">
+                        <i class="la la-info"></i>
+                        <span>View detail</span>
+                      </span>
+                      <span *ngIf="canClose && (isGroupLead || isDuLead || isHrManager) && request?.requestStatusId.title === 'In-Progress'" class="dropdown-item"
+                        href="#" (click)="closeRequest(request)" style="cursor: pointer;">
+                        <i class="fa fa-close"></i>
+                        <span>Close request</span>
+                      </span>
+                      <span *ngIf="(isHrManager) && request?.requestStatusId.title === 'Approved'" class="dropdown-item" href="#" (click)="rejectRequest(request)"
+                        style="cursor: pointer;">
+                        <i class="fa fa-ban"></i>
+                        <span>Reject request</span>
+                      </span>
+                      <span *ngIf="(isHrManager) && (request?.requestStatusId.title === 'Approved' || request?.requestStatusId.title === 'In-Progress')" class="dropdown-item" href="#" (click)="publishRequest(request)"
+                        ngbTooltip="publish request to website of CMC Global" style="cursor: pointer;">
+                        <i class="fa fa-share"></i>
+                        <span>Publish request</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END HEADER TOOLS-->
+            </div>
+          </div>
+        </div>
+        <!-- START SHOW STATUS REPORT EACH REQUEST -->
+        <div class="card-body" style="padding-top: 0rem; padding-bottom: 6px;">
+          <!-- FOR REQUEST is In-Progess status -->
+          <div class="row" *ngIf="request?.requestAssignee.length > 0 && request?.requestStatusId.title === 'In-Progress'">
+            <div class="col-12 rts-flex-container rts-margin-bottom-1" *ngFor="let assignee of request?.requestAssignee">
+              <div class="rts-flex-avatar" [ngClass]="{'opaciti': request?.overDue}">
+                <a href="#" (click)="onCenterDetailWithAssignee(request?.id, assignee.id)">
+                  <app-avatar style="margin-left: 15px;" size="66px" src="{{ assignee?.assignee.avatarUrl | resourceStatic}}" [isRounded]="'true'"></app-avatar>
+                  <b style="margin-left: 15px;">{{ assignee?.assignee.fullName}} </b>
+                </a>
+              </div>
+              <div class="rts-flex-status-container" [ngClass]="{'opaciti': request?.overDue}">
+                <ul class="rts-flex-status">
+                  <!-- <li *ngFor="let status of statusReports">
+                    <app-status-report [number]="status.number" [name]="status.name"></app-status-report>
+                  </li> -->
+                  <li style="cursor: pointer;" (click)="onChangeTarget(assignee)">
+                    <app-status-report class="target" ng-serve [number]="assignee?.numberOfCandidate" [name]="'Target'"></app-status-report>
+                  </li>
+                  <li style="cursor: pointer;" (click)="onCenterDetailWithAssigneeAndStatus(request.id, assignee.id, requestStatus.APPLIED)">
+                    <app-status-report class="applied" [number]="(assignee?.countCandidateStatus.Apply || 0) + (assignee?.countCandidateStatus.Contacting || 0) + (assignee?.countCandidateStatus.Interview || 0) + (assignee?.countCandidateStatus.Offer || 0) + (assignee?.countCandidateStatus.Onboard || 0)"
+                      [name]="'Applied'"></app-status-report>
+                    <!-- <app-status-report class="applied" *ngIf="!assignee?.countCandidateStatus?.Apply" [number]="'-'" [name]="'Applied'"></app-status-report> -->
+                  </li>
+                  <li style="cursor: pointer;" (click)="onCenterDetailWithAssigneeAndStatus(request.id, assignee.id, requestStatus.CONTACTING)">
+                    <app-status-report class="contacting" [number]="assignee?.countCandidateStatus.Contacting || 0" [name]="'Contacting'"></app-status-report>
+                    <!-- <app-status-report class="contacting" *ngIf="!assignee?.countCandidateStatus?.Contacting" [number]="'-'" [name]="'Contacting'"></app-status-report> -->
+                  </li>
+                  <li style="cursor: pointer;" (click)="onCenterDetailWithAssigneeAndStatus(request.id, assignee.id, requestStatus.INTERVIEW)">
+                    <app-status-report class="interview" [number]="assignee?.countCandidateStatus.Interview || 0" [name]="'Interview'"></app-status-report>
+                    <!-- <app-status-report class="interview" *ngIf="!assignee?.countCandidateStatus?.Interview" [number]="'-'" [name]="'Interview'"></app-status-report> -->
+                  </li>
+                  <li style="cursor: pointer;" (click)="onCenterDetailWithAssigneeAndStatus(request.id, assignee.id, requestStatus.OFFER)">
+                    <app-status-report class="offer" [number]="assignee?.countCandidateStatus.Offer || 0" [name]="'Offer'"></app-status-report>
+                    <!-- <app-status-report class="offer" *ngIf="!assignee?.countCandidateStatus?.Offer" [number]="'-'" [name]="'Offer'"></app-status-report> -->
+                  </li>
+                  <li style="cursor: pointer;" (click)="onCenterDetailWithAssigneeAndStatus(request.id, assignee.id, requestStatus.ONBOARD)">
+                    <app-status-report class="onboard" [number]="assignee?.countCandidateStatus.Onboard || 0" [name]="'OnBoard'"></app-status-report>
+                    <!-- <app-status-report class="onboard" *ngIf="!assignee?.countCandidateStatus?.Onboard" [number]="'-'" [name]="'OnBoard'"></app-status-report> -->
+                  </li>
+                  <li style="cursor: pointer;" (click)="onCenterDetailWithAssigneeAndStatus(request.id, assignee.id, requestStatus.CLOSED)">
+                    <app-status-report class="applied" [number]="assignee?.countCandidateStatus.Closed || 0" [name]="'Closed'"></app-status-report>
+                    <!-- <app-status-report class="onboard" *ngIf="!assignee?.countCandidateStatus?.Onboard" [number]="'-'" [name]="'OnBoard'"></app-status-report> -->
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- FOR REQUEST is In-Progess status but it has not been assigned to any HR member -->
+          <div class="row" *ngIf="request?.requestAssignee.length === 0 && request?.requestStatusId.title === 'In-Progress'">
+            <h3 class="rts-color-red rts-margin-top-1">This request has not been assigned to any HR member</h3>
+            <div class="col-12 rts-flex-container rts-margin-bottom-1">
+              <div class="rts-flex-avatar" [ngClass]="{'opaciti': request?.overDue}">
+                <app-avatar style="margin-left: 15px;" size="66px" src="no avatar"></app-avatar>
+              </div>
+              <div class="rts-flex-status-container" [ngClass]="{'opaciti': request?.overDue}">
+                <ul class="rts-flex-status">
+                  <li *ngFor="let status of statusReports">
+                    <app-status-report [number]="status.number" [name]="status.name"></app-status-report>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- FOR REQUEST isn't In-Progess status -->
+          <div class="row" *ngIf="request?.requestStatusId.title !== 'In-Progress'">
+            <div class="col-12 rts-flex-container rts-margin-bottom-1">
+              <div class="rts-flex-avatar" [ngClass]="{'opaciti': request?.overDue}">
+                <app-avatar isRounded="true" style="margin-left: 15px;" size="66px" src="no avatar"></app-avatar>
+              </div>
+              <div class="rts-flex-status-container" [ngClass]="{'opaciti': request?.overDue}">
+                <ul class="rts-flex-status">
+                  <li *ngFor="let status of statusReports">
+                    <app-status-report [number]="status.number" [name]="status.name"></app-status-report>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row extra-footer">
+            <div class="left-extra-footer">
+              <span class="glyphicon glyphicon-star-empty"></span>
+              <span class="bottom-left">This request is</span>
+              <span class="bottom-left">
+                <b style="font-weight: bold; color: #4a4a4a;">{{ request?.requestStatusId.title }}.</b>
+              </span>
+              <span class="bottom-left deadline-date">Its deadline is
+                <span style="font-weight: bold; color: #4a4a4a;" [ngClass]="{'duedate': request?.overDue}">{{ request?.deadline }}</span>
+              </span>
+            </div>
+            <div *ngIf="!(request?.requestStatusId.title ==='Closed' || request?.requestStatusId.title ==='Rejected') ">
+              <span *ngIf=" request?.percentDealine < 101" class="positive-color">
+                {{ request?.remainDate || 0}} days remaining
+              </span>
+              <span *ngIf="request.overDue" class="overdue-color">
+                Deadline is overdue {{ request?.remainDate }} days!
+              </span>
+            </div>
+
+            <div class="right-extra-footer">
+              <span class="bottom-right">
+                <b>{{request?.requestCode}}</b> - Interviewed candidates:
+                <b>{{ (request?.countRequestStatus?.Interview || 0) + (request?.countRequestStatus?.Offer || 0) + (request?.countRequestStatus?.Onboard
+                  || 0) }}</b>
+                totals
+              </span>
+            </div>
+          </div>
+          <!-- START SHOW STATUS REPORT EACH REQUEST -->
+        </div>
+        <div class="progress" style="width: 100%; float: right;" *ngIf="!(request?.requestStatusId.title ==='Closed' || request?.requestStatusId.title ==='Rejected')">
+          <div class="progress-bar" [ngClass]="{
+                      'positive': request?.percentDealine < 90,
+                      'negative': request?.percentDealine > 90 && request?.percentDealine < 100 ,
+                      'overdue': request?.percentDealine > 100
+                     }" role="progressbar" [style.width]="request?.percentDealine + '%'" aria-valuenow="25" aria-valuemin="0"
+            aria-valuemax="100">
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END ROW LIST REQUEST -->
+
+    <!-- PAGINATION -->
+    <div class="row align-items-end" *ngIf="requestPage?.totalElements > 0">
+      <div class="col-sm-12 col-md-6">
+
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="float-right">
+          <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first || response.isSubmitting">
+              <i class="la la-angle-double-left"></i>
+            </button>
+            <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first || response.isSubmitting">
+              <i class="la la-angle-left"></i>
+            </button>
+          </div>
+          <div class="pagination__page-number">
+            <p>Page {{ (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages }}
+            </p>
+          </div>
+          <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+            <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last || response.isSubmitting">
+              <i class="la la-angle-right"></i>
+            </button>
+            <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last || response.isSubmitting">
+              <i class="la la-angle-double-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END::PAGINATION -->
+  </div>
+  <div class="rts-padding-aside" *ngIf="!listRequest || listRequest.length === 0">
+    <div class="row">
+      <h1 class="col-12 error-emoji">\(o_o)/</h1>
+    </div>
+    <div class="row">
+      <h5 class="col-12 error-massage">{{ resultMessage }}</h5>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL ASSIGN MEMEBER -->
+<div class="modal fade " *ngIf="isHrManager" id="modal-assign-member" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="m-form m-form--label-align-right" [formGroup]="form2">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="closeAssignMember(undefined)" [disabled]="response.isSubmitting">&times;</button>
+          <button (click)="addItem()" _ngcontent-c6="" class="btn btn-success m-btn--icon m-btn--air" type="button" [disabled]="response.isSubmitting">
+            <span _ngcontent-c6="">
+              <i _ngcontent-c6="" class="la la-plus"></i>
+              <span _ngcontent-c6="">
+                New
+              </span>
+            </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row grid-demo">
+            <div formArrayName="items" *ngFor="let item of formData.controls; let i = index;">
+              <div [formGroupName]="i" class="form-group m-form__group row" style="margin-bottom: 12px; ">
+                <label class="col-lg-2 col-form-label">
+                  Assignee
+                </label>
+                <div class="col-lg-5">
+                  <select (ngModelChange)="reqAssigneeModalChange($event, i)" formControlName="requestAssignee" required class="form-control m-input">
+                    <option *ngFor="let item of allHrMemberComboBox[i]" value={{item?.id}}>
+                      {{ item?.fullName | summary: 30 }}
+                    </option>
+                  </select>
+                  <div *ngIf="form2.controls.items.controls[i].controls.requestAssignee.invalid
+                                               && (form2.controls.items.controls[i].controls.requestAssignee.dirty
+                                                  || form2.controls.items.controls[i].controls.requestAssignee.touched)"
+                    class="error">
+                    <div *ngIf="form2.controls.items.controls[i].controls.requestAssignee.errors.required">
+                      Assignee is required.
+                    </div>
+                  </div>
+                </div>
+                <label class="col-lg-2 col-form-label">
+                  Target:
+                </label>
+                <div class="col-lg-3">
+                  <input OnlyNumber formControlName="number" min="0" required type="number" class="form-control m-input">
+                  <div *ngIf="form2.controls.items.controls[i].controls.number.invalid
+                                              && (form2.controls.items.controls[i].controls.number.dirty
+                                                 || form2.controls.items.controls[i].controls.number.touched)" class="error">
+                    <div *ngIf="form2.controls.items.controls[i].controls.number.errors.required">
+                      Number is required.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-lg-2" style="text-align: center;">
+                  <i (click)="deleteItem(i)" class="la la-trash-o" style="font-size: 40px; cursor: pointer;"></i>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer ">
+          <button [disabled]="form2.pristine || form2.invalid || response.isSubmitting" type="submit" (click)="onModalSubmit()" class="btn btn-success"
+            data-dismiss="modal">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SUBMIT REQUEST -->
+<div *ngIf="isDuLead ||isHrManager" class="modal fade" id="modal-submit-request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Are you sure to submit this request ?
+        </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="onSetUpDynamicRequest(undefined)" [disabled]="response.isSubmitting">
+          <span aria-hidden="true">
+            ×
+          </span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" (click)="onSubmitRequest()" [disabled]="response.isSubmitting">
+          Ok
+        </button>
+        <button class="btn btn-secondary" data-dismiss="modal" type="button" (click)="onSetUpDynamicRequest(undefined)" [disabled]="response.isSubmitting">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL APPROVE REQUEST -->
+<div class="modal fade" *ngIf="isGroupLead" id="modal-approve-request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" *ngIf="response.message.length === 0">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Are you sure to approve this request ?
+        </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="onSetUpDynamicRequest(undefined)" [disabled]="response.isSubmitting">
+          <span aria-hidden="true">
+            ×
+          </span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="response.message.length !== 0">
+        <div class="m-form__content">
+          <div class="" *ngIf="response.isSuccess" role="alert">
+            <div class="m-alert__icon">
+              <!-- <i class="la la-warning"></i> -->
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+          </div>
+          <div class="m-alert m-alert--icon alert alert-danger" *ngIf="response.isError" role="alert">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+          </div>
+        </div>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="onSetUpDynamicRequest(undefined)" [disabled]="response.isSubmitting">
+          <span aria-hidden="true">
+            ×
+          </span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="onApprove()" *ngIf="!response.isSubmitting && response.message.length === 0">
+          Yes
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" *ngIf="!response.isSubmitting && response.message.length === 0">
+          Cancel
+        </button>
+        <p *ngIf="response.isSubmitting">We are submitting your request</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL REJECT REQUEST -->
+<app-reject-request *ngIf="(currentModal$ | async) === modalRejectRequest" (rejected$)="rejected()"></app-reject-request>
+<!-- MODAL CLOSE REQUEST-->
+<app-close-request *ngIf="(currentModal$ | async) === modalCloseRequest" (closed$)="closed()"></app-close-request>
+<!-- MODAL CHANGE TARGET -->
+<div class="modal fade" *ngIf="isHrManager" id="modal-change-target" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="response.message.length === 0">
+          Change target of member: {{ dynamicRequestAssignee?.assignee.fullName | summary: 20 }}
+        </h5>
+        <div class="m-form__content" *ngIf="response.message.length !== 0">
+          <div class="" *ngIf="response.isSuccess" role="alert">
+            <div class="m-alert__icon">
+              <!-- <i class="la la-warning"></i> -->
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+          </div>
+          <div class="m-alert m-alert--icon alert alert-danger" *ngIf="response.isError" role="alert">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
+            </div>
+            <div class="m-alert__text">
+              {{ response.message }}
+            </div>
+          </div>
+        </div>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="closeModalChangeTarget()" [disabled]="response.isSubmitting">
+          <span aria-hidden="true">
+            ×
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group m-form__group row">
+          <label class="col-form-label col-lg-4 col-sm-12 required">
+            New Target:
+          </label>
+          <div class="col-lg-8 col-md-8 col-sm-12">
+            <div class="input-group">
+              <input type="text" class="form-control m-input" ngModel #newTarget="ngModel" required name="newTarget" (ngModelChange)="validateNewTarget($event)"
+                id="newTarget" maxlength="255" placeholder="Enter new target" [disabled]="response.isSubmitting && response.message.length !== 0"
+                OnlyNumber value="{{ dynamicRequestAssignee?.numberOfCandidate }}">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onNewTarget(newTarget?.value)" [disabled]="newTarget?.invalid || errorTarget"
+          *ngIf="!response.isSubmitting && response.message.length === 0">
+          Done
+        </button>
+        <p *ngIf="response.isSubmitting">We are submitting your request</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL Publish REQUEST  *ngIf="isDuLead ||isHrManager"-->
+<div class="modal fade" id="modal-publish-request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Are you sure to publish this request ?
+        </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="onResetResponse()">
+          <span aria-hidden="true">
+            ×
+          </span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <!-- onPublistRequest  [disabled]="response.isSubmitting" -->
+        <h5 *ngIf="response.isSuccess">{{response.message}}</h5>
+        <button *ngIf="!response.isSuccess" class="btn btn-primary" [disabled]="response.isSubmitting" type="button" (click)="onPublistRequest()">
+          Yes
+        </button>
+        <button class="btn btn-secondary" data-dismiss="modal" type="button" (click)="onResetResponse()">
+          {{response.isSuccess ? 'Close' : 'No'}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

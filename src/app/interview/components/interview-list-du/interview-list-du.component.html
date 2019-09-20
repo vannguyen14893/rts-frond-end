@@ -1,0 +1,222 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Interview 
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="javascript: void(0);" class="m-nav__link" (click)="navInterviewList()">
+              <span class="m-nav__link-text">
+                Interview
+              </span>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="javascript: void(0);" class="m-nav__link" (click)="navInterviewList()">
+              <span class="m-nav__link-text">
+                List
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END: Subheader -->
+  <div class="m-content">
+    <div class="row">
+      <div class="col-12">
+        <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                  <span> List Interview</span>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+              <div class="row align-items-center">
+                <!-- FILTER -->
+                <div class="col-md-12 col-lg-9">
+                  <form [formGroup]="formFilter" (ngSubmit)="onFilter()">
+                    <div class="form-group m-form__group row align-items-center">
+                      <div class="col-lg-10">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-3">
+                            <select class="form-control m-input" formControlName="interviewerId">
+                              <option value="">Select interviewer</option>
+                              <option *ngFor="let user of listInterviewer" value="{{ user?.id }}">
+                                {{ user?.fullName }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-6 col-lg-3">
+                            <select class="form-control m-input" formControlName="statusId">
+                              <option value="">Select status</option>
+                              <option *ngFor="let status of listStatus" value="{{ status?.id }}">
+                                {{ status?.title }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-md-6 col-lg-3">
+                            <div class="input-group">
+                              <input class="form-control" placeholder="Start date" (click)="clearStartDate()" formControlName="startDate" readonly ngbDatepicker
+                                #d1="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary my-btn-group" (click)="d1.toggle()" type="button" style="padding:4px;">
+                                  <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-3">
+                            <div class="input-group">
+                              <input class="form-control" placeholder="End date" formControlName="endDate" (click)="clearEndDate()" readonly ngbDatepicker
+                                #d2="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary my-btn-group" (click)="d2.toggle()" type="button" style="padding:4px;">
+                                  <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-2">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-12">
+                            <button class="btn btn-info m-btn m-btn--icon ">
+                              <span>
+                                <i class="la la-filter"></i>
+                                <span>
+                                  Filter
+                                </span>
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- END::FILTER -->
+                <!-- SEARCH -->
+                <div class="col-md-12 col-lg-3">
+                  <div class="m-input-icon m-input-icon--left">
+                    <input ngModel #title="ngModel" name="title" class="form-control m-input" placeholder="Search by candidate name..." type="text"
+                      (keyup.enter)="search(title.value)" appNoSpecialKey>
+                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                      <span>
+                        <i class="la la-search"></i>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <!-- END::SEARCH -->
+              </div>
+            </div>
+            <div class="m-section">
+              <div class="m-section__content">
+                <!-- TABLE -->
+                <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th sortable-column="title">Title</th>
+                      <th sortable-column="startTime">Start Time</th>
+                      <th sortable-column="endTime">End Time</th>
+                      <th sortable-column="location">Location</th>
+                      <!-- <th>Request</th> -->
+                      <th sortable-column="statusId.title">Status</th>
+                      <!-- <th>Action</th> -->
+                    </tr>
+                  </thead>
+                  <!-- SHOW MESSAGE -->
+                  <!-- <div *ngIf="resultMessage.length > 0" class="align-center">
+                    <p>{{ resultMessage }}</p>
+                  </div> -->
+                  <!-- END::SHOW MESSAGE -->
+                  <tbody *ngIf="listInterview && listInterview.length > 0">
+                    <tr *ngFor="let interview of listInterview; let i = index;">
+                      <th scope="row">{{ requestPage.size * requestPage.number + i + 1 }}</th>
+                      <td>
+                        <a [routerLink]="getDetailUrl(interview?.id)" href="#">
+                          {{ interview?.title }}
+                        </a>
+                      </td>
+                      <td>{{ interview?.startTime }}</td>
+                      <td>{{ interview?.endTime }}</td>
+                      <td>{{ interview?.location }}</td>
+                      <!-- <td>
+                        {{ interview?.candidateCollection[0].requestId.title }}
+                      </td> -->
+                      <td>{{ interview?.statusId.title }}</td>
+                      <!-- <td>
+                        <i class="la la-edit" (click)="onDetail(interview?.id)" placement="top" ngbTooltip="View detail"></i>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- END::TABLE -->
+
+                <!-- DISPLAY NOT FOUND MESSAGE -->
+                <div *ngIf="notFoundMessage.length > 0" class="align-center">
+                  <p>{{ notFoundMessage }}</p>
+                </div>
+                <!-- END::DISPLAY NOT FOUND MESSAGE -->
+
+                <!-- PAGINATION -->
+                <div class="row align-items-end" *ngIf="requestPage?.totalElements > 0">
+                  <div class="col-12">
+                    <div class="float-right">
+                      <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first">
+                          <i class="la la-angle-double-left"></i>
+                        </button>
+                        <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first">
+                          <i class="la la-angle-left"></i>
+                        </button>
+                      </div>
+                      <div class="pagination__page-number">
+                        <p>Page {{ (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages
+                          }}
+                        </p>
+                      </div>
+                      <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                        <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last">
+                          <i class="la la-angle-right"></i>
+                        </button>
+                        <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last">
+                          <i class="la la-angle-double-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END::PAGINATION -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

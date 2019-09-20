@@ -1,0 +1,49 @@
+<div class="row justify-content-md-center margin-top-20">
+  <div class="col-md-6">
+    <h4 class="text-center">
+      Configurable items:
+    </h4>
+  </div>
+</div>
+<div class="row justify-content-md-center">
+  <div class="col-md-6 col-12">
+    <ul class="link-list">
+      <!-- <li class="link-item">
+        <a routerLink="/config/candidate-status">Candidate status</a>
+      </li> -->
+      <!-- <li class="link-item">
+        <a routerLink="/config/cv-status">CV status</a>
+      </li> -->
+      <li *ngIf="canViewDepartment" class="link-item">
+        <a routerLink="/config/department">Department</a>
+      </li>
+      <li *ngIf="canViewExperience" class="link-item">
+        <a routerLink="/config/experience">Experience</a>
+      </li>
+      <li *ngIf="canViewPosition" class="link-item">
+        <a routerLink="/config/position">Position</a>
+      </li>
+      <li *ngIf="canViewPriority" class="link-item">
+        <a routerLink="/config/priority">Priority</a>
+      </li>
+      <li *ngIf="canViewProject" class="link-item">
+        <a routerLink="/config/project">Project</a>
+      </li>
+      <li *ngIf="canViewRecruitmentType" class="link-item">
+        <a routerLink="/config/recruitment-type">Recruitment type</a>
+      </li>
+      <!-- <li class="link-item">
+        <a routerLink="/config/request-status">Request status</a>
+      </li> -->
+      <li *ngIf="canViewSkill" class="link-item">
+        <a routerLink="/config/skill">Skill</a>
+      </li>
+      <li *ngIf="canViewCertification" class="link-item">
+        <a routerLink="/config/certification">Certification</a>
+      </li>
+      <li *ngIf="canViewDepartment" class="link-item">
+        <a routerLink="/config/global-account">Global-account</a>
+      </li>
+    </ul>
+  </div>
+</div>

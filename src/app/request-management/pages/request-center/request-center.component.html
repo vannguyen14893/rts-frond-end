@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="my-header">
+        <!-- <h5>{{ currentRequest?.title }}</h5> -->
+        <div class="title-row">
+          <div class="title">
+            <span>
+              <span class="wrap-tittle">
+                {{ (requests$ | async)[currentRequestId$ | async]?.title }}
+              </span>
+              <span class="legend">
+                has deadline on
+                <span class="title-content">{{ (requests$ | async)[currentRequestId$ | async]?.deadline}}</span>
+              </span>
+            </span>
+          </div>
+          <div class="my-button-group">
+            <a [routerLink]="['/request/', currentRequestId, 'detail']" (click)="viewRequestDetail()">View detail </a>
+            <span style="margin-left: 5px; margin-right: 5px"> | </span>
+            <span (click)="addCandidateToRequest()" style="cursor: pointer; color: blue"> Add candidate</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-candidate-figures></app-candidate-figures>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <!-- candidate list -->
+    <div class="col-md-3 margin-top-15 wrap-app-tab">
+      <app-candidate-list></app-candidate-list>
+    </div>
+    <!-- end::candidate list -->
+
+    <!-- candidate detail -->
+    <div *ngIf="currentCandidateId !== 0; else noCandidate" class="col-md-9">
+      <div class="card remove-card-space">
+        <div class="card-body card-align">
+          <div class="row">
+            <div class="col-sm-12 col-md-7">
+              <app-candidate-header [candidate]="currentCandidate"></app-candidate-header>
+            </div>
+            <div class="col-sm-12 col-md-5">
+              <app-candidate-action-bar (goComment)="goComment()"></app-candidate-action-bar>
+            </div>
+          </div>
+          <!-- candidate info section -->
+          <div class="row">
+            <div class="col-12">
+              <app-candidate-info></app-candidate-info>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-12">
+              <div class="show-more" *ngIf="!showCandidateDetail; else showLess">
+                <a href="#" (click)="toggleCandidateDetail()">Show detail</a>
+                <i class="la la-caret-down"></i>
+              </div>
+              <ng-template #showLess>
+                <div class="show-more">
+                  <a href="#" (click)="toggleCandidateDetail()">Hide detail</a>
+                  <i class="la la-caret-up"></i>
+                </div>
+              </ng-template>
+            </div>
+          </div> -->
+          <!-- end::candidate info section -->
+
+          <!-- schedule section -->
+          <div class="row">
+            <div class="col-12">
+              <div class="section-title__container">
+                <i class="la la-calendar"></i>
+                <p class="section-title__text">Schedule</p>
+                <span class="m-badge m-badge--brand">
+                  {{ (interviewIds$ | async).length }}
+                </span>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="interview-list">
+                <app-interview-list></app-interview-list>
+              </div>
+            </div>
+          </div>
+          <!-- end::schedule section -->
+          <!-- comment section -->
+          <div class="row">
+            <div class="col-12">
+              <div class="section-title__container">
+                <i class="la la-wechat"></i>
+                <p class="section-title__text">Comment</p>
+                <span class="m-badge m-badge--brand">
+                  {{ currentCandidate?.commentCollection?.length }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row element-space">
+            <div class="col-12">
+              <app-candidate-log-list></app-candidate-log-list>
+              <!-- <app-comment-list></app-comment-list> -->
+            </div>
+          </div>
+          <div class="row element-space" *ngIf="canCommentCandidate">
+            <div class="col-12">
+              <div class="send-comment-form">
+                <app-avatar style="padding-right: 15px" src="{{ currentUser.avatarUrl | resourceStatic }}" size="42px" isRounded="true"></app-avatar>
+                <input type="text" class="form-control inputcomment" [(ngModel)]="comment" id="myComment" #inputComment (keyup.enter)="sendComment()">
+                <button class="btn btn-primary btncomment" type="button" (click)="sendComment()">
+                  <i class="la la-send-o"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- end::comment section -->
+        </div>
+      </div>
+    </div>
+    <!-- end:candidate detail -->
+    <!-- If no candidate -->
+    <ng-template #noCandidate>
+      <div class="col-md-9 interview-list">
+        <h5 class="text-center error-no">There are no candidates!</h5>
+      </div>
+    </ng-template>
+    <!-- end::If no candidate -->
+  </div>
+</div>

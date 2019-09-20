@@ -1,0 +1,37 @@
+.my-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+p {
+  margin-bottom: 0;
+}
+h4 {
+  margin-bottom: 0;
+  text-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+}
+.number {
+  font-size: 1.5rem;
+  color: black;
+}
+.text {
+  padding-left: 5px;
+  font-size: 1rem;
+  color: darkgray;
+}
+.rts-align-center {
+  text-align: center;
+}
+
+.card-title {
+  font-size: 28px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.card-text{
+  font-size: 14px;
+  margin-bottom: 15px;
+}

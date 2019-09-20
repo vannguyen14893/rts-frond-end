@@ -1,0 +1,33 @@
+<app-modal header="Add candidates to the interview">
+  <div body>
+    <div *ngIf="message && message.type==='error' && message.message.length > 0" class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show"
+      role="alert">
+      <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
+      {{ message.message }}
+    </div>
+    <div class="candidate-list">
+      <ul>
+        <li *ngFor="let candidate of currentInterview?.candidateCollection">
+          <app-avatar size="m" src="{{ candidate?.cvId?.profileImg | resourcePublic }}"></app-avatar>
+        </li>
+        <li *ngFor="let candidate of addedCandidates">
+          <app-avatar size="m" src="{{ candidate?.cvId?.profileImg | resourcePublic }}"></app-avatar>
+        </li>
+      </ul>
+    </div>
+    <div class="search-candidate">
+      <label for="search-input">More candidates</label>
+      <input type="text" class="form-control" id="search-input" placeholder="Search candidate name" [(ngModel)]="searchInput" (keyup)="search()">
+    </div>
+    <div class="search-result" *ngIf="searchResults">
+      <div class="candidate-list-section">
+        <div *ngFor="let candidate of searchResults" class="candidate-list-item">
+          <app-candidate-list-card [cv]="candidate?.cvId" (click)="checkCandidate(candidate)"></app-candidate-list-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div footer>
+    <button type="button" class="btn btn-outline-primary" (click)="submit()">Submit</button>
+  </div>
+</app-modal>

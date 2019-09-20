@@ -1,0 +1,66 @@
+<div *ngIf="!isMyself; else myself">
+  <div class="m-alert m-alert--icon m-alert--outline alert alert-primary" role="alert" *ngIf="isActive; else setInActive">
+    <div class="m-alert__icon">
+      <i class="la la-warning"></i>
+    </div>
+    <div class="m-alert__text">
+      <strong>
+        Attention!
+      </strong>
+      You are going to set this user as
+      <strong>active</strong>.
+    </div>
+    <div class="m-alert__actions" style="width: 200px;">
+      <button class="btn btn-primary btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="onConfirm()" [disabled]="loading">
+        OK
+      </button>
+      <button aria-label="Close" class="btn btn-secondary btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="closeModal()">
+        Cancel
+      </button>
+    </div>
+  </div>
+  <ng-template #setInActive>
+    <div class="m-alert m-alert--icon m-alert--outline alert alert-danger" role="alert">
+      <div class="m-alert__icon">
+        <i class="la la-warning"></i>
+      </div>
+      <div class="m-alert__text">
+        <strong>
+          Attention!
+        </strong>
+        You are going to set this user as
+        <strong>in-active</strong>.
+      </div>
+      <div class="m-alert__actions" style="width: 200px;">
+        <button class="btn btn-danger btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="onConfirm()" [disabled]="loading">
+          OK
+        </button>
+        <button aria-label="Close" class="btn btn-secondary btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="closeModal()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<ng-template #myself>
+  <div class="m-alert m-alert--icon m-alert--outline alert alert-danger" role="alert">
+    <div class="m-alert__icon">
+      <i class="la la-warning"></i>
+    </div>
+    <div class="m-alert__text">
+      <strong>
+        Sorry!
+      </strong>
+      <br>
+      You cannot disable yourself.
+    </div>
+    <div class="m-alert__actions" style="width: 200px;">
+      <!-- <button class="btn btn-danger btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="onConfirm()" [disabled]="loading">
+        OK
+      </button> -->
+      <button aria-label="Close" class="btn btn-secondary btn-sm m-btn m-btn--pill m-btn--wide" type="button" (click)="closeModal()">
+        Close
+      </button>
+    </div>
+  </div>
+</ng-template>

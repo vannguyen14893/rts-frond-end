@@ -1,0 +1,16 @@
+<div class="facebook">
+  <div class="facebook-header">
+    <app-avatar src="{{ comment.userId.avatarUrl | resourceStatic }}" size="s" isRounded="true"></app-avatar>
+    <div class="facebook-header__text">
+      <p class="facebook-header__username">
+        {{ comment.userId.fullName }}
+      </p>
+      <p class="facebook-header__timestamp">
+        {{ comment.createDate | elapsedTime }}
+      </p>
+    </div>
+  </div>
+  <div class="padding-10 message">
+      {{ comment.commentDetail }}
+  </div>
+</div>

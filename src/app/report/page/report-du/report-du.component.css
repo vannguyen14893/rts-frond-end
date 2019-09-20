@@ -1,0 +1,23 @@
+.col_group_month {
+    border-bottom: 1px solid  !important;
+}
+
+.cell_position {
+    border-right: 0px ; 
+}
+
+.cell_department {
+    border-left: 0px;
+}
+
+.hiden_group {
+    font-size: 0;
+}
+
+.group {
+    background :  #dadfe8;
+}
+
+.lastIndex {
+    background : red;
+}

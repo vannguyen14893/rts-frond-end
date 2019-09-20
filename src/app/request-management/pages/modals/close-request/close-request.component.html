@@ -1,0 +1,16 @@
+<app-modal [header]="'Close request'">
+
+  <div body>
+    <p>Are you sure you want to close this request?</p>
+  </div>
+  <div footer>
+    <div class="wrap-button">
+      <button type="button" class="btn btn-primary btnyes" (click)="close()">
+        Yes
+      </button>
+      <button type="button" class="btn btn-danger btnno" (click)="no()">
+        No
+      </button>
+    </div>
+  </div>
+</app-modal>

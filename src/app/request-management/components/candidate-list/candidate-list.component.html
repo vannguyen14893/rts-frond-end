@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-12">
+    <app-tab [tabs]="tabs" (tabSelected)="switchTab($event)">
+      <div class="candidate-list-section-center" *ngIf="(currentCandidateTab$ | async) === 'Qualified'; else disqualified">
+        <div *ngFor="let candidate of qualifiedCandidates" class="candidate-list-item-center" [ngClass]="{ selected: candidate?.id === (currentCandidateId$ | async) }" (click)="selectCandidate(candidate)">
+          <app-candidate-list-card style="display: flex; flex: 1;" [cv]="candidate?.cvId" [status]="candidate?.statusId" [candidate]="candidate?.id"></app-candidate-list-card>
+        </div>
+        <p *ngIf="qualifiedCandidates?.length === 0" class="no-candidate">There are no candidates!</p>
+      </div>
+      <ng-template #disqualified>
+        <div class="candidate-list-section-center">
+          <div *ngFor="let candidate of disqualifiedCandidates" class="candidate-list-item-center" [ngClass]="{ selected: candidate?.id === (currentCandidateId$ | async) }">
+            <app-candidate-list-card [cv]="candidate?.cvId" (click)="selectCandidate(candidate)"></app-candidate-list-card>
+          </div>
+        </div>
+        <p *ngIf="disqualifiedCandidates?.length === 0" class="no-candidate">There are no candidates!</p>
+      </ng-template>
+    </app-tab>
+  </div>
+</div>

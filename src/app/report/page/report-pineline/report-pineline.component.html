@@ -1,0 +1,291 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+  <!-- BEGIN: Subheader -->
+  <!-- <div class="m-subheader">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h3 class="m-subheader__title m-subheader__title--separator">
+          Report
+        </h3>
+        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+          <li class="m-nav__item m-nav__item--home">
+            <a href="#" class="m-nav__link m-nav__link--icon">
+              <i class="m-nav__link-icon la la-home"></i>
+            </a>
+          </li>
+          <li class="m-nav__separator">
+            -
+          </li>
+          <li class="m-nav__item">
+            <a href="javascript: void(0);" class="m-nav__link" (click)="navInterviewList()">
+              <span class="m-nav__link-text">
+                Pineline
+              </span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div> -->
+  <!-- END: Subheader -->
+  <div class="m-content">
+    <div class="row">
+      <div class="col-12">
+        <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                  <span>Report Pineline</span>
+                </h3>
+              </div>
+            </div>
+            <div class="m-portlet__head-tools">
+              <button type="submit" class="btn btn-success m-btn--icon m-btn--air" (click)="exportExcelPineline()">
+                <span>
+                  <i class="la la-plus"></i>
+                  <span>
+                    Export excel
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+              <div class="row align-items-center">
+                <!-- FILTER -->
+                <div class="col-md-12 col-lg-9">
+                  <form [formGroup]="formFilter" (ngSubmit)="onFilter()">
+                    <div class="form-group m-form__group row align-items-center">
+                      <div class="col-md-12 col-lg-7">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6">
+                            <div class="form-group m-form__group">
+                              <div class="input-group">
+                                <input class="form-control" placeholder="Start date" formControlName="startDate" (click)="clearStartDate()" readonly ngbDatepicker
+                                  #d1="ngbDatepicker">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary my-btn-group" (click)="d1.toggle()" type="button" style="padding:4px;">
+                                    <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6">
+                            <div class="form-group m-form__group">
+                              <div class="input-group">
+                                <input class="form-control" placeholder="End date" formControlName="endDate" (click)="clearEndDate()" readonly ngbDatepicker
+                                  #d2="ngbDatepicker">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary my-btn-group" (click)="d2.toggle()" type="button" style="padding:4px;">
+                                    <i class="la la-calendar" style="color: black; font-size:2rem;"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-2">
+                        <button class="btn btn-info m-btn m-btn--icon ">
+                          <span>
+                            <i class="la la-filter"></i>
+                            <span>
+                              Filter
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- END::FILTER -->
+              </div>
+            </div>
+
+            <div class="m-section">
+              <div class="m-section__content">
+                <!-- TABLE -->
+                <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                  <thead>
+                    <tr>
+                      <th sortable-column="title">Request Code</th>
+                      <th sortable-column="project">Project</th>
+                      <th sortable-column="position">Position</th>
+                      <th sortable-column="type">Type</th>
+                      <th>Order Date</th>
+                      <th>Deadline</th>
+                      <th class="narrow">Order</th>
+                      <th>Assignee</th>
+                      <th class="narrow">Number</th>
+                      <th class="narrow">Apply</th>
+                      <th class="narrow">Contacting</th>
+                      <th class="narrow">Interview</th>
+                      <th class="narrow">Offer</th>
+                      <th class="narrow">Onboard</th>
+                      <th class="narrow">Missing</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+
+                  <tbody *ngFor="let request of listRequest; let i = index;">
+                    <tr [ngStyle]="{'background-color': request?.requestStatusId?.title === 'Close' ? 'gainsboro' : 'none' }">
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span ngbTooltip="{{ request?.requestCode }}">{{ request?.requestCode | summary: 20 }}</span>
+                      </td>
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span placement="top" ngbTooltip="{{ request?.projectId?.title }}">
+                          {{ request?.projectId?.title | summary: 20 }}
+                        </span>
+                      </td>
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span ngbTooltip="{{ request?.positionId?.title }}">
+                          {{ request?.positionId?.title | summary: 20 }}
+                        </span>
+                      </td>
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span placement="top" ngbTooltip="{{ request?.recruitmentTypeId?.title }}">
+                          {{ request?.recruitmentTypeId?.title | summary: 20 }}
+                        </span>
+                      </td>
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span placement="top">
+                          {{ request?.approvedDate}}
+                        </span>
+                      </td>
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span>
+                          {{ request?.deadline }}
+                        </span>
+                      </td>
+
+                      <td [attr.rowspan]="request?.requestAssignee.length + 1">
+                        <span placement="top" ngbTooltip=" request number ">
+                          {{ request?.number }}
+                        </span>
+                      </td>
+
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="Assigne number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="Apply number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="Contacting number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="Interview number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="Offer number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="onboard number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span ngbTooltip="missing number"></span>
+                      </td>
+                      <td *ngIf="request?.requestAssignee.length === 0">
+                        <span placement="top" ngbTooltip=" request status ">
+                          {{ request?.requestStatusId?.title }}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let user of request?.requestAssignee" [ngStyle]="{'background-color': request?.requestStatusId?.title === 'Close' ? 'gainsboro' : 'none' }">
+
+                      <td>
+                        <span>{{ user?.assignee?.fullName }}</span>
+                      </td>
+                      <td>
+                        <span ngbTooltip="Assigne number">{{ user?.numberOfCandidate || 0 }}</span>
+                      </td>
+                      <td>
+                        <!-- <span ngbTooltip="Apply number">{{ user?.countCandidateStatus?.Apply }}</span> -->
+                        <span ngbTooltip="Apply number">{{ (user?.countCandidateStatus.Apply || 0) + 
+                          (user?.countCandidateStatus.Contacting || 0) 
+                        + (user?.countCandidateStatus.Interview || 0) 
+                        + (user?.countCandidateStatus.Offer || 0) + (user?.countCandidateStatus.Onboard || 0) }}
+                      </span>
+                      </td>
+                      <td>
+                        <span ngbTooltip="Contacting number">{{ user?.countCandidateStatus?.Contacting || 0 }}</span>
+                      </td>
+                      <td>
+                        <span ngbTooltip="Interview number">{{ user?.countCandidateStatus?.Interview || 0 }}</span>
+                      </td>
+                      <td>
+                        <span ngbTooltip="Offer number">{{ user?.countCandidateStatus?.Offer || 0 }}</span>
+                      </td>
+                      <td>
+                        <span ngbTooltip="onboard number">{{ user?.countCandidateStatus?.Onboard || 0 }}</span>
+                      </td>
+                      <td>
+                        <span ngbTooltip="missing number">{{ (user?.numberOfCandidate - (user?.countCandidateStatus?.Onboard || 0)) || 0 }}</span>
+                      </td>
+
+                      <td>
+                        <span placement="top" ngbTooltip=" request status ">
+                          {{ request?.requestStatusId?.title }}
+                        </span>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <!-- END::TABLE -->
+
+                <!-- SHOW MESSAGE -->
+                <div *ngIf="resultMessage.length > 0" class="align-center">
+                  <p>{{ resultMessage }}</p>
+                </div>
+                <!-- END::SHOW MESSAGE -->
+
+                <!-- PAGINATION -->
+                <div class="row align-items-end" *ngIf="requestPage?.totalElements > 0">
+                  <div class="col-12">
+                    <div class="float-right">
+                      <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first">
+                          <i class="la la-angle-double-left"></i>
+                        </button>
+                        <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first">
+                          <i class="la la-angle-left"></i>
+                        </button>
+                      </div>
+                      <div class="pagination__page-number">
+                        <p>Page {{ (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages
+                          }}
+                        </p>
+                      </div>
+                      <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                        <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last">
+                          <i class="la la-angle-right"></i>
+                        </button>
+                        <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last">
+                          <i class="la la-angle-double-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END::PAGINATION -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

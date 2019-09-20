@@ -1,0 +1,17 @@
+/* @import '../../../../../styles/design/_variables.scss'; */
+#footer {
+    width: 100%;
+    border-top: 1px solid #a7a9ac;
+    background-color: #a7a9ac;
+    padding-top: 10px;
+    text-align: -webkit-center;
+    position: fixed; 
+    bottom:0%;
+    height: 28px;
+}
+
+@media screen and (max-width: 1030px) {
+    #header{
+        font-size: 120%;
+    }
+}

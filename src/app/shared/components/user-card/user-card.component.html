@@ -1,0 +1,10 @@
+<div class="user-card">
+    <app-avatar src="{{ user?.avatarUrl | resourceStatic }}" size='l' isRounded="true"></app-avatar>
+    <div class="user-info">
+      <div class="name"> 
+        <div class="full-name">{{ user?.fullName }} </div>
+      </div>
+      <p class="title">{{ user?.username }} </p>
+      <p class="experience">{{ user?.departmentId?.title }} </p>
+    </div>
+  </div>
